@@ -10,8 +10,9 @@ steps:
 - name: test-backend
   image: openjdk:8-jdk-slim
   commands:
-  - ./api/mvnw clean install
-  - ./api/mvnw test
+  - cd ./api
+  - ./mvnw clean install
+  - ./mvnw test
 
 - name: test-frontend
   image: mhart:alpine-node:12
