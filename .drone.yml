@@ -10,6 +10,7 @@ steps:
 - name: test-backend
   image: openjdk:8-jdk-slim
   commands:
+  - ./api/mvnw clean install
   - ./api/mvnw test
 
 - name: test-frontend
