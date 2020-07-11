@@ -15,7 +15,7 @@ steps:
   - ./mvnw test
 
 - name: test-frontend
-  image: mhart:alpine-node:12
+  image: mhart/alpine-node:12
   commands:
   - cd ./ui
   - npm install
