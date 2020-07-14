@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+    restart: always
+    image: postgres:13-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=kimosabe
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+
+  redis:
+    restart: always
+    image: redis:6-alpine
+    ports:
+      - '6379:6379'
