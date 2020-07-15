@@ -17,7 +17,7 @@ class User (
         @Column(name = "username", unique = true) private var username : String,
         @Column(name = "password") private var password : String,
         @JsonIgnore @ManyToMany(fetch = FetchType.EAGER)
-        @JoinTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")], inverseJoinColumns = [JoinColumn(name = "role_id")])
+        @JoinTable(name = "users_roles", joinColumns = [JoinColumn(name = "user_id")], inverseJoinColumns = [JoinColumn(name = "role_id")])
         val roles: MutableSet<Role> = mutableSetOf()
 ) : UserDetails, Serializable {
 
