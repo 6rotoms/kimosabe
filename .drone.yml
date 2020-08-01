@@ -8,11 +8,11 @@ platform:
 
 steps:
 - name: test-backend
-  image: openjdk:8-jdk-slim
+  image: openjdk:11-jdk-slim
   commands:
   - cd ./api
   - ./mvnw clean install
-  - ./mvnw test -P unit-test
+  - ./mvnw test -P test
 
 - name: test-frontend
   image: mhart/alpine-node:12
