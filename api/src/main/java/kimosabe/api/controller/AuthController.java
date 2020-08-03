@@ -35,7 +35,6 @@ public class AuthController {
         Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(auth);
-        session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
         return new ResponseEntity<String>(HttpStatus.OK);
     }
 

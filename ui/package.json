@@ -1,9 +1,12 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "kimosabe-ui",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "static front-end for kimosabe",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "contributors": [
+    "Alex Reymer ()",
+    "Rui Zhu (zrui.dev)"
+  ],
   "dependencies": {
     "gatsby": "^2.23.12",
     "gatsby-image": "^2.4.9",
@@ -16,22 +19,25 @@
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "react-redux": "^7.2.1",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
+    "@testing-library/react": "^10.4.7",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.1.0",
-    "babel-preset-gatsby": "^0.5.2",
+    "babel-jest": "^26.2.2",
+    "babel-preset-gatsby": "^0.5.4",
     "eslint": "^7.4.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jest": "^23.18.0",
     "eslint-plugin-react": "^7.20.3",
+    "fetch-mock": "^9.10.5",
     "gatsby-plugin-eslint": "^2.0.8",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^26.1.0",
+    "jest": "^26.2.2",
     "prettier": "2.0.5",
-    "react-test-renderer": "^16.13.1"
+    "redux-mock-store": "^1.5.4"
   },
   "keywords": [
     "gatsby"
@@ -40,11 +46,12 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format": "./node_modules/.bin/prettier --config ./prettierrc.json --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "./node_modules/.bin/jest"
+    "test": "./node_modules/.bin/jest --coverage",
+    "lint": "./node_modules/.bin/eslint ."
   },
   "repository": {
     "type": "git",
