@@ -19,7 +19,7 @@ steps:
   commands:
   - cd ./ui
   - npm install
-  - npm lint
+  - npm run-script lint
   - npm test
 
 trigger:
