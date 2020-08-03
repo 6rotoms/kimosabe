@@ -4,7 +4,7 @@ Frontend for Kimosabe API. written in React/Redux.
 
 ## Useful commands
 
-linting: `npm lint`  
+linting: `npm run-script lint`  
 testing: `npm test`  
 testing specific files: `npm test path/to/file.test.js`
 
