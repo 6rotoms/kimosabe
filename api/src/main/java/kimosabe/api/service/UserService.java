@@ -30,7 +30,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> loadedUser = userRepository.findByUsername(username) ;
         if (loadedUser.isEmpty()) {
             throw new UsernameNotFoundException(String.format("User with username %s not found", username));
@@ -50,5 +50,15 @@ public class UserService implements UserDetailsService {
         }
         user.addRole(userRole.get());
         return userRepository.save(user);
+    }
+
+    public boolean checkPassword(User user, String password){
+        String encodedPassword = passwordEncoder.encode(password);
+        return encodedPassword.equals(user.getPassword());
+    }
+
+    public void changePassword(User user, String password){
+        String encodedPassword = passwordEncoder.encode(password);
+        user.setPassword(encodedPassword);
     }
 }
