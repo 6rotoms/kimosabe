@@ -1,5 +1,6 @@
 package kimosabe.api.service;
 
+import kimosabe.api.exceptions.IncorrectPasswordException;
 import kimosabe.api.exceptions.MissingDatabaseEntryException;
 import kimosabe.api.exceptions.UsernameTakenException;
 import kimosabe.api.model.Role;
@@ -53,12 +54,12 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean checkPassword(User user, String password){
-        String encodedPassword = passwordEncoder.encode(password);
-        return encodedPassword.equals(user.getPassword());
+        return passwordEncoder.matches(password, user.getPassword());
     }
 
     public void changePassword(User user, String password){
         String encodedPassword = passwordEncoder.encode(password);
         user.setPassword(encodedPassword);
+        userRepository.save(user);
     }
 }

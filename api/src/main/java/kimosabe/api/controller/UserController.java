@@ -1,5 +1,6 @@
 package kimosabe.api.controller;
 
+import kimosabe.api.exceptions.IncorrectPasswordException;
 import kimosabe.api.model.User;
 import kimosabe.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,15 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> changePassword(@RequestParam("newPassword") String newPassword, @RequestParam("oldPassword") String oldPassword) {
         User user = userService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-
-        if (userService.checkPassword(user, oldPassword)){
-            userService.changePassword(user, newPassword);
-            return new ResponseEntity<String>("Password changed successfully!", HttpStatus.OK);
-        }else{
-            return new ResponseEntity<String>("Incorrect old password!",HttpStatus.BAD_REQUEST);
+        try {
+            if (userService.checkPassword(user, oldPassword)) {
+                userService.changePassword(user, newPassword);
+                return new ResponseEntity<String>("Password changed successfully", HttpStatus.OK);
+            } else {
+                throw new IncorrectPasswordException();
+            }
+        }catch (IncorrectPasswordException e){
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }
