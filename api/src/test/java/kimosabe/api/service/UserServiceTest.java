@@ -1,5 +1,6 @@
 package kimosabe.api.service;
 
+import kimosabe.api.exceptions.IncorrectPasswordException;
 import kimosabe.api.exceptions.MissingDatabaseEntryException;
 import kimosabe.api.exceptions.UsernameTakenException;
 import kimosabe.api.model.Role;
@@ -97,5 +98,33 @@ public class UserServiceTest {
         // Act
         // Assert
         Assertions.assertThrows(UsernameNotFoundException.class, () -> userService.loadUserByUsername("username"));
+    }
+
+    @Test
+    public void whenCheckPasswordCalledValid_ThenReturnTrue(){
+        // Arrange
+        when(passwordEncoder.matches("password", "password")).thenReturn(true);
+
+        // Act
+        // Assert
+        Assertions.assertEquals(true, userService.checkPassword(user, "password"));
+    }
+
+    @Test
+    public void whenCheckPasswordCalledIncorrectOldPassword_ThenReturnFalse(){
+        // Assert
+        Assertions.assertEquals(false, userService.checkPassword(user, "wrongPassword"));
+    }
+
+    @Test
+    public void whenChangePasswordCalled_ThenPasswordChanged(){
+        // Arrange
+        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+
+        // Act
+        userService.changePassword(user, "newPassword");
+
+        // Assert
+        assertThat(user.getPassword()).isEqualTo("encodedNewPassword");
     }
 }
