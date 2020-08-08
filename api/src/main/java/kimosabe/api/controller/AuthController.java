@@ -35,7 +35,6 @@ public class AuthController {
         Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(auth);
-        session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
         return new ResponseEntity<String>(HttpStatus.OK);
     }
 
@@ -51,11 +50,6 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
         }
         return new ResponseEntity<String>(HttpStatus.OK);
-    }
-
-    @GetMapping
-    public ResponseEntity<?> index(HttpSession session) {
-        return ResponseEntity.status(HttpStatus.OK).body(SecurityContextHolder.getContext());
     }
 
     @PostMapping("/logout")

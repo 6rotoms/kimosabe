@@ -1,22 +1,21 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from 'react';
+import { Link } from 'gatsby';
+import { useSelector } from 'react-redux';
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+import Layout from '../components/layout';
+import SEO from '../components/seo';
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link> <br />
-    <Link to="/using-typescript/">Go to `&quot;`Using TypeScript`&quot`</Link>
-  </Layout>
-)
+const IndexPage = () => {
 
-export default IndexPage
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  return (
+    <Layout>
+      <SEO title="Home" />
+      <h1>Header</h1>
+      <p>{loggedIn ? 'Welcome!' : 'Kimosabe placeholder'}</p>
+      <Link to="/login/">Temp Login Link</Link> <br />
+    </Layout>
+  );
+};
+
+export default IndexPage;
