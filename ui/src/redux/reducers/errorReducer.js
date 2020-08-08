@@ -6,11 +6,12 @@ export const initialState = {
 
 function errorReducer(state = initialState, action) {
   switch (action.type) {
-    case LOGIN_FAILED:
+    case LOGIN_FAILED: {
       return {
         ...state,
         loginError: action.errorMessage,
       };
+    }
     case LOGIN_SUCCESS:
       return {
         ...state,

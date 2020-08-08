@@ -1,13 +1,18 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import fetchMock from 'fetch-mock';
 
 import * as actions from '../../../src/redux/actions/authActions';
 import * as types from '../../../src/constants/actions';
 import { initialState as initialAuthState } from '../../../src/redux/reducers/authReducer';
 import { initialState as initialErrorState } from '../../../src/redux/reducers/errorReducer';
 import { navigate } from '../../__mocks__/gatsby';
-import { LOGIN_ERROR_MESSAGES } from '../../../src/constants';
+import { LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../../../src/constants';
+import { login, logout } from '../../../src/services/authService';
+
+jest.mock('../../../src/services/authService', () => ({
+  login: jest.fn(),
+  logout: jest.fn(),
+}));
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -19,8 +24,9 @@ describe('redux/actions/authActions.js', () => {
   });
 
   afterEach(() => {
-    fetchMock.restore();
+    jest.clearAllMocks();
   });
+
   describe('when login requested', () => {
     describe('and request has no error', () => {
       describe('and request returns no error', () => {
@@ -30,7 +36,7 @@ describe('redux/actions/authActions.js', () => {
           const response = {
             status: 200,
           };
-          fetchMock.post(`${process.env.GATSBY_API_URL}/auth/login`, response);
+          login.mockReturnValueOnce(response);
           expectedActions = [
             { type: types.LOGIN_REQUEST },
             { type: types.LOGIN_SUCCESS },
@@ -59,8 +65,9 @@ describe('redux/actions/authActions.js', () => {
           // Arrange
           const response = {
             status: 403,
+            error: LOGIN_ERROR_MESSAGES[403],
           };
-          fetchMock.post(`${process.env.GATSBY_API_URL}/auth/login`, response);
+          login.mockReturnValueOnce(response);
           expectedActions = [
             { type: types.LOGIN_REQUEST },
             {
@@ -86,8 +93,9 @@ describe('redux/actions/authActions.js', () => {
           // Arrange
           const response = {
             status: 500,
+            error: LOGIN_ERROR_MESSAGES[500],
           };
-          fetchMock.post(`${process.env.GATSBY_API_URL}/auth/login`, response);
+          login.mockReturnValueOnce(response);
           expectedActions = [
             { type: types.LOGIN_REQUEST },
             {
@@ -113,8 +121,9 @@ describe('redux/actions/authActions.js', () => {
           // Arrange
           const response = {
             status: 501,
+            error: LOGIN_ERROR_MESSAGES.UNDEFINED,
           };
-          fetchMock.post(`${process.env.GATSBY_API_URL}/auth/login`, response);
+          login.mockReturnValueOnce(response);
           expectedActions = [
             { type: types.LOGIN_REQUEST },
             {
@@ -134,29 +143,6 @@ describe('redux/actions/authActions.js', () => {
         });
       });
     });
-    describe('and request has error', () => {
-      let expectedActions;
-      beforeEach(async () => {
-        // Arrange
-        fetchMock.post(`${process.env.GATSBY_API_URL}/auth/login`, () => {
-          throw new Error('error thrown');
-        });
-        expectedActions = [
-          { type: types.LOGIN_REQUEST },
-          {
-            type: types.LOGIN_FAILED,
-            errorMessage: LOGIN_ERROR_MESSAGES.UNDEFINED,
-          },
-        ];
-
-        // Act
-        await store.dispatch(actions.loginUser({ username: '', password: '' }));
-      });
-
-      test('then LOGIN_FAILED should be dispatched', () => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
-    });
   });
 
   describe('when logout requested', () => {
@@ -168,7 +154,7 @@ describe('redux/actions/authActions.js', () => {
           const response = {
             status: 200,
           };
-          fetchMock.post(`${process.env.GATSBY_API_URL}/auth/logout`, response);
+          logout.mockReturnValueOnce(response);
           expectedActions = [
             { type: types.LOGOUT_REQUEST },
             { type: types.LOGOUT_SUCCESS },
@@ -187,9 +173,10 @@ describe('redux/actions/authActions.js', () => {
         beforeEach(async () => {
           // Arrange
           const response = {
-            status: 400,
+            status: 500,
+            error: LOGOUT_ERROR_MESSAGES[500],
           };
-          fetchMock.post(`${process.env.GATSBY_API_URL}/auth/logout`, response);
+          logout.mockReturnValueOnce(response);
           expectedActions = [
             { type: types.LOGOUT_REQUEST },
             { type: types.LOGOUT_FAILED },
@@ -202,26 +189,6 @@ describe('redux/actions/authActions.js', () => {
         test('then LOGOUT_FAILED should be dispatched', () => {
           expect(store.getActions()).toEqual(expectedActions);
         });
-      });
-    });
-    describe('and request has error', () => {
-      let expectedActions;
-      beforeEach(async () => {
-        // Arrange
-        fetchMock.post(`${process.env.GATSBY_API_URL}/auth/logout`, () => {
-          throw new Error('error thrown');
-        });
-        expectedActions = [
-          { type: types.LOGOUT_REQUEST },
-          { type: types.LOGOUT_FAILED },
-        ];
-
-        // Act
-        await store.dispatch(actions.logoutUser());
-      });
-
-      test('then LOGOUT_FAILED should be dispatched', () => {
-        expect(store.getActions()).toEqual(expectedActions);
       });
     });
   });

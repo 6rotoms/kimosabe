@@ -12,7 +12,6 @@ const LoginPage = () => {
   const loginError = useSelector((state) => state.errors.loginError);
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
-
   return (
     <Layout>
       <SEO title="Home" />
@@ -32,8 +31,12 @@ const LoginPage = () => {
           data-testid="password-field"
           onChange={(event) => setPassword(event.target.value)}
         />
-        <input type="submit" value="Login" />
-        <span>{loginError}</span>
+        <input
+          data-testid="login-submit-button"
+          type="submit"
+          value="Login"
+        />
+        <span data-testid="error-span">{loginError}</span>
         {isLoading ? <span>Loading...</span> : null }
       </form>
     </Layout>

@@ -2,7 +2,7 @@
 import React from 'react';
 import { render as rtlRender } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { store } from '../src/redux/store';
+import { makeStore } from '../src/redux/store';
 
 const TestProvider = ({
   store,
@@ -13,6 +13,7 @@ function render(ui, { store, ...otherOpts }) {
   return rtlRender(<TestProvider store={store}>{ui}</TestProvider>, otherOpts);
 }
 export function makeTestStore() {
+  const store = makeStore();
   const origDispatch = store.dispatch;
   store.dispatch = jest.fn(origDispatch);
   return store;
