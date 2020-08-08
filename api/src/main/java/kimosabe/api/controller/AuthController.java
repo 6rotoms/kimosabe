@@ -52,11 +52,6 @@ public class AuthController {
         return new ResponseEntity<String>(HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<?> index(HttpSession session) {
-        return ResponseEntity.status(HttpStatus.OK).body(SecurityContextHolder.getContext());
-    }
-
     @PostMapping("/logout")
     public void logout(HttpSession session) {
         session.invalidate();
