@@ -1,6 +1,5 @@
 package kimosabe.api.service;
 
-import kimosabe.api.exceptions.IncorrectPasswordException;
 import kimosabe.api.exceptions.MissingDatabaseEntryException;
 import kimosabe.api.exceptions.UsernameTakenException;
 import kimosabe.api.model.Role;
@@ -10,7 +9,6 @@ import kimosabe.api.repository.RoleRepository;
 import kimosabe.api.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,10 +18,10 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

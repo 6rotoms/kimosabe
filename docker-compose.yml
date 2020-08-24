@@ -12,6 +12,10 @@ services:
 
   redis:
     restart: always
-    image: redis:6-alpine
+    image: redislabs/redisearch:latest
     ports:
       - '6379:6379'
+  populate-redis:
+    build: https://github.com/6rotoms/igdb-pdt.git
+    ports:
+      - '6400:6400'
