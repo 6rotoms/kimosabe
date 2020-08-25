@@ -1,6 +1,5 @@
 package kimosabe.api.service;
 
-import kimosabe.api.exceptions.IncorrectPasswordException;
 import kimosabe.api.exceptions.MissingDatabaseEntryException;
 import kimosabe.api.exceptions.UsernameTakenException;
 import kimosabe.api.model.Role;
@@ -9,7 +8,6 @@ import kimosabe.api.model.User;
 import kimosabe.api.repository.RoleRepository;
 import kimosabe.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
