@@ -1,5 +1,6 @@
 package kimosabe.api.controller;
 
+import kimosabe.api.exceptions.UsernameTakenException;
 import kimosabe.api.model.User;
 import kimosabe.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,9 @@ public class AuthController {
     ) {
         try {
             userService.createNewUser(new User(username, password));
+        } catch (UsernameTakenException e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.toString());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());

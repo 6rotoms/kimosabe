@@ -14,6 +14,7 @@ const IndexPage = () => {
       <h1>Header</h1>
       <p>{loggedIn ? 'Welcome!' : 'Kimosabe placeholder'}</p>
       <Link to="/login/">Temp Login Link</Link> <br />
+      <Link to="/register/">Temp Register Link</Link> <br />
     </Layout>
   );
 };
