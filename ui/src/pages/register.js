@@ -5,6 +5,7 @@ import { registerUser } from '../redux/actions';
 
 
 import '../styles/global.css';
+import '../styles/register.css';
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
@@ -41,15 +42,15 @@ const RegisterPage = () => {
           dispatch(registerUser({ username, password }));
         }
         }} className='register-form'>
-        <input type='text' value={username} onChange={(event) => setUsername(event.target.value)} placeholder='Username' className='input-field'/>
+        <input type='text' value={username} onChange={(event) => setUsername(event.target.value)} placeholder='Username' className='input-field register-form-input'/>
         <span className='error' id='error-username'></span>
         <span data-testid="error-span" className='error'>{registerError}</span>
-        <input type='password' value={password} onChange={(event) => setPassword(event.target.value)} placeholder='Password' className='input-field'/>
+        <input type='password' value={password} onChange={(event) => setPassword(event.target.value)} placeholder='Password' className='input-field register-form-input'/>
         <span className='error' id='error-password'></span>
-        <input type='password' value={cpassword} onChange={(event) => setCPassword(event.target.value)} placeholder='Confirm Password' className='input-field'/>
+        <input type='password' value={cpassword} onChange={(event) => setCPassword(event.target.value)} placeholder='Confirm Password' className='input-field register-form-input'/>
         <span className='error' id='error-compare'></span>
         {isLoading ? <span className='loading-text'>Loading...</span> : null }
-        <input type="submit" value="Register" className='input-button'/>
+        <input type="submit" value="Register" className='input-button register-form-input'/>
       </form>
     </div>);
 };

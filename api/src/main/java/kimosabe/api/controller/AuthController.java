@@ -45,7 +45,11 @@ public class AuthController {
             @RequestHeader String password
     ) {
         try {
-            userService.createNewUser(new User(username, password));
+            if (username.length() >= 3 && password.length() >= 3) {
+                userService.createNewUser(new User(username, password));
+            }else{
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid username or password");
+            }
         } catch (UsernameTakenException e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.toString());
