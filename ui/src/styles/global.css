@@ -1,8 +1,8 @@
 :root{
-    --color-1: #D08770;
-    --color-2: #BF616A;
-    --color-3: #4C566A;
-    --color-4: #2E3440;
+    --color-orange: #D08770;
+    --color-red: #BF616A;
+    --color-grey: #4C566A;
+    --color-darkgrey: #2E3440;
     --color-text: #EBE9F0;
 }
 
@@ -15,7 +15,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--color-3);
+    background-color: var(--color-grey);
     width: 100vw;
     height: 100vh;
 }
@@ -23,7 +23,7 @@
 .input-field{
     padding: 0.8rem;
     width: auto;
-    background-color: var(--color-4);
+    background-color: var(--color-darkgrey);
     color: var(--color-text);
     border: none;
     border-radius: 0.25rem;
@@ -31,7 +31,7 @@
 
 .input-button{
     color: var(--color-text);
-    background-color: var(--color-2);
+    background-color: var(--color-red);
     border: none;
     border-radius: 0.25rem;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.75);
@@ -42,7 +42,7 @@
 }
 
 .input-button:hover{
-    background-color: var(--color-1);
+    background-color: var(--color-orange);
     transition: 0.25s;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .error{
-    color: var(--color-2);
+    color: var(--color-red);
     width: 75%;
     text-align: right;
 }
