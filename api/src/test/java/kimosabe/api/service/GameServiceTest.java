@@ -34,10 +34,10 @@ public class GameServiceTest {
         List<GameSearchResult> mockedResponse = new ArrayList<>();
         mockedResponse.add(new GameSearchResult("id123","baldur's gate", "imgUrl"));
         mockedResponse.add(new GameSearchResult("id234","baldur's gate ii", "imgUrl"));
-        when(gameSearchRepository.getSearchResults("baldur")).thenReturn(mockedResponse);
+        when(gameSearchRepository.getSearchResults("baldur", 0)).thenReturn(mockedResponse);
 
         // Act
-        List<GameSearchResult> actualResponse = gameService.searchForGames("baldur");
+        List<GameSearchResult> actualResponse = gameService.searchForGames("baldur", 0);
 
         // Assert
         assertThat(actualResponse).isEqualTo(mockedResponse);

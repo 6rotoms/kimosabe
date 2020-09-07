@@ -15,7 +15,7 @@ public class GameService {
         this.gameSearchRepository = gameSearchRepository;
     }
 
-    public List<GameSearchResult> searchForGames(String searchTerm) {
-        return this.gameSearchRepository.getSearchResults(searchTerm);
+    public List<GameSearchResult> searchForGames(String searchTerm, int pageNumber) {
+        return this.gameSearchRepository.getSearchResults(searchTerm, pageNumber);
     }
 }

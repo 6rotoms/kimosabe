@@ -21,7 +21,9 @@ public class GameController {
     }
 
     @GetMapping("/search")
-    public List<GameSearchResult> results(@RequestParam("searchTerm") String searchTerm) {
-        return gameService.searchForGames(searchTerm);
+    public List<GameSearchResult> results(
+            @RequestParam("searchTerm") String searchTerm,
+            @RequestParam(value="pageNum", defaultValue = "0") Integer pageNum) {
+        return gameService.searchForGames(searchTerm, pageNum);
     }
 }
