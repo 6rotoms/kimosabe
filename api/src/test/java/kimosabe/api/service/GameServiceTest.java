@@ -1,6 +1,7 @@
 package kimosabe.api.service;
 
 import kimosabe.api.entity.GameSearchResult;
+import kimosabe.api.entity.SearchSummary;
 import kimosabe.api.repository.GameSearchRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -34,10 +35,22 @@ public class GameServiceTest {
         List<GameSearchResult> mockedResponse = new ArrayList<>();
         mockedResponse.add(new GameSearchResult("id123","baldur's gate", "imgUrl"));
         mockedResponse.add(new GameSearchResult("id234","baldur's gate ii", "imgUrl"));
-        when(gameSearchRepository.getSearchResults("baldur", 0)).thenReturn(mockedResponse);
+        when(gameSearchRepository.getSearchResultsPage("baldur", 0)).thenReturn(mockedResponse);
 
         // Act
         List<GameSearchResult> actualResponse = gameService.searchForGames("baldur", 0);
+
+        // Assert
+        assertThat(actualResponse).isEqualTo(mockedResponse);
+    }
+    @Test
+    public void whenGettingSearchSummary_ThenReturnSearchSummary() {
+        // Arrange
+        SearchSummary mockedResponse = new SearchSummary(500, "searchTerm");
+        when(gameSearchRepository.getSearchSummary("searchTerm")).thenReturn(mockedResponse);
+
+        // Act
+        SearchSummary actualResponse = gameService.getSearchSummary("searchTerm");
 
         // Assert
         assertThat(actualResponse).isEqualTo(mockedResponse);
