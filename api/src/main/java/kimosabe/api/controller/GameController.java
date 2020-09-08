@@ -28,7 +28,7 @@ public class GameController {
         return gameService.searchForGames(searchTerm, pageNum);
     }
 
-    @GetMapping("/search-info")
+    @GetMapping("/searchInfo")
     public SearchSummary results(
             @RequestParam(value="searchTerm") String searchTerm) {
         return gameService.getSearchSummary(searchTerm);
