@@ -23,7 +23,7 @@ public class GameSearchRepository {
     }
 
     public SearchSummary getSearchSummary(String searchTerm) {
-        int searchCount = conn.sync().aggregate("games", searchTerm).size();
+        long searchCount = conn.sync().search("games", searchTerm).getCount();
         return new SearchSummary(searchCount, searchTerm);
     }
 

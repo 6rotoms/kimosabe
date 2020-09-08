@@ -7,13 +7,13 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
 public class SearchSummary {
-    private int maxNumPages;
+    private long maxNumPages;
     private String searchTerm;
-    private int numSearchResults;
+    private long numSearchResults;
 
-    public SearchSummary(int numSearchResults, String searchTerm) {
+    public SearchSummary(long numSearchResults, String searchTerm) {
         this.numSearchResults = numSearchResults;
-        this.maxNumPages = (int)Math.ceil(numSearchResults / IgdbConstants.PAGE_SIZE);
+        this.maxNumPages = (long)Math.ceil(numSearchResults / IgdbConstants.PAGE_SIZE);
         this.searchTerm = searchTerm;
     }
 }
