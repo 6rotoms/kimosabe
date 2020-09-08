@@ -24,7 +24,7 @@ describe('pages/register.js', () => {
       const store = makeStore();
       // Act
       render(<RegisterPage />, {store});
-  
+
       // Assert
       expect(screen.getByTestId('rp-username').value).toBe('');
       expect(screen.getByTestId('rp-password').value).toBe('');
@@ -45,7 +45,7 @@ describe('pages/register.js', () => {
             expect(screen.getByTestId('rp-username').value).toBe('newusername');
         });
     });
-    
+
     describe('when password is changed', () => {
         test('then state should change', async () => {
             // Arrange
@@ -65,12 +65,12 @@ describe('pages/register.js', () => {
         test('then state should change', async () => {
             // Arrange
             const store = makeStore();
-    
+
             // Act
             const { findByTestId } = render(<RegisterPage />, {store});
             const field = await findByTestId('rp-cpassword');
             fireEvent.change(field, { target: { value: 'newpassword' } });
-    
+
             // Assert
             expect(screen.getByTestId('rp-cpassword').value).toBe('newpassword');
         });
@@ -82,8 +82,8 @@ describe('pages/register.js', () => {
                 // Arrange
                 const store = makeStore();
                 const response = {
-                    status: 200
-                }
+                    status: 200,
+                };
                 register.mockReturnValueOnce(response);
 
                 // Act
@@ -138,12 +138,12 @@ describe('pages/register.js', () => {
                 expect(screen.getByTestId('rp-password-error').textContent).toBe(REGISTER_ERROR_MESSAGES.PASSWORD_TOO_SHORT);
             });
         });
-        
+
         describe('password and confirm password fields do not match', () => {
             test('error should be displayed', async () => {
                 // Arrange
                 const store = makeStore();
-            
+
                 // Act
                 render(<RegisterPage/>, {store});
                 const field = screen.getByTestId('rp-password');

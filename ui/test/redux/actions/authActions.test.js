@@ -59,7 +59,7 @@ describe('redux/actions/authActions.js', () => {
           expect(navigate).toHaveBeenCalledWith('/');
         });
       });
-      
+
       describe('and request returns 403', () => {
         let expectedActions;
         beforeEach(async () => {
@@ -85,7 +85,7 @@ describe('redux/actions/authActions.js', () => {
 
         test('then REGISTER_FAILED should be dispatched', () => {
           expect(store.getActions()).toEqual(expectedActions);
-        });  
+        });
       });
 
       describe('and request returns 409', () => {
@@ -113,7 +113,7 @@ describe('redux/actions/authActions.js', () => {
 
         test('then REGISTER_FAILED should be dispatched', () => {
           expect(store.getActions()).toEqual(expectedActions);
-        });  
+        });
       });
 
       describe('and request returns 500', () => {
