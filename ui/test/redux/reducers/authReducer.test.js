@@ -11,6 +11,45 @@ describe('redux/reducers/authReducer.js', () => {
     });
   });
 
+  describe('when REGISTER_REQUEST action is called', () => {
+    test('then isLoading should be set to true', () => {
+      // Arrange
+      const action = { type: types.REGISTER_REQUEST };
+
+      // Act
+      const result = reducer(undefined, action);
+
+      // Assert
+      expect(result).toEqual({ ...initialState, isLoading: true });
+    });
+  });
+
+  describe('when REGISTER_FAILED action is called', () => {
+    test('then isLoading should be set to false', () => {
+      // Arrange
+      const action = { type: types.REGISTER_FAILED };
+
+      // Act
+      const result = reducer({ ...initialState, isLoading: true }, action);
+
+      // Assert
+      expect(result).toEqual({ ...initialState });
+    });
+  });
+
+  describe('when REGISTER_SUCCESS action is called', () => {
+    test('then isLoading should be set to false', () => {
+      // Arrange
+      const action = { type: types.REGISTER_SUCCESS };
+
+      // Act
+      const result = reducer({ ...initialState, isLoading: true }, action);
+
+      // Assert
+      expect(result).toEqual({ ...initialState });
+    });
+  });
+
   describe('when LOGIN_REQUEST action is called', () => {
     test('then isLoading should be set to true', () => {
       // Arrange

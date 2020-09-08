@@ -6,10 +6,11 @@ import * as types from '../../../src/constants/actions';
 import { initialState as initialAuthState } from '../../../src/redux/reducers/authReducer';
 import { initialState as initialErrorState } from '../../../src/redux/reducers/errorReducer';
 import { navigate } from '../../__mocks__/gatsby';
-import { LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../../../src/constants';
-import { login, logout } from '../../../src/services/authService';
+import { REGISTER_ERROR_MESSAGES, LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../../../src/constants';
+import { register, login, logout } from '../../../src/services/authService';
 
 jest.mock('../../../src/services/authService', () => ({
+  register: jest.fn(),
   login: jest.fn(),
   logout: jest.fn(),
 }));
@@ -25,6 +26,152 @@ describe('redux/actions/authActions.js', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  describe('when register requested', () => {
+    describe('and request has no error', () => {
+      describe('and request returns no error', () => {
+        let expectedActions;
+        beforeEach(async () => {
+          // Arrange
+          const response = {
+            status: 200,
+          };
+          register.mockReturnValueOnce(response);
+          expectedActions = [
+            { type: types.REGISTER_REQUEST },
+            { type: types.REGISTER_SUCCESS },
+          ];
+
+          // Act
+          await store.dispatch(
+            actions.registerUser({ username: 'user', password: 'pass' }),
+          );
+        });
+
+        test('then REGISTER_SUCCESS should be dispatched', async () => {
+          // Assert
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+
+        test('then redirect to home should occur', async () => {
+          // Assert
+          expect(navigate).toHaveBeenCalledWith('/');
+        });
+      });
+      
+      describe('and request returns 403', () => {
+        let expectedActions;
+        beforeEach(async () => {
+          // Arrange
+          const response = {
+            status: 403,
+            error: REGISTER_ERROR_MESSAGES[403],
+          };
+          register.mockReturnValueOnce(response);
+          expectedActions = [
+            { type: types.REGISTER_REQUEST },
+            {
+              type: types.REGISTER_FAILED,
+              errorMessage: REGISTER_ERROR_MESSAGES[403],
+            },
+          ];
+
+          // Act
+          await store.dispatch(
+            actions.registerUser({ username: '', password: '' }),
+          );
+        });
+
+        test('then REGISTER_FAILED should be dispatched', () => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });  
+      });
+
+      describe('and request returns 409', () => {
+        let expectedActions;
+        beforeEach(async () => {
+          // Arrange
+          const response = {
+            status: 409,
+            error: REGISTER_ERROR_MESSAGES[409],
+          };
+          register.mockReturnValueOnce(response);
+          expectedActions = [
+            { type: types.REGISTER_REQUEST },
+            {
+              type: types.REGISTER_FAILED,
+              errorMessage: REGISTER_ERROR_MESSAGES[409],
+            },
+          ];
+
+          // Act
+          await store.dispatch(
+            actions.registerUser({ username: '', password: '' }),
+          );
+        });
+
+        test('then REGISTER_FAILED should be dispatched', () => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });  
+      });
+
+      describe('and request returns 500', () => {
+        let expectedActions;
+        beforeEach(async () => {
+          // Arrange
+          const response = {
+            status: 500,
+            error: REGISTER_ERROR_MESSAGES[500],
+          };
+          register.mockReturnValueOnce(response);
+          expectedActions = [
+            { type: types.REGISTER_REQUEST },
+            {
+              type: types.REGISTER_FAILED,
+              errorMessage: REGISTER_ERROR_MESSAGES[500],
+            },
+          ];
+
+          // Act
+          await store.dispatch(
+            actions.registerUser({ username: '', password: '' }),
+          );
+        });
+
+        test('then REGISTER_FAILED should be dispatched', () => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      });
+
+      describe('and request returns unspecified', () => {
+        let expectedActions;
+        beforeEach(async () => {
+          // Arrange
+          const response = {
+            status: 501,
+            error: REGISTER_ERROR_MESSAGES.UNDEFINED,
+          };
+          register.mockReturnValueOnce(response);
+          expectedActions = [
+            { type: types.REGISTER_REQUEST },
+            {
+              type: types.REGISTER_FAILED,
+              errorMessage: REGISTER_ERROR_MESSAGES.UNDEFINED,
+            },
+          ];
+
+          // Act
+          await store.dispatch(
+            actions.registerUser({ username: '', password: '' }),
+          );
+        });
+
+        test('then REGISTER_FAILED should be dispatched', () => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      });
+    });
   });
 
   describe('when login requested', () => {

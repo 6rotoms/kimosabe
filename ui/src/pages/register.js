@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../redux/actions';
 
 import '../styles/register.css';
+import { REGISTER_ERROR_MESSAGES } from '../constants';
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
@@ -17,13 +18,13 @@ const RegisterPage = () => {
     const fieldsAreValid = () => {
       const errors = {};
       if (username.length < 3){
-        errors['username'] = 'Username should be at least 3 characters';
+        errors['username'] = REGISTER_ERROR_MESSAGES.USERNAME_TOO_SHORT;
       }
       if (password.length < 3){
-        errors['password'] = 'Password should be at least 3 characters';
+        errors['password'] = REGISTER_ERROR_MESSAGES.PASSWORD_TOO_SHORT;
       }
       if (password.localeCompare(cpassword) !== 0){
-        errors['compare'] = 'Passwords should match';
+        errors['compare'] = REGISTER_ERROR_MESSAGES.CONFIRM_PASSWORD_FAILED;
       }
       setInlineErrors(errors);
       return Object.keys(errors).length === 0;
@@ -36,14 +37,14 @@ const RegisterPage = () => {
           dispatch(registerUser({ username, password }));
         }
         }} className='register-form'>
-        <input type='text' value={username} onChange={(event) => setUsername(event.target.value)} placeholder='Username' className='input-field register-form-input'/>
-        <span className='error' id='error-username'>{inlineErrors.username || registerError }</span>
-        <input type='password' value={password} onChange={(event) => setPassword(event.target.value)} placeholder='Password' className='input-field register-form-input'/>
-        <span className='error' id='error-password'>{inlineErrors.password}</span>
-        <input type='password' value={cpassword} onChange={(event) => setCPassword(event.target.value)} placeholder='Confirm Password' className='input-field register-form-input'/>
-        <span className='error' id='error-compare'>{inlineErrors.compare}</span>
+        <input data-testid='rp-username' type='text' value={username} onChange={(event) => setUsername(event.target.value)} placeholder='Username' className='input-field register-form-input'/>
+        <span data-testid='rp-username-error' className='error' id='error-username'>{inlineErrors.username || registerError }</span>
+        <input data-testid='rp-password' type='password' value={password} onChange={(event) => setPassword(event.target.value)} placeholder='Password' className='input-field register-form-input'/>
+        <span data-testid='rp-password-error' className='error' id='error-password'>{inlineErrors.password}</span>
+        <input data-testid='rp-cpassword' type='password' value={cpassword} onChange={(event) => setCPassword(event.target.value)} placeholder='Confirm Password' className='input-field register-form-input'/>
+        <span data-testid='rp-cpassword-error' className='error' id='error-compare'>{inlineErrors.compare}</span>
         {isLoading ? <span className='loading-text'>Loading...</span> : null }
-        <input type="submit" value="Register" className='input-button register-form-input'/>
+        <input data-testid='rp-register-button' type="submit" value="Register" className='input-button register-form-input'/>
       </form>
     </div>);
 };
