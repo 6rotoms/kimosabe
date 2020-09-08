@@ -2,6 +2,9 @@ import 'cross-fetch/polyfill';
 import { navigate } from 'gatsby';
 
 import {
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILED,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
@@ -10,6 +13,26 @@ import {
   LOGOUT_FAILED,
 } from '../../constants';
 import authService from '../../../src/services/authService';
+
+export const registerUser = ({ username, password }) => {
+  return async (dispatch) => {
+    dispatch({
+      type: REGISTER_REQUEST,
+    });
+    const response = await authService.register({ username, password });
+    if (response.error) {
+      dispatch({
+        type: REGISTER_FAILED,
+        errorMessage: response.error,
+      });
+      return;
+    }
+    dispatch({
+      type: REGISTER_SUCCESS,
+    });
+    navigate('/');
+  };
+};
 
 export const loginUser = ({ username, password }) => {
   return async (dispatch) => {
