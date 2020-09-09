@@ -1,6 +1,7 @@
 package kimosabe.api.controller;
 
 import kimosabe.api.entity.GameSearchResult;
+import kimosabe.api.entity.SearchSummary;
 import kimosabe.api.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,15 @@ public class GameController {
     }
 
     @GetMapping("/search")
-    public List<GameSearchResult> results(@RequestParam("searchTerm") String searchTerm) {
-        return gameService.searchForGames(searchTerm);
+    public List<GameSearchResult> results(
+            @RequestParam(value="searchTerm") String searchTerm,
+            @RequestParam(value="pageNum", defaultValue = "0") Integer pageNum) {
+        return gameService.searchForGames(searchTerm, pageNum);
+    }
+
+    @GetMapping("/searchInfo")
+    public SearchSummary results(
+            @RequestParam(value="searchTerm") String searchTerm) {
+        return gameService.getSearchSummary(searchTerm);
     }
 }
