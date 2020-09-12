@@ -1,6 +1,6 @@
 package kimosabe.api.service;
-import kimosabe.api.entity.GameSearchResult;
 import kimosabe.api.entity.SearchSummary;
+import kimosabe.api.entity.GameSearchResponse;
 import kimosabe.api.repository.GameSearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class GameService {
         this.gameSearchRepository = gameSearchRepository;
     }
 
-    public List<GameSearchResult> searchForGames(String searchTerm, int pageNumber) {
+    public List<GameSearchResponse> searchForGames(String searchTerm, int pageNumber) {
         return this.gameSearchRepository.getSearchResultsPage(searchTerm, pageNumber);
     }
 

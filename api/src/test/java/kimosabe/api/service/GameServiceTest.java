@@ -1,7 +1,8 @@
 package kimosabe.api.service;
 
-import kimosabe.api.entity.GameSearchResult;
+import com.redislabs.lettusearch.search.Document;
 import kimosabe.api.entity.SearchSummary;
+import kimosabe.api.entity.GameSearchResponse;
 import kimosabe.api.repository.GameSearchRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -32,13 +33,25 @@ public class GameServiceTest {
     @Test
     public void whenSearchForGameWithString_ThenReturnGameResultArray() {
         // Arrange
-        List<GameSearchResult> mockedResponse = new ArrayList<>();
-        mockedResponse.add(new GameSearchResult("id123","baldur's gate", "imgUrl"));
-        mockedResponse.add(new GameSearchResult("id234","baldur's gate ii", "imgUrl"));
+        List<GameSearchResponse> mockedResponse = new ArrayList<>();
+        Document<String, String> mockDoc1 = new Document<>();
+        mockDoc1.setId("id123");
+        mockDoc1.put("name", "baldur's gate");
+        mockDoc1.put("cover", "img1");
+        mockDoc1.put("thumb", "img2");
+        mockDoc1.put("summary", "baldurs gate");
+        mockedResponse.add(new GameSearchResponse(mockDoc1));
+        Document<String, String> mockDoc2 = new Document<>();
+        mockDoc2.setId("id124");
+        mockDoc2.put("name", "baldur's gate ii");
+        mockDoc2.put("cover", "img11");
+        mockDoc2.put("thumb", "img22");
+        mockDoc2.put("summary", "baldurs gate 2");
+        mockedResponse.add(new GameSearchResponse(mockDoc2));
         when(gameSearchRepository.getSearchResultsPage("baldur", 0)).thenReturn(mockedResponse);
 
         // Act
-        List<GameSearchResult> actualResponse = gameService.searchForGames("baldur", 0);
+        List<GameSearchResponse> actualResponse = gameService.searchForGames("baldur", 0);
 
         // Assert
         assertThat(actualResponse).isEqualTo(mockedResponse);

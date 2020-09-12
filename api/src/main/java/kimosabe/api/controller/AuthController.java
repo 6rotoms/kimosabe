@@ -1,11 +1,10 @@
 package kimosabe.api.controller;
 
-import kimosabe.api.exceptions.UsernameTakenException;
+import kimosabe.api.entity.LoginDetailsRequestBody;
 import kimosabe.api.model.User;
 import kimosabe.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,39 +27,29 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(
-            @RequestHeader String username,
-            @RequestHeader String password,
+    @ResponseStatus(HttpStatus.OK)
+    public void login(
+            @RequestBody LoginDetailsRequestBody loginDetails,
             HttpSession session
     ) {
-        Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        Authentication auth = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginDetails.getUsername(), loginDetails.getPassword()));
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(auth);
-        return new ResponseEntity<String>(HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(
-            @RequestHeader String username,
-            @RequestHeader String password
+    @ResponseStatus(HttpStatus.OK)
+    public void register(
+            @RequestBody LoginDetailsRequestBody loginDetails
     ) {
-        try {
-            if (username.length() >= 3 && password.length() >= 3) {
-                userService.createNewUser(new User(username, password));
-            }else{
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid username or password");
-            }
-        } catch (UsernameTakenException e){
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
-        }
-        return new ResponseEntity<String>(HttpStatus.OK);
+        String username = loginDetails.getUsername();
+        String password = loginDetails.getPassword();
+        userService.createNewUser(new User(username, password));
     }
 
     @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.OK)
     public void logout(HttpSession session) {
         session.invalidate();
     }
