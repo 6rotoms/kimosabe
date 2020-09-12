@@ -1,9 +1,11 @@
 package kimosabe.api.config;
 
+import kimosabe.api.service.CustomUserDetailsService;
 import kimosabe.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,12 +19,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
-    private UserService userService;
+    private CustomUserDetailsService userService;
 
     @Autowired
-    public WebSecurityConfiguration(PasswordEncoder passwordEncoder, UserService userService) {
+    public WebSecurityConfig(PasswordEncoder passwordEncoder, CustomUserDetailsService userService) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
     }
@@ -45,7 +47,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/**", "/games/**").permitAll()
+                .antMatchers("/auth/**", "/games/**", "/profile/{username}").permitAll()
+                .antMatchers(HttpMethod.GET, "/groups/{groupId}", "/user/profile/{userId}").permitAll()
                 .anyRequest().authenticated();
     }
 }

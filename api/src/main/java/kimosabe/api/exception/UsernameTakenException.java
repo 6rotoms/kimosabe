@@ -1,6 +1,6 @@
-package kimosabe.api.exceptions;
+package kimosabe.api.exception;
 
-public class UsernameTakenException extends Exception {
+public class UsernameTakenException extends RuntimeException {
     public UsernameTakenException(String username) {
         super(String.format("Username %s taken", username));
     }
