@@ -5,7 +5,7 @@
     --color-red: #BF616A;
     --color-red-light: #C6747C;
     --color-grey: #4C566A;
-    --color-darkgrey: #2E3440;
+    --color-grey-dark: #2E3440;
     --color-text: #EBE9F0;
 }
 
@@ -28,7 +28,7 @@
 .input-field{
     padding: 1.25rem;
     width: auto;
-    background-color: var(--color-darkgrey);
+    background-color: var(--color-grey-dark);
     color: var(--color-text);
     border: none;
     border-radius: 0.25rem;
