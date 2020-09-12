@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
 
 import Layout from '../components/layout';
@@ -11,10 +10,7 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <h1>Header</h1>
       <p>{loggedIn ? 'Welcome!' : 'Kimosabe placeholder'}</p>
-      <Link to="/login/">Temp Login Link</Link> <br />
-      <Link to="/register/">Temp Register Link</Link> <br />
     </Layout>
   );
 };

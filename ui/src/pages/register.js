@@ -5,6 +5,9 @@ import { registerUser } from '../redux/actions';
 
 import '../styles/register.css';
 import { REGISTER_ERROR_MESSAGES } from '../constants';
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
@@ -30,7 +33,9 @@ const RegisterPage = () => {
       return Object.keys(errors).length === 0;
     };
 
-    return(<div className='main-content'>
+    return(
+    <Layout>
+      <SEO title="Home" />
       <form onSubmit={(e) => {
         e.preventDefault();
         if(fieldsAreValid()){
@@ -46,7 +51,7 @@ const RegisterPage = () => {
         {isLoading ? <span className='loading-text'>Loading...</span> : null }
         <input data-testid='rp-register-button' type="submit" value="Register" className='input-button register-form-input'/>
       </form>
-    </div>);
+    </Layout>);
 };
 
 export default RegisterPage;

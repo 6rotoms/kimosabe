@@ -1,0 +1,40 @@
+.header-container{
+    display: flex;
+    align-items: center;
+    background-color: var(--color-orange);
+    height: 7.5%;
+}
+
+.header-title{
+    display: flex;
+    width: 50%;
+    margin: 1rem;
+}
+
+.header-title__text{
+    width: 40%;
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 2.5rem;
+}
+
+.header-title__text:focus{
+    outline: none;
+}
+
+.header-title__search{
+    width: 150%;
+}
+
+
+.header-login{
+    display: flex;
+    justify-content: right;
+    width: 50%;
+    margin: 1rem;
+}
+
+.header-login__button{
+    font-weight: bold;
+    min-width: auto;   
+}
