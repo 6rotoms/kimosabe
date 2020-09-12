@@ -32,6 +32,7 @@ const LoginPage = () => {
         />
         <input
           value={password}
+          type='password'
           data-testid="password-field"
           onChange={(event) => setPassword(event.target.value)}
           placeholder='Password'

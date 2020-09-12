@@ -35,9 +35,6 @@
 }
 
 .header-login__button{
+    font-weight: bold;
     min-width: auto;   
-}
-
-.header-login__button:hover{
-    background-color: var(--color-red);
 }
