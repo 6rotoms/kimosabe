@@ -1,11 +1,13 @@
 package kimosabe.api.service;
 
-import kimosabe.api.exceptions.MissingDatabaseEntryException;
-import kimosabe.api.exceptions.UsernameTakenException;
+import kimosabe.api.exception.MissingDatabaseEntryException;
+import kimosabe.api.exception.MissingRoleException;
+import kimosabe.api.exception.UsernameTakenException;
 import kimosabe.api.model.Role;
 import kimosabe.api.model.RoleName;
 import kimosabe.api.model.User;
 import kimosabe.api.repository.RoleRepository;
+import kimosabe.api.repository.UserRelationshipRepository;
 import kimosabe.api.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -32,6 +34,8 @@ public class UserServiceTest {
     PasswordEncoder passwordEncoder;
     @Mock
     RoleRepository roleRepository;
+    @Mock
+    UserRelationshipRepository relationshipRepository;
     @InjectMocks
     UserService userService;
 
@@ -88,14 +92,15 @@ public class UserServiceTest {
 
         // Act
         // Assert
-        Assertions.assertThrows(MissingDatabaseEntryException.class, () -> userService.createNewUser(user));
+        Assertions.assertThrows(MissingRoleException.class, () -> userService.createNewUser(user));
     }
 
     @Test
-    public void whenLoadUserByUsernameCalledInvalid_ThenThrowException() {
+    public void whenGetUserByUsernameCalledInvalid_ThenThrowException() {
         // Act
+        when(roleRepository.findByName(RoleName.ROLE_USER)).thenReturn(Optional.empty());
         // Assert
-        Assertions.assertThrows(UsernameNotFoundException.class, () -> userService.loadUserByUsername("username"));
+        Assertions.assertThrows(MissingDatabaseEntryException.class, () -> userService.getUserByUsername("username"));
     }
 
     @Test

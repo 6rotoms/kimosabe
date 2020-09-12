@@ -12,9 +12,12 @@ const authService = {
       const response = await fetch(`${process.env.GATSBY_API_URL}/auth/register`, {
         method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           username,
           password,
-        },
+        }),
       });
       if (response.status !== 200) {
         return {
@@ -36,9 +39,12 @@ const authService = {
       const response = await fetch(`${process.env.GATSBY_API_URL}/auth/login`, {
         method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           username,
           password,
-        },
+        }),
       });
       if (response.status !== 200) {
         return {
