@@ -17,10 +17,10 @@ public class GameService {
     }
 
     public List<GameSearchResponse> searchForGames(String searchTerm, int pageNumber) {
-        return this.gameSearchRepository.getSearchResultsPage(searchTerm, pageNumber);
+        return gameSearchRepository.getSearchResultsPage(searchTerm, pageNumber);
     }
 
     public SearchSummary getSearchSummary(String searchTerm) {
-        return this.gameSearchRepository.getSearchSummary(searchTerm);
+        return gameSearchRepository.getSearchSummary(searchTerm);
     }
 }

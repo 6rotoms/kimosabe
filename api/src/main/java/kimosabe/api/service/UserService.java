@@ -72,8 +72,8 @@ public class UserService {
     }
 
     public void createFriendRequest(String username, FriendInviteRequestBody friendInvite) {
-        User requester = this.getUserByUsername(username);
-        User target = this.getUserByUsername(friendInvite.getFriendUsername());
+        User requester = getUserByUsername(username);
+        User target = getUserByUsername(friendInvite.getFriendUsername());
         relationshipRepository.save(new UserRelationship(requester, target, RelationshipStatus.PENDING));
     }
 
