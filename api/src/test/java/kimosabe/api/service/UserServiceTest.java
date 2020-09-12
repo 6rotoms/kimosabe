@@ -1,6 +1,7 @@
 package kimosabe.api.service;
 
 import kimosabe.api.exception.MissingDatabaseEntryException;
+import kimosabe.api.exception.MissingRoleException;
 import kimosabe.api.exception.UsernameTakenException;
 import kimosabe.api.model.Role;
 import kimosabe.api.model.RoleName;
@@ -91,14 +92,15 @@ public class UserServiceTest {
 
         // Act
         // Assert
-        Assertions.assertThrows(MissingDatabaseEntryException.class, () -> userService.createNewUser(user));
+        Assertions.assertThrows(MissingRoleException.class, () -> userService.createNewUser(user));
     }
 
     @Test
     public void whenGetUserByUsernameCalledInvalid_ThenThrowException() {
         // Act
+        when(roleRepository.findByName(RoleName.ROLE_USER)).thenReturn(Optional.empty());
         // Assert
-        Assertions.assertThrows(UsernameNotFoundException.class, () -> userService.getUserByUsername("username"));
+        Assertions.assertThrows(MissingDatabaseEntryException.class, () -> userService.getUserByUsername("username"));
     }
 
     @Test
