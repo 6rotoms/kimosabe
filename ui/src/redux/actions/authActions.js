@@ -27,10 +27,10 @@ export const registerUser = ({ username, password }) => {
       });
       return;
     }
+    history.push('/');
     dispatch({
       type: REGISTER_SUCCESS,
     });
-    history.push('/');
   };
 };
 
@@ -50,6 +50,7 @@ export const loginUser = ({ username, password }) => {
     dispatch({
       type: LOGIN_SUCCESS,
     });
+    console.log('REDIRECT');
     history.push('/');
   };
 };
