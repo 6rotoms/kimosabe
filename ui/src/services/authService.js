@@ -5,7 +5,6 @@ import { REGISTER_ERROR_MESSAGES, LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } 
 const authService = {
   register: async ({ username, password }) => {
     try {
-      console.log(process.env.REACT_APP_API_URL);
       const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
         method: 'POST',
         headers: {
@@ -24,7 +23,6 @@ const authService = {
       }
       return { status: response.status };
     } catch (error) {
-      console.log(error);
       return {
         status: 500,
         error: REGISTER_ERROR_MESSAGES.UNDEFINED,
