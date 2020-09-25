@@ -1,7 +1,7 @@
 import fetchMock from 'fetch-mock';
 
-import authService from '../../src/services/authService';
-import { LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../../src/constants';
+import authService from '../../services/authService';
+import { LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../../constants';
 
 describe('services/authService.js', () => {
   afterEach(() => {
@@ -24,7 +24,7 @@ describe('services/authService.js', () => {
 
       test('then status 200 should be returned', () => {
         // Assert
-        expect(serviceResponse).toEqual({status: 200});
+        expect(serviceResponse).toEqual({ status: 200 });
       });
     });
 
@@ -43,7 +43,7 @@ describe('services/authService.js', () => {
 
       test('then status 200 should be returned', () => {
         // Assert
-        expect(serviceResponse).toEqual({status: 403, error: LOGIN_ERROR_MESSAGES[403]});
+        expect(serviceResponse).toEqual({ status: 403, error: LOGIN_ERROR_MESSAGES[403] });
       });
     });
 
@@ -62,7 +62,7 @@ describe('services/authService.js', () => {
 
       test('then status 200 should be returned', () => {
         // Assert
-        expect(serviceResponse).toEqual({status: 500, error: LOGIN_ERROR_MESSAGES[500]});
+        expect(serviceResponse).toEqual({ status: 500, error: LOGIN_ERROR_MESSAGES[500] });
       });
     });
 
@@ -81,7 +81,10 @@ describe('services/authService.js', () => {
 
       test('then status 200 should be returned', () => {
         // Assert
-        expect(serviceResponse).toEqual({status: 501, error: LOGIN_ERROR_MESSAGES.UNDEFINED});
+        expect(serviceResponse).toEqual({
+          status: 501,
+          error: LOGIN_ERROR_MESSAGES.UNDEFINED,
+        });
       });
     });
 
@@ -99,7 +102,10 @@ describe('services/authService.js', () => {
 
       test('then status 200 should be returned', () => {
         // Assert
-        expect(serviceResponse).toEqual({status: 500, error: LOGIN_ERROR_MESSAGES.UNDEFINED});
+        expect(serviceResponse).toEqual({
+          status: 500,
+          error: LOGIN_ERROR_MESSAGES.UNDEFINED,
+        });
       });
     });
   });
@@ -120,7 +126,7 @@ describe('services/authService.js', () => {
 
       test('then status 200 should be returned', () => {
         // Assert
-        expect(serviceResponse).toEqual({status: 200});
+        expect(serviceResponse).toEqual({ status: 200 });
       });
     });
 
@@ -139,7 +145,7 @@ describe('services/authService.js', () => {
 
       test('then status 200 should be returned', () => {
         // Assert
-        expect(serviceResponse).toEqual({status: 500, error: LOGOUT_ERROR_MESSAGES[500]});
+        expect(serviceResponse).toEqual({ status: 500, error: LOGOUT_ERROR_MESSAGES[500] });
       });
     });
 
@@ -158,7 +164,10 @@ describe('services/authService.js', () => {
 
       test('then status 200 should be returned', () => {
         // Assert
-        expect(serviceResponse).toEqual({status: 501, error: LOGOUT_ERROR_MESSAGES.UNDEFINED});
+        expect(serviceResponse).toEqual({
+          status: 501,
+          error: LOGOUT_ERROR_MESSAGES.UNDEFINED,
+        });
       });
     });
 
@@ -176,7 +185,10 @@ describe('services/authService.js', () => {
 
       test('then status 200 should be returned', () => {
         // Assert
-        expect(serviceResponse).toEqual({status: 500, error: LOGOUT_ERROR_MESSAGES.UNDEFINED});
+        expect(serviceResponse).toEqual({
+          status: 500,
+          error: LOGOUT_ERROR_MESSAGES.UNDEFINED,
+        });
       });
     });
   });

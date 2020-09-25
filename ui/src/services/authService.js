@@ -1,10 +1,6 @@
 import 'cross-fetch/polyfill';
 
-import {
-  REGISTER_ERROR_MESSAGES,
-  LOGIN_ERROR_MESSAGES,
-  LOGOUT_ERROR_MESSAGES,
-} from '../constants/auth';
+import { REGISTER_ERROR_MESSAGES, LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../constants/auth';
 
 const authService = {
   register: async ({ username, password }) => {

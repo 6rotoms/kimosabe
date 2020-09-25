@@ -2,15 +2,17 @@
 import React from 'react';
 import { render as rtlRender } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { makeStore } from '../src/redux/store';
+import { BrowserRouter } from 'react-router-dom';
+import { makeStore } from '../redux/store';
 
-const TestProvider = ({
-  store,
-  children,
-}) => <Provider store={store}>{children}</Provider>;
+const TestWrapper = ({ store, children }) => (
+  <Provider store={store}>
+    <BrowserRouter>{children}</BrowserRouter>
+  </Provider>
+);
 
 function render(ui, { store, ...otherOpts }) {
-  return rtlRender(<TestProvider store={store}>{ui}</TestProvider>, otherOpts);
+  return rtlRender(<TestWrapper store={store}>{ui}</TestWrapper>, otherOpts);
 }
 export function makeTestStore() {
   const store = makeStore();
