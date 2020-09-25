@@ -15,7 +15,8 @@
     "no-array-constructor": "error",
     "no-trailing-spaces": "error",
     "react/prop-types": 0,
-    "quotes": [2, "single", { "avoidEscape": true }]
+    "quotes": [2, "single", { "avoidEscape": true }],
+    "max-len": [2, { "code": 120 }]
   },
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "plugins": ["jest"],

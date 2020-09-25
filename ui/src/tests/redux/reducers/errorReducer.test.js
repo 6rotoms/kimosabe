@@ -1,5 +1,5 @@
-import * as types from '../../../src/constants/actions';
-import reducer, { initialState } from '../../../src/redux/reducers/errorReducer';
+import * as types from '../../../constants';
+import reducer, { initialState } from '../../../redux/reducers/errorReducer';
 
 describe('redux/reducers/errorReducer.js', () => {
   describe('when undefined action is called', () => {
