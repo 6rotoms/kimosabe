@@ -1,4 +1,11 @@
-import { REGISTER_REQUEST, REGISTER_FAILED, REGISTER_SUCCESS, LOGIN_REQUEST, LOGIN_FAILED, LOGIN_SUCCESS } from '../../constants';
+import {
+  REGISTER_REQUEST,
+  REGISTER_FAILED,
+  REGISTER_SUCCESS,
+  LOGIN_REQUEST,
+  LOGIN_FAILED,
+  LOGIN_SUCCESS,
+} from '../../constants';
 
 export const initialState = {
   isLoading: false,

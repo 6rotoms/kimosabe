@@ -19,8 +19,7 @@
 
 html,
 body,
-#___gatsby,
-#gatsby-focus-wrapper {
+#root {
   height: 100%;
   overflow: hidden;
 }
@@ -104,22 +103,4 @@ h2 {
   color: var(--color-red);
   width: 75%;
   text-align: right;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: red;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-red);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-red-light);
 }

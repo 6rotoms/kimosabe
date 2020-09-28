@@ -1,30 +1,21 @@
 import React from 'react';
-import { useStaticQuery } from 'gatsby';
 
-import graphql from '../__mocks__/graphql';
 import { render, fireEvent, screen, makeTestStore, waitFor } from '../test-utils';
-import LoginPage from '../../src/pages/login';
-import { login } from '../../src/services/authService';
-import { makeStore } from '../../src/redux/store';
-import { LOGIN_ERROR_MESSAGES } from '../../src/constants/auth';
+import LoginPage from '../../pages/login';
+import { login } from '../../services/authService';
+import { makeStore } from '../../redux/store';
+import { LOGIN_ERROR_MESSAGES } from '../../constants/auth';
 
-jest.mock('../../src/services/authService', () => ({
+jest.mock('../../services/authService', () => ({
   login: jest.fn(),
 }));
-
-beforeEach(() => {
-  useStaticQuery
-    .mockImplementationOnce(graphql.layoutQuery)
-    .mockImplementationOnce(graphql.SEOQuery);
-});
-
 
 describe('pages/login.js', () => {
   it('should render', () => {
     // Arrange
     const store = makeStore();
     // Act
-    render(<LoginPage />, {store});
+    render(<LoginPage />, { store });
 
     // Assert
     expect(screen.getByTestId('username-field').value).toBe('');
@@ -33,24 +24,22 @@ describe('pages/login.js', () => {
 
   describe('when login button clicked', () => {
     test('then loginUser action creater should be called', () => {
-        // Arrange
-        const store = makeTestStore();
-        const response = {
-          status: 200,
-        };
-        login.mockReturnValueOnce(response);
-        // Act
-        render(<LoginPage />, {store});
+      // Arrange
+      const store = makeTestStore();
+      const response = {
+        status: 200,
+      };
+      login.mockReturnValueOnce(response);
+      // Act
+      render(<LoginPage />, { store });
 
-        // Assert
-        fireEvent.click(screen.getByTestId('login-submit-button'));
-        expect(store.dispatch).toHaveBeenCalledWith(expect.any(Function));
+      // Assert
+      fireEvent.click(screen.getByTestId('login-submit-button'));
+      expect(store.dispatch).toHaveBeenCalledWith(expect.any(Function));
     });
 
     describe('and login succeeds', () => {
-      beforeEach(() => {
-
-      });
+      beforeEach(() => {});
 
       test('then error should be set', async () => {
         // Arrange
@@ -61,7 +50,7 @@ describe('pages/login.js', () => {
         login.mockReturnValueOnce(response);
 
         // Act
-        render(<LoginPage />, {store});
+        render(<LoginPage />, { store });
         fireEvent.click(screen.getByTestId('login-submit-button'));
         await waitFor(() => {});
 
@@ -71,7 +60,6 @@ describe('pages/login.js', () => {
     });
 
     describe('and login fails', () => {
-
       test('then error should be set', async () => {
         // Arrange
         const store = makeStore();
@@ -82,7 +70,7 @@ describe('pages/login.js', () => {
         login.mockReturnValueOnce(response);
 
         // Act
-        const { getByText } = render(<LoginPage />, {store});
+        const { getByText } = render(<LoginPage />, { store });
         fireEvent.click(screen.getByTestId('login-submit-button'));
         await waitFor(() => {});
 
@@ -99,7 +87,7 @@ describe('pages/login.js', () => {
       const store = makeStore();
 
       // Act
-      const { findByTestId } = render(<LoginPage />, {store});
+      const { findByTestId } = render(<LoginPage />, { store });
       const field = await findByTestId('username-field');
       fireEvent.change(field, { target: { value: 'newusername' } });
 
@@ -114,7 +102,7 @@ describe('pages/login.js', () => {
       const store = makeStore();
 
       // Act
-      const { findByTestId } = render(<LoginPage />, {store});
+      const { findByTestId } = render(<LoginPage />, { store });
       const field = await findByTestId('password-field');
       fireEvent.change(field, { target: { value: 'newpassword' } });
 

@@ -1,5 +1,5 @@
 import 'cross-fetch/polyfill';
-import { navigate } from 'gatsby';
+import history from '../../history';
 
 import {
   REGISTER_REQUEST,
@@ -30,7 +30,7 @@ export const registerUser = ({ username, password }) => {
     dispatch({
       type: REGISTER_SUCCESS,
     });
-    navigate('/');
+    history.push('/');
   };
 };
 
@@ -50,7 +50,7 @@ export const loginUser = ({ username, password }) => {
     dispatch({
       type: LOGIN_SUCCESS,
     });
-    navigate('/');
+    history.push('/');
   };
 };
 
@@ -69,6 +69,6 @@ export const logoutUser = () => {
     dispatch({
       type: LOGOUT_SUCCESS,
     });
-    navigate('/');
+    history.push('/');
   };
 };

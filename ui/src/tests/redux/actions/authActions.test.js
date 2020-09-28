@@ -1,15 +1,19 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import * as actions from '../../../src/redux/actions/authActions';
-import * as types from '../../../src/constants/actions';
-import { initialState as initialAuthState } from '../../../src/redux/reducers/authReducer';
-import { initialState as initialErrorState } from '../../../src/redux/reducers/errorReducer';
-import { navigate } from '../../__mocks__/gatsby';
-import { REGISTER_ERROR_MESSAGES, LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../../../src/constants';
-import { register, login, logout } from '../../../src/services/authService';
+import * as actions from '../../../redux/actions/authActions';
+import * as types from '../../../constants/actions';
+import { initialState as initialAuthState } from '../../../redux/reducers/authReducer';
+import { initialState as initialErrorState } from '../../../redux/reducers/errorReducer';
+import { REGISTER_ERROR_MESSAGES, LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../../../constants';
+import history from '../../../history';
+import { register, login, logout } from '../../../services/authService';
 
-jest.mock('../../../src/services/authService', () => ({
+jest.mock('../../../history', () => ({
+  push: jest.fn(),
+}));
+
+jest.mock('../../../services/authService', () => ({
   register: jest.fn(),
   login: jest.fn(),
   logout: jest.fn(),
@@ -38,15 +42,10 @@ describe('redux/actions/authActions.js', () => {
             status: 200,
           };
           register.mockReturnValueOnce(response);
-          expectedActions = [
-            { type: types.REGISTER_REQUEST },
-            { type: types.REGISTER_SUCCESS },
-          ];
+          expectedActions = [{ type: types.REGISTER_REQUEST }, { type: types.REGISTER_SUCCESS }];
 
           // Act
-          await store.dispatch(
-            actions.registerUser({ username: 'user', password: 'pass' }),
-          );
+          await store.dispatch(actions.registerUser({ username: 'user', password: 'pass' }));
         });
 
         test('then REGISTER_SUCCESS should be dispatched', async () => {
@@ -56,7 +55,7 @@ describe('redux/actions/authActions.js', () => {
 
         test('then redirect to home should occur', async () => {
           // Assert
-          expect(navigate).toHaveBeenCalledWith('/');
+          expect(history.push).toHaveBeenCalledWith('/');
         });
       });
 
@@ -78,9 +77,7 @@ describe('redux/actions/authActions.js', () => {
           ];
 
           // Act
-          await store.dispatch(
-            actions.registerUser({ username: '', password: '' }),
-          );
+          await store.dispatch(actions.registerUser({ username: '', password: '' }));
         });
 
         test('then REGISTER_FAILED should be dispatched', () => {
@@ -106,9 +103,7 @@ describe('redux/actions/authActions.js', () => {
           ];
 
           // Act
-          await store.dispatch(
-            actions.registerUser({ username: '', password: '' }),
-          );
+          await store.dispatch(actions.registerUser({ username: '', password: '' }));
         });
 
         test('then REGISTER_FAILED should be dispatched', () => {
@@ -134,9 +129,7 @@ describe('redux/actions/authActions.js', () => {
           ];
 
           // Act
-          await store.dispatch(
-            actions.registerUser({ username: '', password: '' }),
-          );
+          await store.dispatch(actions.registerUser({ username: '', password: '' }));
         });
 
         test('then REGISTER_FAILED should be dispatched', () => {
@@ -162,9 +155,7 @@ describe('redux/actions/authActions.js', () => {
           ];
 
           // Act
-          await store.dispatch(
-            actions.registerUser({ username: '', password: '' }),
-          );
+          await store.dispatch(actions.registerUser({ username: '', password: '' }));
         });
 
         test('then REGISTER_FAILED should be dispatched', () => {
@@ -184,15 +175,10 @@ describe('redux/actions/authActions.js', () => {
             status: 200,
           };
           login.mockReturnValueOnce(response);
-          expectedActions = [
-            { type: types.LOGIN_REQUEST },
-            { type: types.LOGIN_SUCCESS },
-          ];
+          expectedActions = [{ type: types.LOGIN_REQUEST }, { type: types.LOGIN_SUCCESS }];
 
           // Act
-          await store.dispatch(
-            actions.loginUser({ username: '', password: '' }),
-          );
+          await store.dispatch(actions.loginUser({ username: '', password: '' }));
         });
 
         test('then LOGIN_SUCCESS should be dispatched', async () => {
@@ -202,7 +188,7 @@ describe('redux/actions/authActions.js', () => {
 
         test('then redirect to home should occur', async () => {
           // Assert
-          expect(navigate).toHaveBeenCalledWith('/');
+          expect(history.push).toHaveBeenCalledWith('/');
         });
       });
 
@@ -224,9 +210,7 @@ describe('redux/actions/authActions.js', () => {
           ];
 
           // Act
-          await store.dispatch(
-            actions.loginUser({ username: '', password: '' }),
-          );
+          await store.dispatch(actions.loginUser({ username: '', password: '' }));
         });
 
         test('then LOGIN_FAILED should be dispatched', () => {
@@ -252,9 +236,7 @@ describe('redux/actions/authActions.js', () => {
           ];
 
           // Act
-          await store.dispatch(
-            actions.loginUser({ username: '', password: '' }),
-          );
+          await store.dispatch(actions.loginUser({ username: '', password: '' }));
         });
 
         test('then LOGIN_FAILED should be dispatched', () => {
@@ -280,9 +262,7 @@ describe('redux/actions/authActions.js', () => {
           ];
 
           // Act
-          await store.dispatch(
-            actions.loginUser({ username: '', password: '' }),
-          );
+          await store.dispatch(actions.loginUser({ username: '', password: '' }));
         });
 
         test('then LOGIN_FAILED should be dispatched', () => {
@@ -302,10 +282,7 @@ describe('redux/actions/authActions.js', () => {
             status: 200,
           };
           logout.mockReturnValueOnce(response);
-          expectedActions = [
-            { type: types.LOGOUT_REQUEST },
-            { type: types.LOGOUT_SUCCESS },
-          ];
+          expectedActions = [{ type: types.LOGOUT_REQUEST }, { type: types.LOGOUT_SUCCESS }];
 
           // Act
           await store.dispatch(actions.logoutUser());
@@ -324,10 +301,7 @@ describe('redux/actions/authActions.js', () => {
             error: LOGOUT_ERROR_MESSAGES[500],
           };
           logout.mockReturnValueOnce(response);
-          expectedActions = [
-            { type: types.LOGOUT_REQUEST },
-            { type: types.LOGOUT_FAILED },
-          ];
+          expectedActions = [{ type: types.LOGOUT_REQUEST }, { type: types.LOGOUT_FAILED }];
 
           // Act
           await store.dispatch(actions.logoutUser());

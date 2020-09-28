@@ -1,15 +1,11 @@
 import 'cross-fetch/polyfill';
 
-import {
-  REGISTER_ERROR_MESSAGES,
-  LOGIN_ERROR_MESSAGES,
-  LOGOUT_ERROR_MESSAGES,
-} from '../constants/auth';
+import { REGISTER_ERROR_MESSAGES, LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../constants/auth';
 
 const authService = {
   register: async ({ username, password }) => {
     try {
-      const response = await fetch(`${process.env.GATSBY_API_URL}/auth/register`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +32,7 @@ const authService = {
 
   login: async ({ username, password }) => {
     try {
-      const response = await fetch(`${process.env.GATSBY_API_URL}/auth/login`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -63,7 +59,7 @@ const authService = {
 
   logout: async () => {
     try {
-      const response = await fetch(`${process.env.GATSBY_API_URL}/auth/logout`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/logout`, {
         method: 'POST',
       });
       if (response.status !== 200) {
