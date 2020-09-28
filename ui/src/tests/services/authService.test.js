@@ -16,7 +16,7 @@ describe('services/authService.js', () => {
         const response = {
           status: 200,
         };
-        fetchMock.post(`${process.env.GATSBY_API_URL}/auth/login`, response);
+        fetchMock.post(`${process.env.REACT_APP_API_URL}/auth/login`, response);
 
         // Act
         serviceResponse = await authService.login({ username: '', password: '' });
@@ -35,7 +35,7 @@ describe('services/authService.js', () => {
         const response = {
           status: 403,
         };
-        fetchMock.post(`${process.env.GATSBY_API_URL}/auth/login`, response);
+        fetchMock.post(`${process.env.REACT_APP_API_URL}/auth/login`, response);
 
         // Act
         serviceResponse = await authService.login({ username: '', password: '' });
@@ -54,7 +54,7 @@ describe('services/authService.js', () => {
         const response = {
           status: 500,
         };
-        fetchMock.post(`${process.env.GATSBY_API_URL}/auth/login`, response);
+        fetchMock.post(`${process.env.REACT_APP_API_URL}/auth/login`, response);
 
         // Act
         serviceResponse = await authService.login({ username: '', password: '' });
@@ -73,7 +73,7 @@ describe('services/authService.js', () => {
         const response = {
           status: 501,
         };
-        fetchMock.post(`${process.env.GATSBY_API_URL}/auth/login`, response);
+        fetchMock.post(`${process.env.REACT_APP_API_URL}/auth/login`, response);
 
         // Act
         serviceResponse = await authService.login({ username: '', password: '' });
@@ -92,7 +92,7 @@ describe('services/authService.js', () => {
       let serviceResponse;
       beforeEach(async () => {
         // Arrange
-        fetchMock.post(`${process.env.GATSBY_API_URL}/auth/login`, () => {
+        fetchMock.post(`${process.env.REACT_APP_API_URL}/auth/login`, () => {
           throw new Error('error thrown');
         });
 
@@ -118,7 +118,7 @@ describe('services/authService.js', () => {
         const response = {
           status: 200,
         };
-        fetchMock.post(`${process.env.GATSBY_API_URL}/auth/logout`, response);
+        fetchMock.post(`${process.env.REACT_APP_API_URL}/auth/logout`, response);
 
         // Act
         serviceResponse = await authService.logout();
@@ -137,7 +137,7 @@ describe('services/authService.js', () => {
         const response = {
           status: 500,
         };
-        fetchMock.post(`${process.env.GATSBY_API_URL}/auth/logout`, response);
+        fetchMock.post(`${process.env.REACT_APP_API_URL}/auth/logout`, response);
 
         // Act
         serviceResponse = await authService.logout();
@@ -156,7 +156,7 @@ describe('services/authService.js', () => {
         const response = {
           status: 501,
         };
-        fetchMock.post(`${process.env.GATSBY_API_URL}/auth/logout`, response);
+        fetchMock.post(`${process.env.REACT_APP_API_URL}/auth/logout`, response);
 
         // Act
         serviceResponse = await authService.logout();
@@ -175,7 +175,7 @@ describe('services/authService.js', () => {
       let serviceResponse;
       beforeEach(async () => {
         // Arrange
-        fetchMock.post(`${process.env.GATSBY_API_URL}/auth/logout`, () => {
+        fetchMock.post(`${process.env.REACT_APP_API_URL}/auth/logout`, () => {
           throw new Error('error thrown');
         });
 
