@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/header.css';
 
-import { useDispatch } from 'react-redux';
-import { searchUpdate } from '../redux/actions';
-
 const Header = ({ siteTitle }) => {
-  const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState('');
 
   return (
     <header className="header-container">
@@ -16,9 +13,15 @@ const Header = ({ siteTitle }) => {
           {siteTitle}
         </Link>
         <input
-          onChange={e => {
+          onChange={(e) => {
             e.preventDefault();
-            dispatch(searchUpdate({ searchTerm: e.target.value }));
+            setSearchTerm(e.target.value);
+          }}
+          onKeyUp={(e) => {
+            if (e.keyCode === 13) {
+              e.preventDefault();
+              window.location.href = `${window.location.origin}/search?term=${searchTerm}&page=0`;
+            }
           }}
           type="text"
           placeholder="Look For Group..."

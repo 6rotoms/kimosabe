@@ -1,11 +1,17 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { LoginPage, RegisterPage, HomePage, SearchPage } from './pages';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import Header from './components/header';
-
+import { HomePage, LoginPage, RegisterPage, SearchPage } from './pages';
 import './styles/global.css';
 
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 function App() {
+  const query = useQuery();
+
   return (
     <div className="layout">
       <Header siteTitle="kimosabe" />
@@ -20,8 +26,8 @@ function App() {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route exact path="/search">
-            <SearchPage />
+          <Route path="/search">
+            <SearchPage searchTerm={query.get('term')} pageNum={query.get('page')}/>
           </Route>
         </Switch>
       </main>
