@@ -26,9 +26,9 @@ services:
 - name: db
   image: postgres:13-alpine
   environment:
-  - POSTGRES_DB=kimosabe
-  - POSTGRES_USER=postgres
-  - POSTGRES_PASSWORD=admin
+    POSTGRES_DB: kimosabe
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: admin
 
 - name: redis
   image: redislabs/redisearch:latest
