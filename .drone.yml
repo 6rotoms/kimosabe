@@ -36,10 +36,11 @@ services:
 - name: populate-redis
   image: plugins/docker
   insecure: true
+  privileged: true
   environment:
     REDIS_HOST: redis
   settings:
-    repo: https://github.com/6rotoms/igdb-pdt.git
+    repo: 6rotoms/igdb-pdt
 
 trigger:
   branch:
