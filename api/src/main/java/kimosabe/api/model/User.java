@@ -1,6 +1,5 @@
 package kimosabe.api.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,13 +34,13 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(mappedBy = "members")
+    @ManyToMany(mappedBy = "members", fetch = FetchType.LAZY)
     private Set<Group> groups = new HashSet<>();
 
-    @OneToMany(mappedBy = "requester")
+    @OneToMany(mappedBy = "requester", fetch = FetchType.LAZY)
     private Set<UserRelationship> requestedRelationships;
 
-    @OneToMany(mappedBy = "target")
+    @OneToMany(mappedBy = "target", fetch = FetchType.LAZY)
     private Set<UserRelationship> targetRelationships;
 
     public User(String username, String password) {
@@ -49,13 +49,13 @@ public class User implements UserDetails {
         this.id = UUID.randomUUID();
     }
 
+    public void addRole(Role newRole) {
+        roles.add(newRole);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName().toString())).collect(Collectors.toList());
-    }
-
-    public void addRole(Role newRole) {
-        roles.add(newRole);
     }
 
     @Override
@@ -96,5 +96,19 @@ public class User implements UserDetails {
 
     public Set<User> getFriends() {
         return getUsersOnRelationshipStatus(RelationshipStatus.ACCEPTED);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof User) {
+            User other = (User) obj;
+            return this.username.equals(other.username);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return username != null ? username.hashCode() : 0;
     }
 }

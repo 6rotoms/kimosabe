@@ -21,4 +21,17 @@ public class Role implements Serializable {
     public Role(RoleName name) {
         this.name = name;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Role){
+            Role toCompare = (Role) obj;
+            return this.name.equals(toCompare.name);
+        }
+        return false;
+    }
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }
