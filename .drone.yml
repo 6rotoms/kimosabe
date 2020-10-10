@@ -12,7 +12,7 @@ steps:
   commands:
   - cd ./api
   - ./mvnw clean install
-  - ./mvnw test -P test
+  - ./mvnw test -P it
 
 - name: test-frontend
   image: mhart/alpine-node:12
@@ -35,6 +35,9 @@ services:
 
 - name: populate-redis
   image: plugins/docker
+  insecure: true
+  environment:
+    REDIS_HOST: redis
   settings:
     repo: https://github.com/6rotoms/igdb-pdt.git
 
