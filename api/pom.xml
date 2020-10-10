@@ -101,10 +101,26 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>it</id>
+			<properties>
+				<profileActive>it</profileActive>
+				<it.skip>false</it.skip>
+				<maven.test.skip>false</maven.test.skip>
+			</properties>
+		</profile>
+		<profile>
 			<id>test</id>
 			<properties>
-				<profileActive>test</profileActive>
+				<profileActive>it</profileActive>
 				<it.skip>true</it.skip>
+				<maven.test.skip>false</maven.test.skip>
+			</properties>
+		</profile>
+		<profile>
+			<id>localit</id>
+			<properties>
+				<profileActive>it</profileActive>
+				<it.skip>false</it.skip>
 				<maven.test.skip>false</maven.test.skip>
 			</properties>
 		</profile>
