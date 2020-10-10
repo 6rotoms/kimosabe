@@ -34,7 +34,7 @@ services:
   image: redislabs/redisearch:latest
 
 - name: populate-redis
-  image: 6rotom/igdb-pdt:v0.3.2
+  image: 6rotom/igdb-pdt
   environment:
     REDIS_HOST: redis
 
