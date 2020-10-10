@@ -34,12 +34,9 @@ services:
   image: redislabs/redisearch:latest
 
 - name: populate-redis
-  image: plugins/docker
-  insecure: true
+  image: 6rotom/igdb-pdt:v0.3.2
   environment:
     REDIS_HOST: redis
-  settings:
-    repo: 6rotoms/igdb-pdt
 
 trigger:
   branch:

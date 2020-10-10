@@ -17,6 +17,6 @@ services:
       - '6379:6379'
   populate-redis:
     restart: always
-    build: https://github.com/6rotoms/igdb-pdt.git
+    image: 6rotom/igdb-pdt:v0.3.2
     ports:
       - '6400:6400'
