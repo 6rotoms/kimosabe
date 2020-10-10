@@ -36,7 +36,6 @@ services:
 - name: populate-redis
   image: plugins/docker
   insecure: true
-  privileged: true
   environment:
     REDIS_HOST: redis
   settings:
