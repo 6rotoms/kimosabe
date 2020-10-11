@@ -5,7 +5,7 @@ import kimosabe.api.entity.FriendAnswerRequestBody;
 import kimosabe.api.entity.FriendInviteRequestBody;
 import kimosabe.api.exception.MissingDatabaseEntryException;
 import kimosabe.api.exception.MissingRoleException;
-import kimosabe.api.exception.UsernameTakenException;
+import kimosabe.api.exception.EntityExistsException;
 import kimosabe.api.model.*;
 import kimosabe.api.repository.RoleRepository;
 import kimosabe.api.repository.UserRelationshipRepository;
@@ -13,10 +13,13 @@ import kimosabe.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Service
+@Transactional
 public class UserService {
     private PasswordEncoder passwordEncoder;
     private RoleRepository roleRepository;
@@ -49,7 +52,7 @@ public class UserService {
             throw new BadRequestException("Username and password must be longer than 3 characters");
         }
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new UsernameTakenException(user.getUsername());
+            throw new EntityExistsException("User with username " + user.getUsername());
         }
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
@@ -66,6 +69,9 @@ public class UserService {
     }
 
     public void changePassword(User user, String password) {
+        if (password.length() < 3) {
+            throw new BadRequestException("Password must be longer than 3 characters");
+        }
         String encodedPassword = passwordEncoder.encode(password);
         user.setPassword(encodedPassword);
         userRepository.save(user);
