@@ -22,7 +22,11 @@ const SearchPage = ({ searchTerm, pageNum }) => {
     updateGameComponents();
   });
 
-  return <div className="search">{gameComponents}</div>;
+  return (
+    <div data-testid="search-results" className="search">
+      {gameComponents}
+    </div>
+  );
 };
 
 export default SearchPage;

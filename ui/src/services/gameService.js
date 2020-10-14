@@ -24,7 +24,7 @@ const gameService = {
     } catch (error) {
       return {
         status: 500,
-        error: SEARCH_ERROR_MESSAGES.UNDEFINED,
+        error: SEARCH_ERROR_MESSAGES[500],
       };
     }
   },

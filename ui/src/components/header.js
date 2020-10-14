@@ -13,6 +13,7 @@ const Header = ({ siteTitle }) => {
           {siteTitle}
         </Link>
         <input
+          data-testid="header-search"
           onChange={(e) => {
             e.preventDefault();
             setSearchTerm(e.target.value);
@@ -20,7 +21,7 @@ const Header = ({ siteTitle }) => {
           onKeyUp={(e) => {
             if (e.keyCode === 13) {
               e.preventDefault();
-              window.location.href = `${window.location.origin}/search?term=${searchTerm}&page=0`;
+              window.location.assign(`${window.location.origin}/search?term=${searchTerm}&page=0`);
             }
           }}
           type="text"
