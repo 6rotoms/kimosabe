@@ -21,7 +21,7 @@ public class Group implements Serializable {
     @Column(name="name")
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_groups", joinColumns = @JoinColumn(name = "groups_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     Set<User> members = new HashSet<>();
 
@@ -32,5 +32,19 @@ public class Group implements Serializable {
 
     public void addUser(User user) {
         members.add(user);
+    }
+
+    @Override
+    public int hashCode() {
+        return groupId.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Group) {
+            Group other = (Group) obj;
+            return groupId.equals(other.groupId);
+        }
+        return false;
     }
 }

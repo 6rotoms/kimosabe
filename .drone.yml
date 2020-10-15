@@ -12,7 +12,7 @@ steps:
   commands:
   - cd ./api
   - ./mvnw clean install
-  - ./mvnw test -P test
+  - ./mvnw test -P it
 
 - name: test-frontend
   image: mhart/alpine-node:12
@@ -21,6 +21,22 @@ steps:
   - npm install
   - npm run-script lint
   - npm test
+
+services:
+- name: db
+  image: postgres:13-alpine
+  environment:
+    POSTGRES_DB: kimosabe
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: admin
+
+- name: redis
+  image: redislabs/redisearch:latest
+
+- name: populate-redis
+  image: 6rotom/igdb-pdt
+  environment:
+    REDIS_HOST: redis
 
 trigger:
   branch:
