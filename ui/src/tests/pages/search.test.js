@@ -4,21 +4,15 @@ import { gameSearch } from '../../services/gameService';
 import Header from '../../components/header';
 import { makeStore } from '../../redux/store';
 import SearchPage from '../../pages/search';
+import history from '../../history';
 
 jest.mock('../../services/gameService', () => ({
   gameSearch: jest.fn(),
 }));
 
+jest.spyOn(history, 'push');
+
 describe('components/header.js', () => {
-  beforeAll(() => {
-    delete window.location;
-    window.location = { assign: jest.fn() };
-  });
-
-  afterAll(() => {
-    window.location = location;
-  });
-
   it('should render', () => {
     // Arrange
     const store = makeStore();
@@ -56,7 +50,7 @@ describe('components/header.js', () => {
       fireEvent.keyUp(field, { key: 'Enter', code: 'Enter', keyCode: 13 });
 
       // Assert
-      expect(window.location.assign).toHaveBeenCalled();
+      expect(history.push).toHaveBeenCalled();
     });
   });
 });
