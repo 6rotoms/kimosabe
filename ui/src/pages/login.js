@@ -42,7 +42,7 @@ const LoginPage = () => {
         data-testid="login-submit-button"
         type="submit"
         value="Login"
-        className="input-button register-form-input"
+        className="input-button bgh-red register-form-input"
       />
       <p>
         Not registered?{' '}

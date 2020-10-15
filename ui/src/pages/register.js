@@ -78,7 +78,7 @@ const RegisterPage = () => {
         data-testid="rp-register-button"
         type="submit"
         value="Register"
-        className="input-button register-form-input"
+        className="input-button bgh-red register-form-input"
       />
     </form>
   );

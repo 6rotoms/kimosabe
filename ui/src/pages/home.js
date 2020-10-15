@@ -3,7 +3,11 @@ import { useSelector } from 'react-redux';
 
 const HomePage = () => {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
-  return <p>{loggedIn ? 'Welcome!' : 'Kimosabe placeholder'}</p>;
+  return (
+    <div>
+      <p>{loggedIn ? 'Welcome!' : 'Kimosabe placeholder'}</p>
+    </div>
+  );
 };
 
 export default HomePage;
