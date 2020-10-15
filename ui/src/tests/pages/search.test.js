@@ -1,7 +1,13 @@
 import React from 'react';
 import { render, fireEvent, screen } from '../test-utils';
+import { gameSearch } from '../../services/gameService';
 import Header from '../../components/header';
 import { makeStore } from '../../redux/store';
+import SearchPage from '../../pages/search';
+
+jest.mock('../../services/gameService', () => ({
+  gameSearch: jest.fn(),
+}));
 
 describe('components/header.js', () => {
   beforeAll(() => {
@@ -52,5 +58,30 @@ describe('components/header.js', () => {
       // Assert
       expect(window.location.assign).toHaveBeenCalled();
     });
+  });
+});
+
+describe('pages/search.js', () => {
+  it('should render and display search results', async () => {
+    // Arrange
+    const store = makeStore();
+    const response = {
+      status: 200,
+      body: [
+        {
+          coverUrl: 'test cover',
+          id: 'baldurs-test-3',
+          name: 'Baldurs Test 3',
+          summary: 'test summary',
+          thumbUrl: 'test thumb',
+        },
+      ],
+    };
+    gameSearch.mockReturnValueOnce(response);
+    // Act
+    const { findByTestId } = render(<SearchPage />, { store });
+    const searchResults = await findByTestId('search-results');
+    // Assert
+    expect(searchResults.children).toHaveLength(1);
   });
 });

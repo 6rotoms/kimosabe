@@ -20,7 +20,7 @@ const SearchPage = ({ searchTerm, pageNum }) => {
 
   useEffect(() => {
     updateGameComponents();
-  });
+  }, []);
 
   return (
     <div data-testid="search-results" className="search">
