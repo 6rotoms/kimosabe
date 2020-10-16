@@ -77,7 +77,7 @@ describe('redux/reducers/authReducer.js', () => {
   });
 
   describe('when LOGIN_SUCCESS action is called', () => {
-    test('then isLoading should be set to false', () => {
+    test('then isLoading should be set to true', () => {
       // Arrange
       const action = { type: types.LOGIN_SUCCESS };
 
@@ -85,7 +85,7 @@ describe('redux/reducers/authReducer.js', () => {
       const result = reducer({ ...initialState, isLoading: true }, action);
 
       // Assert
-      expect(result).toEqual({ ...initialState });
+      expect(result).toEqual({ ...initialState, loggedIn: true });
     });
   });
 });

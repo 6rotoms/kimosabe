@@ -21,7 +21,10 @@ const Tile = ({ title, children, className = '', titleAlign = 'center' }) => {
 
 Tile.propTypes = {
   // Pass in element or string.
-  title: PropTypes.string | PropTypes.element,
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]),
   children: PropTypes.element,
   // Alignment of title: Either left, right, or center.
   titleAlign: PropTypes.string,
