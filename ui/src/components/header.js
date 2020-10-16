@@ -22,7 +22,7 @@ const Header = ({ siteTitle }) => {
           onKeyUp={(e) => {
             if (e.keyCode === 13) {
               e.preventDefault();
-              history.push(`/search?term=${searchTerm}&page=0`);
+              history.push(`/search?term=${encodeURI(searchTerm)}&page=0`);
             }
           }}
           type="text"
@@ -31,7 +31,7 @@ const Header = ({ siteTitle }) => {
         />
       </div>
       <div className="header-login">
-        <Link to="/login/" className="input-button header-login__button">
+        <Link to="/login/" className="input-button bgh-red header-login__button">
           Login
         </Link>
       </div>

@@ -75,7 +75,7 @@ describe('pages/login.js', () => {
         await waitFor(() => {});
 
         // Assert
-        const element = await getByText(LOGIN_ERROR_MESSAGES[403]);
+        const element = getByText(LOGIN_ERROR_MESSAGES[403]);
         expect(element).toBeDefined();
       });
     });

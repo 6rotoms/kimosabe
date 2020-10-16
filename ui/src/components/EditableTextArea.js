@@ -16,10 +16,12 @@ const EditableTextArea = ({ initialText='', onSave, isToggleable=false, charLimi
     }
   };
 
-  const handleChange = (newText) => {
-    if (charLimit < 0 || newText.length <= charLimit) {
-      setUnsavedBio(newText);
+  const handleChange = (text) => {
+    let newText = text;
+    if (charLimit > 0) {
+      newText = newText.substring(0, Math.min(text.length, charLimit));
     }
+    setUnsavedBio(newText);
   };
 
   const handleCancel = () => {
@@ -31,26 +33,27 @@ const EditableTextArea = ({ initialText='', onSave, isToggleable=false, charLimi
     <div className="edit-display-wrapper">
       {editable ? (
         <textarea
+          data-testid="display-textarea"
           className="display-textarea-dark edit-text"
           onChange={(e) => handleChange(e.target.value)}
           value={unsavedBio}
         />
       ) : (
-        <div className="display-text-light display-text">{bio}</div>
+        <div data-testid="display-text" className="display-text-light display-text">{bio}</div>
       )}
-
-      <div className="button-container">
-        {isToggleable && editable && (
-          <button className="input-button bgh-red" onClick={handleCancel}>
-            Cancel
-          </button>
-        )}
-        {isToggleable && (
+      {isToggleable &&
+        <div className="button-container" data-testid="button-container">
+          {editable && (
+            <button className="input-button bgh-red" onClick={handleCancel}>
+              Cancel
+            </button>
+          )}
           <button className="input-button bgh-green" onClick={handleSave}>
             {editable ? 'Save' : 'Edit'}
           </button>
-        )}
-      </div>
+        </div>
+      }
+
     </div>
   );
 };

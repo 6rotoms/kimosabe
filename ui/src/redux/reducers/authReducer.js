@@ -9,6 +9,7 @@ import {
 
 export const initialState = {
   isLoading: false,
+  loggedIn: false,
 };
 
 function authReducer(state = initialState, action) {
@@ -42,6 +43,7 @@ function authReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
+        loggedIn: true,
       };
     default:
       return state;

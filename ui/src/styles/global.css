@@ -133,6 +133,10 @@ textarea {
   padding: 5px 5px 10px 10px;
 }
 
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
+
 .display-textarea-dark {
   background-color: var(--color-grey-darker);
 }

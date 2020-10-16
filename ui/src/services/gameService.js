@@ -6,19 +6,15 @@ const gameService = {
   gameSearch: async ({ searchTerm, pageNum }) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/games?searchTerm=${searchTerm}&pageNum=${pageNum}`,
+        `${process.env.REACT_APP_API_URL}/games?searchTerm=${encodeURIComponent(searchTerm)}&pageNum=${pageNum}`,
         {
           method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
         },
       );
 
       const body = await response.json();
-
       return {
-        status: 200,
+        status: response.status,
         body: body,
       };
     } catch (error) {
