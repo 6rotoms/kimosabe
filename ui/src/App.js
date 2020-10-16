@@ -1,15 +1,8 @@
 import React from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import Header from './components/header';
-import {
-  HomePage,
-  LoginPage,
-  RegisterPage,
-  SearchPage,
-  UserProfilePage,
-} from './pages';
+import { HomePage, LoginPage, RegisterPage, SearchPage, UserProfilePage } from './pages';
 import './styles/global.css';
-
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -36,7 +29,7 @@ function App() {
             <HomePage />
           </Route>
           <Route path="/search">
-            <SearchPage searchTerm={query.get('term')} pageNum={query.get('page')}/>
+            <SearchPage searchTerm={query.get('term')} pageNum={query.get('page')} />
           </Route>
         </Switch>
       </main>

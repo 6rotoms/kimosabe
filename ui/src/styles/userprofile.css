@@ -1,4 +1,6 @@
-.col1, .col2, .col3 {
+.col1,
+.col2,
+.col3 {
   display: flex;
   height: calc(100% - 2vw);
   margin-top: 1vw;
@@ -14,7 +16,8 @@
   margin-right: 1vw;
 }
 
-.col1 > :first-child, .col2 > :first-child {
+.col1 > :first-child,
+.col2 > :first-child {
   margin-bottom: 1vw;
 }
 

@@ -2,16 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/tile.css';
 
-const Tile = ({ title, children, className='', titleAlign='center' }) => {
-  const alignment = {textAlign: titleAlign};
+const Tile = ({ title, children, className = '', titleAlign = 'center' }) => {
+  const alignment = { textAlign: titleAlign };
   return (
     <div className={`tile-container ${className}`}>
-      {title &&
+      {title && (
         <div data-testid="title-div">
-          <div data-testid="title-content" className="title" style={alignment}>{title}</div>
+          <div data-testid="title-content" className="title" style={alignment}>
+            {title}
+          </div>
           <div className="underline" />
         </div>
-      }
+      )}
       {children}
     </div>
   );
