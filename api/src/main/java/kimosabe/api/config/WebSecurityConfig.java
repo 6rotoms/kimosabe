@@ -32,9 +32,9 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig<S extends Session> extends WebSecurityConfigurerAdapter {
-    private PasswordEncoder passwordEncoder;
-    private CustomUserDetailsService userService;
-    private CustomConcurrentSessionFilter concurrentSessionFilter;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomUserDetailsService userService;
+    private final CustomConcurrentSessionFilter concurrentSessionFilter;
 
     @Autowired
     public WebSecurityConfig(

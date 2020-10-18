@@ -19,8 +19,8 @@ import java.util.Optional;
 @Service
 @Transactional
 public class GroupService {
-    private GroupRepository groupRepository;
-    private GameSearchRepository gameSearchRepository;
+    private final GroupRepository groupRepository;
+    private final GameSearchRepository gameSearchRepository;
 
     @Autowired
     public GroupService(

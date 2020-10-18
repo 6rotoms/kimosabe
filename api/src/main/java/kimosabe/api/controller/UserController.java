@@ -23,9 +23,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private UserService userService;
-    private GroupService groupService;
-    private FindByIndexNameSessionRepository<? extends Session> sessionRepository;
+    private final UserService userService;
+    private final GroupService groupService;
+    private final FindByIndexNameSessionRepository<? extends Session> sessionRepository;
 
     @Autowired
     public UserController(

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/groups")
 public class GroupController {
-    private GroupService groupService;
-    private UserService userService;
+    private final GroupService groupService;
+    private final UserService userService;
 
     @Autowired
     public GroupController(GroupService groupService, UserService userService) {

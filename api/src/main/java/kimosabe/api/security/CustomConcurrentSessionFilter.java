@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class CustomConcurrentSessionFilter extends GenericFilterBean {
-    private FindByIndexNameSessionRepository sessionRepository;
+    private final FindByIndexNameSessionRepository sessionRepository;
     public CustomConcurrentSessionFilter(FindByIndexNameSessionRepository sessionRepository) {
         this.sessionRepository = sessionRepository;
     }

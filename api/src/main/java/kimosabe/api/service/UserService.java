@@ -21,10 +21,10 @@ import java.util.Set;
 @Service
 @Transactional
 public class UserService {
-    private PasswordEncoder passwordEncoder;
-    private RoleRepository roleRepository;
-    private UserRepository userRepository;
-    private UserRelationshipRepository relationshipRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final UserRelationshipRepository relationshipRepository;
 
     @Autowired
     public UserService(
