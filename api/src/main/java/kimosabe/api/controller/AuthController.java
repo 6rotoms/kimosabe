@@ -45,13 +45,6 @@ public class AuthController {
     public void login(
             @RequestBody LoginDetailsRequestBody loginDetails
     ) {
-        Map<String, ? extends Session> sessions = sessionRepository.findByPrincipalName(loginDetails.getUsername());
-        int numExpired = sessions.size() + 1 > AppConstants.MAX_NUM_SESSIONS ?
-                sessions.size() + 1 - AppConstants.MAX_NUM_SESSIONS : 0;
-        List<Map.Entry<String, ? extends Session>> expiredSessions = sessions.entrySet().stream()
-                .sorted(Comparator.comparing(s -> s.getValue().getCreationTime()))
-                .limit(numExpired).collect(Collectors.toList());
-        expiredSessions.forEach(e -> sessionRepository.deleteById(e.getKey()));
         Authentication auth = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDetails.getUsername(), loginDetails.getPassword()));
         SecurityContext securityContext = SecurityContextHolder.getContext();

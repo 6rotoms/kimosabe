@@ -1,5 +1,6 @@
 package kimosabe.api.config;
 
+import kimosabe.api.security.CustomConcurrentSessionFilter;
 import kimosabe.api.service.CustomUserDetailsService;
 import kimosabe.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.session.ConcurrentSessionFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.Session;
 import org.springframework.session.data.redis.RedisIndexedSessionRepository;
@@ -32,14 +34,17 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 public class WebSecurityConfig<S extends Session> extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
     private CustomUserDetailsService userService;
+    private CustomConcurrentSessionFilter concurrentSessionFilter;
 
     @Autowired
     public WebSecurityConfig(
             PasswordEncoder passwordEncoder,
-            CustomUserDetailsService userService
+            CustomUserDetailsService userService,
+            CustomConcurrentSessionFilter concurrentSessionFilter
     ) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
+        this.concurrentSessionFilter = concurrentSessionFilter;
     }
 
     @Override
@@ -60,6 +65,8 @@ public class WebSecurityConfig<S extends Session> extends WebSecurityConfigurerA
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/games/**", "/groups/{groupId}", "/user/profile/**").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and()
+                .addFilterAfter(concurrentSessionFilter, ConcurrentSessionFilter.class);
     }
 }
