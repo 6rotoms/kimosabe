@@ -89,7 +89,7 @@ public class UserService {
         Optional<UserRelationship> relationship = relationshipRepository
                 .findById(new UserRelationshipId(requester, target));
         if (relationship.isEmpty()) {
-            throw new MissingDatabaseEntryException("Relationship");
+            throw new MissingDatabaseEntryException("Friend Request");
         }
         UserRelationship actualRelationship = relationship.get();
         if (friendAnswer.isAccept()) {
@@ -98,5 +98,21 @@ public class UserService {
         } else {
             relationshipRepository.delete(actualRelationship);
         }
+    }
+
+    public void deleteFriend(String username, String friendName) {
+        User user = getUserByUsername(username);
+        User friend = getUserByUsername(friendName);
+        Optional<UserRelationship> relationship =
+                relationshipRepository.findByIdAndRelationshipStatus(new UserRelationshipId(user, friend),
+                        RelationshipStatus.ACCEPTED);
+        if (relationship.isEmpty()) {
+            relationshipRepository.findByIdAndRelationshipStatus(new UserRelationshipId(friend, user),
+                    RelationshipStatus.ACCEPTED);
+        }
+        if (relationship.isEmpty()) {
+            throw new MissingDatabaseEntryException("Friend Relationship");
+        }
+        relationshipRepository.delete(relationship.get());
     }
 }
