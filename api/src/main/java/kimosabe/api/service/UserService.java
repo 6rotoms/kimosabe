@@ -103,11 +103,12 @@ public class UserService {
     public void deleteFriend(String username, String friendName) {
         User user = getUserByUsername(username);
         User friend = getUserByUsername(friendName);
+        System.out.println("here");
         Optional<UserRelationship> relationship =
                 relationshipRepository.findByIdAndRelationshipStatus(new UserRelationshipId(user, friend),
                         RelationshipStatus.ACCEPTED);
         if (relationship.isEmpty()) {
-            relationshipRepository.findByIdAndRelationshipStatus(new UserRelationshipId(friend, user),
+            relationship = relationshipRepository.findByIdAndRelationshipStatus(new UserRelationshipId(friend, user),
                     RelationshipStatus.ACCEPTED);
         }
         if (relationship.isEmpty()) {
