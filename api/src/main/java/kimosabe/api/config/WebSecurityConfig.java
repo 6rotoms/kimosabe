@@ -1,6 +1,9 @@
 package kimosabe.api.config;
 
+import kimosabe.api.constants.AppConstants;
 import kimosabe.api.security.CustomConcurrentSessionFilter;
+import kimosabe.api.security.LoginFailureHandler;
+import kimosabe.api.security.LoginSuccessHandler;
 import kimosabe.api.service.CustomUserDetailsService;
 import kimosabe.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +21,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.session.data.redis.RedisIndexedSessionRepository;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
@@ -34,17 +40,20 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 public class WebSecurityConfig<S extends Session> extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailsService userService;
-    private final CustomConcurrentSessionFilter concurrentSessionFilter;
+    private final FilterConfig filterConfig;
+    private final SessionRegistry sessionRegistry;
 
     @Autowired
     public WebSecurityConfig(
             PasswordEncoder passwordEncoder,
             CustomUserDetailsService userService,
-            CustomConcurrentSessionFilter concurrentSessionFilter
+            FilterConfig filterConfig,
+            SessionRegistry sessionRegistry
     ) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
-        this.concurrentSessionFilter = concurrentSessionFilter;
+        this.filterConfig = filterConfig;
+        this.sessionRegistry = sessionRegistry;
     }
 
     @Override
@@ -66,7 +75,7 @@ public class WebSecurityConfig<S extends Session> extends WebSecurityConfigurerA
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/games/**", "/groups/{groupId}", "/user/profile/**").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .addFilterAfter(concurrentSessionFilter, ConcurrentSessionFilter.class);
+                .and().addFilterAt(filterConfig.usernamePasswordAuthenticationFilter(authenticationManagerBean()), UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement().maximumSessions(AppConstants.MAX_NUM_SESSIONS).sessionRegistry(sessionRegistry);
     }
 }
