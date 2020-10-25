@@ -41,15 +41,11 @@ public class FriendAcceptTest {
     public void user1FriendRequestUser2() {
         // Arrange
         baseUrl = "http://localhost:"+ randomServerPort + "/user/friends";
-        FriendInviteRequestBody requestBody= new FriendInviteRequestBody();
-        requestBody.setFriendUsername("user2");
-        HttpHeaders headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
-        HttpEntity<FriendInviteRequestBody> request = new HttpEntity<>(requestBody, headers);
-        restTemplate.postForEntity(baseUrl, request, String.class);
+        TestUserUtils.user1RequestFriendUser2(restTemplate, randomServerPort);
     }
 
     @Test
-    @DisplayName("Test if valid friend accept returns 200")
+    @DisplayName("valid friend accept returns 200")
     public void whenFriendAcceptValid_thenReturn200OK() {
         // Arrange
         FriendAnswerRequestBody requestBody= new FriendAnswerRequestBody();
@@ -66,7 +62,7 @@ public class FriendAcceptTest {
     }
 
     @Test
-    @DisplayName("Test if valid friend accept adds accepted relationship")
+    @DisplayName("valid friend accept adds accepted relationship")
     public void whenFriendAcceptValid_thenChangeRelationshipToPending() {
         // Arrange
         FriendAnswerRequestBody requestBody= new FriendAnswerRequestBody();
@@ -90,7 +86,7 @@ public class FriendAcceptTest {
     }
 
     @Test
-    @DisplayName("Test if missing accept in answer defaults to false")
+    @DisplayName("missing accept in answer defaults to false")
     public void whenFriendAcceptMissingAccept_thenDeny() {
         // Arrange
         FriendAnswerRequestBody requestBody= new FriendAnswerRequestBody();
@@ -106,7 +102,7 @@ public class FriendAcceptTest {
     }
 
     @Test
-    @DisplayName("Test if valid friend deny removes pending relationship")
+    @DisplayName("valid friend deny removes pending relationship")
     public void whenFriendDenyValid_thenRemoveRelationship() {
         // Arrange
         FriendAnswerRequestBody requestBody= new FriendAnswerRequestBody();

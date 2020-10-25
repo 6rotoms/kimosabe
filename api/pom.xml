@@ -119,7 +119,7 @@
 		<profile>
 			<id>localit</id>
 			<properties>
-				<profileActive>it</profileActive>
+				<profileActive>localit</profileActive>
 				<it.skip>false</it.skip>
 				<maven.test.skip>false</maven.test.skip>
 			</properties>

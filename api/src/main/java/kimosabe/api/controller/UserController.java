@@ -66,6 +66,13 @@ public class UserController {
         userService.acceptFriendRequest(username, friendAnswer);
     }
 
+    @DeleteMapping("/friends/{friendName}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public void deleteFriend(@PathVariable String friendName) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        userService.deleteFriend(username, friendName);
+    }
+
     @GetMapping("/sessions")
     @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.OK)
