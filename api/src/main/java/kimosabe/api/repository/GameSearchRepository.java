@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class GameSearchRepository {
-    private StatefulRediSearchConnection<String, String> conn;
+    private final StatefulRediSearchConnection<String, String> conn;
 
     @Autowired
     public GameSearchRepository(StatefulRediSearchConnection<String, String> conn) {

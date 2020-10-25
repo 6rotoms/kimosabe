@@ -9,33 +9,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Collection;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private UserService userService;
-    private GroupService groupService;
-    private FindByIndexNameSessionRepository<? extends Session> sessionRepository;
+    private final UserService userService;
+    private final GroupService groupService;
+    private final SessionRegistry sessionRegistry;
 
     @Autowired
     public UserController(
             UserService userService,
             GroupService groupService,
-            FindByIndexNameSessionRepository<? extends Session> sessionRepository
+            SessionRegistry sessionRegistry
     ) {
         this.userService = userService;
         this.groupService = groupService;
-        this.sessionRepository = sessionRepository;
+        this.sessionRegistry = sessionRegistry;
     }
 
     @PostMapping("/changePassword")
@@ -78,8 +77,8 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public void getSessions(Principal principal) {
         String user = principal.getName();
-        Collection<? extends Session> usersSessions = this.sessionRepository.findByPrincipalName(user).values();
-        System.out.println(usersSessions.size());
+        sessionRegistry.getAllSessions(principal, true).size();
+        System.out.println(sessionRegistry.getAllSessions(principal, true).size());
     }
 
     @GetMapping("/profile/{username}")

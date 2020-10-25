@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class GameService {
-    private GameSearchRepository gameSearchRepository;
+    private final GameSearchRepository gameSearchRepository;
 
     @Autowired
     public GameService(GameSearchRepository gameSearchRepository) {
