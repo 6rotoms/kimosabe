@@ -5,16 +5,16 @@ export const initialState = {
 };
 
 const searchReducer = (state = initialState, action) => {
-    switch(action.type){
-        case SEARCH_REQUEST:{
-            return {
-                ...state,
-                searchTerm: action.searchTerm,
-            };
-        }
-        default:
-            return state;
+  switch (action.type) {
+    case SEARCH_REQUEST: {
+      return {
+        ...state,
+        searchTerm: action.searchTerm,
+      };
     }
+    default:
+      return state;
+  }
 };
 
 export default searchReducer;

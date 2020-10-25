@@ -4,8 +4,11 @@
   --color-search: #9f6e62;
   --color-red: #bf616a;
   --color-red-light: #c6747c;
+  --color-green: #a3be8c;
+  --color-green-light: #b9cf9c;
   --color-grey: #4c566a;
-  --color-grey-dark: #2e3440;
+  --color-grey-dark: #424651;
+  --color-grey-darker: #2e3440;
   --color-text: #ebe9f0;
 }
 
@@ -53,7 +56,7 @@ h2 {
 .input-field {
   padding: 1.25rem;
   width: auto;
-  background-color: var(--color-grey-dark);
+  background-color: var(--color-grey-darker);
   color: var(--color-text);
   border: none;
   border-radius: 0.25rem;
@@ -62,10 +65,11 @@ h2 {
 .input-button {
   color: var(--color-text);
   text-decoration: none;
-  background-color: var(--color-red);
   border: none;
   border-radius: 5px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.5);
   min-width: 125px;
   width: auto;
   height: auto;
@@ -74,7 +78,24 @@ h2 {
 }
 
 .input-button:hover {
+  cursor: pointer;
+}
+
+.bgh-red {
+  background-color: var(--color-red);
+}
+
+.bgh-green {
+  background-color: var(--color-green);
+}
+
+.bgh-red:hover {
   background-color: var(--color-red-light);
+  transition: 0.25s;
+}
+
+.bgh-green:hover {
+  background-color: var(--color-green-light);
   transition: 0.25s;
 }
 
@@ -103,4 +124,21 @@ h2 {
   color: var(--color-red);
   width: 75%;
   text-align: right;
+}
+
+textarea {
+  resize: none;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 5px 10px 10px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+.display-textarea-dark {
+  background-color: var(--color-grey-darker);
 }
