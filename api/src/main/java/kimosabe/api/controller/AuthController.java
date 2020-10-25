@@ -29,17 +29,6 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @PostMapping("/login")
-    @ResponseStatus(HttpStatus.OK)
-    public void login(
-            @RequestBody LoginDetailsRequestBody loginDetails
-    ) {
-        Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDetails.getUsername(), loginDetails.getPassword()));
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        securityContext.setAuthentication(auth);
-    }
-
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
     public void register(
