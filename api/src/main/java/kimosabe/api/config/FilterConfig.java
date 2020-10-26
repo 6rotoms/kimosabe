@@ -18,22 +18,19 @@ public class FilterConfig {
     private final LoginFailureHandler loginFailureHandler;
     private  final LoginSuccessHandler loginSuccessHandler;
     private final ObjectMapper objectMapper;
-    private final SessionRegistry sessionRegistry;
-    private final FindByIndexNameSessionRepository sessionRepository;
+    private final CustomConcurrentSessionStrategy sessionStrategy;
 
     @Autowired
     public FilterConfig (
             LoginFailureHandler loginFailureHandler,
             LoginSuccessHandler loginSuccessHandler,
             ObjectMapper objectMapper,
-            SessionRegistry sessionRegistry,
-            FindByIndexNameSessionRepository sessionRepository
+            CustomConcurrentSessionStrategy sessionStrategy
     ) {
         this.loginSuccessHandler = loginSuccessHandler;
         this.loginFailureHandler = loginFailureHandler;
         this.objectMapper = objectMapper;
-        this.sessionRegistry = sessionRegistry;
-        this.sessionRepository = sessionRepository;
+        this.sessionStrategy = sessionStrategy;
     }
 
     protected CustomUsernamePasswordAuthFilter usernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -46,12 +43,8 @@ public class FilterConfig {
     }
 
     private ConcurrentSessionControlAuthenticationStrategy authStrategy() {
-        CustomConcurrentSessionStrategy result = new CustomConcurrentSessionStrategy(
-                this.sessionRegistry,
-                this.sessionRepository
-        );
-        result.setMaximumSessions(AppConstants.MAX_NUM_SESSIONS);
-        return result;
+        sessionStrategy.setMaximumSessions(AppConstants.MAX_NUM_SESSIONS);
+        return sessionStrategy;
     }
 
 }

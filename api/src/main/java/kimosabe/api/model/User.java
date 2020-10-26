@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -49,8 +50,11 @@ public class User implements UserDetails {
     @Column(name = "gender")
     private String gender;
 
+    @Column(name = "location")
+    private String location;
+
     @Column(name = "last_login")
-    private Date lastLogin;
+    private Instant lastLogin;
 
     public User(String username, String password) {
         this.username = username;

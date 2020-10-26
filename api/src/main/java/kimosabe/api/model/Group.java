@@ -1,9 +1,12 @@
 package kimosabe.api.model;
 
+import kimosabe.api.entity.AuditedEntity;
 import kimosabe.api.entity.GameSearchResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +16,7 @@ import java.util.Set;
 @Table(name = "groups")
 @Entity
 @NoArgsConstructor @Getter @Setter
-public class Group implements Serializable {
+public class Group extends AuditedEntity implements Serializable {
     @Id
     @Column(name="id", unique = true)
     private String groupId;

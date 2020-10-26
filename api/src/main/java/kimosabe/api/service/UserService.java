@@ -1,5 +1,6 @@
 package kimosabe.api.service;
 
+import kimosabe.api.entity.UserProfileInfo;
 import kimosabe.api.exception.BadRequestException;
 import kimosabe.api.entity.FriendAnswerRequestBody;
 import kimosabe.api.entity.FriendInviteRequestBody;
@@ -15,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
@@ -103,7 +106,6 @@ public class UserService {
     public void deleteFriend(String username, String friendName) {
         User user = getUserByUsername(username);
         User friend = getUserByUsername(friendName);
-        System.out.println("here");
         Optional<UserRelationship> relationship =
                 relationshipRepository.findByIdAndRelationshipStatus(new UserRelationshipId(user, friend),
                         RelationshipStatus.ACCEPTED);
@@ -115,5 +117,28 @@ public class UserService {
             throw new MissingDatabaseEntryException("Friend Relationship");
         }
         relationshipRepository.delete(relationship.get());
+    }
+
+    public void updateLoginTime(String username) {
+        User user = getUserByUsername(username);
+        user.setLastLogin(Instant.now());
+        userRepository.save(user);
+    }
+
+    public void updateUserInfo(String username, UserProfileInfo profileInfo) {
+        User user = getUserByUsername(username);
+        if (profileInfo.getAge() != null) {
+            user.setAge(profileInfo.getAge());
+        }
+        if (profileInfo.getBiography() != null && !profileInfo.getBiography().isBlank()) {
+            user.setBiography(profileInfo.getBiography());
+        }
+        if (profileInfo.getGender() != null && !profileInfo.getGender().isBlank()) {
+            user.setGender(profileInfo.getGender());
+        }
+        if (profileInfo.getLocation() != null && !profileInfo.getLocation().isBlank()) {
+            user.setLocation(profileInfo.getLocation());
+        }
+        userRepository.save(user);
     }
 }

@@ -1,5 +1,6 @@
 package kimosabe.api.games;
 
+import kimosabe.api.AbstractBaseIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,17 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class SearchGamesTest {
-    @Autowired
-    TestRestTemplate restTemplate;
-
-    @LocalServerPort
-    int randomServerPort;
-    String baseUrl;
-
+public class SearchGamesTest extends AbstractBaseIntegrationTest {
     @BeforeEach
     public void setup() {
         this.baseUrl = "http://localhost:" + randomServerPort + "/games";
