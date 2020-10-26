@@ -3,33 +3,18 @@ package kimosabe.api.group;
 import kimosabe.api.TestUserUtils;
 import kimosabe.api.model.Group;
 import kimosabe.api.repository.GroupRepository;
+import kimosabe.api.AbstractBaseIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.time.Instant;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class GroupCreationTest {
-    @Autowired
-    TestRestTemplate restTemplate;
-
-    @LocalServerPort
-    int randomServerPort;
-    String baseUrl;
-
+public class GroupCreationTest extends AbstractBaseIntegrationTest {
     @Autowired
     GroupRepository groupRepository;
 
@@ -38,12 +23,12 @@ public class GroupCreationTest {
     @BeforeEach
     public void setup() {
         // Arrange
-        this.baseUrl = "http://localhost:" + randomServerPort + "/groups";
+        baseUrl = "http://localhost:" + randomServerPort + "/groups";
         headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
     }
 
     @Test
-    @DisplayName("Test if valid group creation returns 200")
+    @DisplayName("valid group creation returns 200")
     public void whenGroupIdValid_thenReturn200OK() {
         // Arrange
         HttpEntity<String> request = new HttpEntity<>(headers);
@@ -57,13 +42,14 @@ public class GroupCreationTest {
     }
 
     @Test
-    @DisplayName("Test if valid group creation properly initializes all entries")
+    @DisplayName("valid group creation properly initializes all entries")
     @Transactional
     public void whenGroupIdValid_thenExpectGroupObjectToBeCreated() {
         // Arrange
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         // Act
+        Instant start = Instant.now();
         restTemplate.postForEntity(this.baseUrl + "/baldur-s-gate-enhanced-edition", request, String.class);
         Optional<Group> result = groupRepository.findById("baldur-s-gate-enhanced-edition");
 
@@ -72,11 +58,13 @@ public class GroupCreationTest {
         Group group = result.get();
         assertThat(group.getGroupId()).isEqualTo("baldur-s-gate-enhanced-edition");
         assertThat(group.getName()).isEqualTo("Baldur's Gate: Enhanced Edition");
+        assertThat(group.getOwner()).isEqualTo("user1");
+        assertThat(group.getCreatedDate()).isBetween(start, Instant.now());
         assertThat(group.getMembers()).isEmpty();
     }
 
     @Test
-    @DisplayName("Test if invalid group id returns 404")
+    @DisplayName("if invalid group id returns 404")
     public void whenGroupIdInvalid_thenReturn404NotFound() {
         // Arrange
         HttpEntity<String> request = new HttpEntity<>(headers);
@@ -90,7 +78,7 @@ public class GroupCreationTest {
     }
 
     @Test
-    @DisplayName("Test if duplicate group id returns 409")
+    @DisplayName("duplicate group id returns 409")
     public void whenGroupIdDuplicate_thenReturn409Conflict() {
         // Arrange
         HttpEntity<String> request = new HttpEntity<>(headers);

@@ -83,9 +83,16 @@ public class UserController {
 
     @GetMapping("/profile/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public UserInfo getUserInfo(@PathVariable String username) {
+    public UserProfileInfo getUserInfo(@PathVariable String username) {
         User user = userService.getUserByUsername(username);
-        return new UserInfo(user);
+        return new UserProfileInfo(user);
+    }
+
+    @PutMapping("/profile")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateUserInfo(@RequestBody UserProfileInfo profileInfo) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        userService.updateUserInfo(username, profileInfo);
     }
 
     @GetMapping("/profile/{username}/friends")

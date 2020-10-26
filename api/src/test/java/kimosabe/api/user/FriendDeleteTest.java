@@ -1,40 +1,26 @@
 package kimosabe.api.user;
 
+import kimosabe.api.AbstractBaseIntegrationTest;
+import kimosabe.api.TestUserConstants;
 import kimosabe.api.TestUserUtils;
 import kimosabe.api.model.UserRelationshipId;
 import kimosabe.api.repository.UserRelationshipRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class FriendDeleteTest {
-    @Autowired
-    TestRestTemplate restTemplate;
-
+public class FriendDeleteTest extends AbstractBaseIntegrationTest {
     @Autowired
     UserRelationshipRepository userRelationshipRepository;
-
-    @LocalServerPort
-    int randomServerPort;
-    String baseUrl;
 
     @BeforeEach
     public void setup() {
         // Arrange
-        baseUrl = "http://localhost:"+ randomServerPort + "/user/friends";
+        baseUrl = "http://localhost:"+ randomServerPort + "/user/friends/{username}";
     }
 
     @Test
@@ -47,9 +33,9 @@ public class FriendDeleteTest {
 
         // Act
         ResponseEntity<String> response = restTemplate.exchange(
-                baseUrl+ "/user2",
+                baseUrl,
                     HttpMethod.DELETE, request,
-                    String.class);
+                    String.class, "user2");
 
         // Assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -64,15 +50,15 @@ public class FriendDeleteTest {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         // Act
-        ResponseEntity<String> response = restTemplate.exchange(
-                baseUrl+ "/user2",
+        restTemplate.exchange(
+                baseUrl,
                 HttpMethod.DELETE, request,
-                String.class);
+                String.class, "user2");
 
         // Assert
         assertThat(userRelationshipRepository.findById(
-                new UserRelationshipId(TestUserUtils.user1Id,
-                        TestUserUtils.user2Id))).isEmpty();
+                new UserRelationshipId(TestUserConstants.user1Id,
+                        TestUserConstants.user2Id))).isEmpty();
     }
 
     @Test
@@ -84,14 +70,14 @@ public class FriendDeleteTest {
 
         // Act
         ResponseEntity<String> response = restTemplate.exchange(
-                baseUrl+ "/user1",
+                baseUrl,
                 HttpMethod.DELETE, request,
-                String.class);
+                String.class, "user1");
 
         // Assert
         assertThat(userRelationshipRepository.findById(
-                new UserRelationshipId(TestUserUtils.user1Id,
-                        TestUserUtils.user2Id))).isEmpty();
+                new UserRelationshipId(TestUserConstants.user1Id,
+                        TestUserConstants.user2Id))).isEmpty();
     }
 
     @Test
@@ -103,9 +89,9 @@ public class FriendDeleteTest {
 
         // Act
         ResponseEntity<String> response = restTemplate.exchange(
-                baseUrl+ "/user1",
+                baseUrl,
                 HttpMethod.DELETE, request,
-                String.class);
+                String.class, "user1");
 
         // Assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -120,9 +106,9 @@ public class FriendDeleteTest {
 
         // Act
         ResponseEntity<String> response = restTemplate.exchange(
-                baseUrl+ "/user3",
+                baseUrl,
                 HttpMethod.DELETE, request,
-                String.class);
+                String.class, "user3");
 
         // Assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

@@ -1,5 +1,6 @@
 package kimosabe.api.group;
 
+import kimosabe.api.AbstractBaseIntegrationTest;
 import kimosabe.api.TestUserUtils;
 import kimosabe.api.model.Group;
 import kimosabe.api.repository.GroupRepository;
@@ -17,17 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class GroupInfoTest {
-    @Autowired
-    TestRestTemplate restTemplate;
-
-    @LocalServerPort
-    int randomServerPort;
-    String baseUrl;
-
+public class GroupInfoTest extends AbstractBaseIntegrationTest {
     @Autowired
     GroupRepository groupRepository;
 
@@ -40,19 +31,11 @@ public class GroupInfoTest {
         headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
     }
 
-    public void createGroup() {
-        // Arrange
-        Group newGroup = new Group();
-        newGroup.setGroupId("baldur-s-gate-enhanced-edition");
-        newGroup.setName("Baldur's Gate: Enhanced Edition");
-        groupRepository.save(newGroup);
-    }
-
     @Test
     @DisplayName("valid group get returns 200")
     public void whenGroupExists_thenReturn200OK() {
         // Arrange
-        createGroup();
+        TestUserUtils.user1CreateNewGroupBaldursGate(restTemplate, randomServerPort);
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         // Act
@@ -67,7 +50,7 @@ public class GroupInfoTest {
     @DisplayName("valid group returns proper info")
     public void whenGroupExists_thenReturnGroupInfo() {
         // Arrange
-        createGroup();
+        TestUserUtils.user1CreateNewGroupBaldursGate(restTemplate, randomServerPort);
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         // Act

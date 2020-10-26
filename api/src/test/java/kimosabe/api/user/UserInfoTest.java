@@ -1,32 +1,18 @@
 package kimosabe.api.user;
 
-import kimosabe.api.entity.UserInfo;
+import kimosabe.api.AbstractBaseIntegrationTest;
+import kimosabe.api.TestUserConstants;
+import kimosabe.api.TestUserUtils;
+import kimosabe.api.entity.UserProfileInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class UserInfoTest {
-    @Autowired
-    TestRestTemplate restTemplate;
-
-    @LocalServerPort
-    int randomServerPort;
-    String baseUrl;
-
+public class UserInfoTest extends AbstractBaseIntegrationTest {
     @BeforeEach
     public void setup() {
         this.baseUrl = "http://localhost:" + randomServerPort + "/user/profile/{username}";
@@ -55,10 +41,18 @@ public class UserInfoTest {
     @Test
     @DisplayName("valid username returns correct object")
     public void whenUsernameValid_ThenReturnProperObject() {
+        // Arrange
+        TestUserUtils.user1UpdateASLBiography(restTemplate, randomServerPort);
+        UserProfileInfo expected = TestUserConstants.getUser1ASL();
         // Act
-        ResponseEntity<UserInfo> response = restTemplate.getForEntity(baseUrl, UserInfo.class, "user1");
+        ResponseEntity<UserProfileInfo> response = restTemplate.getForEntity(baseUrl, UserProfileInfo.class, "user1");
 
         // Assert
-        assertThat(response.getBody().getUsername()).isEqualTo("user1");
+        UserProfileInfo body = response.getBody();
+        assertThat(body.getUserInfo().getUsername()).isEqualTo(expected.getUserInfo().getUsername());
+        assertThat(body.getAge()).isEqualTo(expected.getAge());
+        assertThat(body.getBiography()).isEqualTo(expected.getBiography());
+        assertThat(body.getLocation()).isEqualTo(expected.getLocation());
+        assertThat(body.getGender()).isEqualTo(expected.getGender());
     }
 }

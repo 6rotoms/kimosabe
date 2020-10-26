@@ -38,7 +38,6 @@ public class GroupController {
     }
 
     @GetMapping("{groupId}")
-    @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.OK)
     public GroupInfo getGroupInfo(@PathVariable String groupId) {
         return groupService.getGroupInfo(groupId);

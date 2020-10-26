@@ -1,5 +1,6 @@
 package kimosabe.api.group;
 
+import kimosabe.api.AbstractBaseIntegrationTest;
 import kimosabe.api.TestUserUtils;
 import kimosabe.api.model.Group;
 import kimosabe.api.model.User;
@@ -25,22 +26,12 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class AddUserToGroupTest {
-    @Autowired
-    TestRestTemplate restTemplate;
-
+public class AddUserToGroupTest extends AbstractBaseIntegrationTest {
     @Autowired
     UserRepository userRepository;
 
     @Autowired
     GroupRepository groupRepository;
-
-    @LocalServerPort
-    int randomServerPort;
-    String baseUrl;
 
     HttpHeaders headers;
 

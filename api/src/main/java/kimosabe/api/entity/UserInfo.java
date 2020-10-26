@@ -13,8 +13,8 @@ public class UserInfo {
     @JsonProperty("profileIcon")
     private String profileIcon;
 
-    public UserInfo(User friend) {
-        this.username = friend.getUsername();
+    public UserInfo(User user) {
+        this.username = user.getUsername();
         this.profileIcon = "icondata";
     }
 }

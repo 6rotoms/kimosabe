@@ -9,10 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.time.Instant;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,6 +40,21 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "target", fetch = FetchType.LAZY)
     private Set<UserRelationship> targetRelationships;
+
+    @Column(name = "age")
+    private Integer age;
+
+    @Column(name="biography", columnDefinition = "TEXT")
+    private String biography;
+
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "location")
+    private String location;
+
+    @Column(name = "last_login")
+    private Instant lastLogin;
 
     public User(String username, String password) {
         this.username = username;

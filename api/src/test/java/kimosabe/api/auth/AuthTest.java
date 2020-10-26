@@ -1,5 +1,6 @@
 package kimosabe.api.auth;
 
+import kimosabe.api.AbstractBaseIntegrationTest;
 import kimosabe.api.entity.LoginDetailsRequestBody;
 import kimosabe.api.model.Role;
 import kimosabe.api.model.RoleName;
@@ -20,27 +21,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.Instant;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class AuthTest {
-    @Autowired
-    TestRestTemplate restTemplate;
-
+public class AuthTest extends AbstractBaseIntegrationTest {
     @Autowired
     UserRepository userRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
-    @LocalServerPort
-    int randomServerPort;
-    String baseUrl;
 
     @BeforeEach
     public void setup() {
@@ -61,6 +53,25 @@ public class AuthTest {
 
         // Assert
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    @DisplayName("valid login updates last login")
+    void whenLoginValid_ThenLastLoginTimeShouldBeSet() {
+        // Arrange
+        LoginDetailsRequestBody requestBody = new LoginDetailsRequestBody();
+        requestBody.setUsername("user1");
+        requestBody.setPassword("password1");
+        HttpEntity<LoginDetailsRequestBody> request = new HttpEntity<>(requestBody);
+
+        // Act
+        Instant start = Instant.now();
+        ResponseEntity<String> result = restTemplate.postForEntity(baseUrl + "/login", request, String.class);
+
+        // Assert
+        Optional<User> entity = userRepository.findByUsername("user1");
+        assert(entity.isPresent());
+        assertThat(entity.get().getLastLogin()).isBetween(start, Instant.now());
     }
 
     @Test
