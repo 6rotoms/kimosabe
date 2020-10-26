@@ -50,6 +50,7 @@ const authService = {
       }
       return { status: response.status };
     } catch (error) {
+      console.log(error);
       return {
         status: 500,
         error: LOGIN_ERROR_MESSAGES.UNDEFINED,
