@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, screen } from '../test-utils';
 import { gameSearch } from '../../services/gameService';
-import Header from '../../components/header';
+import Header from '../../components/Header';
 import { makeStore } from '../../redux/store';
 import SearchPage from '../../pages/search';
 import history from '../../history';

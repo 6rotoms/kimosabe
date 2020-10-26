@@ -10,7 +10,6 @@ const Header = ({ siteTitle }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  console.log(isLoggedIn);
   return (
     <header className="header-container">
       <div className="header-title">
