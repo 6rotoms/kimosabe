@@ -35,18 +35,15 @@ const Header = ({ siteTitle }) => {
         />
       </div>
       <div className="header-login">
-      {
-        isLoggedIn ?
-        <button
-          className="input-button bgh-red"
-          onClick={() => dispatch(logoutUser())}
-        >
-          Logout
-        </button> :
-        <Link to="/login/" className="input-button bgh-red header-login__button">
-          Login
-        </Link>
-      }
+        {isLoggedIn ? (
+          <button className="input-button bgh-red" onClick={() => dispatch(logoutUser())}>
+            Logout
+          </button>
+        ) : (
+          <Link to="/login/" className="input-button bgh-red header-login__button">
+            Login
+          </Link>
+        )}
       </div>
     </header>
   );
