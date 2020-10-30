@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 import GameService from '../services/gameService';
 
 import '../styles/search.css';
-import SearchResult from '../components/searchResult';
+import SearchResult from '../components/SearchResult';
 
 const SearchPage = ({ searchTerm, pageNum }) => {
   const [gameComponents, setGameComponents] = useState('');
