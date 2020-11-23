@@ -71,7 +71,7 @@ describe('pages/userprofile.js', () => {
   });
 
   describe('when user clicks group', () => {
-    it('then it should redirect to group', async ()=> {
+    it('then it should redirect to group', async () => {
       // Arrange
       mockWithGoodResponse();
 
@@ -94,7 +94,7 @@ describe('pages/userprofile.js', () => {
       render(<UserProfilePage />);
 
       // Assert
-      await waitFor(()=> {});
+      await waitFor(() => {});
       expect(screen.getByText('0123456789a123456789b123456789c1...')).not.toEqual(null);
     });
   });
