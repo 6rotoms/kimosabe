@@ -1,6 +1,5 @@
 package kimosabe.api.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -13,8 +12,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(
                         "http://localhost:8000") // TODO: Switch to load from Spring Boot properties file
-                .allowCredentials(true)
-        ;
+                .allowCredentials(true);
+
     }
 
 }

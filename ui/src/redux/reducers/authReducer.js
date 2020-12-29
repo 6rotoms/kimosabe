@@ -5,6 +5,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_FAILED,
   LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  LOGOUT_REQUEST,
+  LOGOUT_FAILED,
 } from '../../constants';
 
 export const initialState = {
@@ -44,6 +47,22 @@ function authReducer(state = initialState, action) {
         ...state,
         isLoading: false,
         loggedIn: true,
+      };
+    case LOGOUT_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case LOGOUT_FAILED:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        loggedIn: false,
+        isLoading: false,
       };
     default:
       return state;

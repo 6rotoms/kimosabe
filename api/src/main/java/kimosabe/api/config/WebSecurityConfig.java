@@ -55,6 +55,7 @@ public class WebSecurityConfig<S extends Session> extends WebSecurityConfigurerA
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .cors().and()
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/games/**", "/groups/{groupId}", "/user/profile/**").permitAll()

@@ -4,7 +4,7 @@ import GameService from '../services/gameService';
 import ReactPaginate from 'react-paginate';
 
 import '../styles/search.css';
-import SearchResult from '../components/searchResult';
+import SearchResult from '../components/SearchResult';
 
 const SearchPage = ({ searchTerm, pageNum }) => {
   const [gameComponents, setGameComponents] = useState('');
