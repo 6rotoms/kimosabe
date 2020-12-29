@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState, useCallback } from 'react';
-import GameService from '../services/gameService';
+import gameService from '../services/gameService';
 import ReactPaginate from 'react-paginate';
 
 import '../styles/search.css';
@@ -12,7 +12,7 @@ const SearchPage = ({ searchTerm, pageNum }) => {
 
   const updateGameComponents = useCallback(
     async (pageNum) => {
-      const res = await GameService.gameSearch({
+      const res = await gameService.gameSearch({
         searchTerm: searchTerm,
         pageNum: pageNum,
       });
@@ -24,7 +24,7 @@ const SearchPage = ({ searchTerm, pageNum }) => {
   );
 
   const getTotalNumberOfPages = useCallback(async () => {
-    const res = await GameService.getSearchInfo({
+    const res = await gameService.getSearchInfo({
       searchTerm: searchTerm,
     });
 

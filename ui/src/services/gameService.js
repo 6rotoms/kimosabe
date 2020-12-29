@@ -35,6 +35,7 @@ const gameService = {
       );
 
       const body = await response.json();
+      console.log(body);
       return {
         status: response.status,
         body: body,
