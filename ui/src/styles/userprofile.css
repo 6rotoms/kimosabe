@@ -41,7 +41,46 @@
   display: grid;
   height: 100%;
   width: 100%;
-  grid-template-columns: auto 40% 40%;
+  grid-template-columns: 20% auto 35%;
   grid-template-rows: 100%;
   gap: 1vw;
+}
+
+.groups-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 150px);
+  gap: 0.7vw;
+}
+
+.group-coverart {
+  width: 150px;
+}
+
+.user-group {
+  position: relative;
+}
+
+.user-group:hover {
+  cursor: pointer;
+}
+
+.user-group_title {
+  position: absolute;
+  font-size: 15px;
+  left: 0px;
+  bottom: 4px;
+  max-height: 45px;
+  height: 45px;
+  width: 150px;
+  overflow: hidden;
+  background-color: #2e3440aa;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-word;
+  white-space: pre-wrap;
 }

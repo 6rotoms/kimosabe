@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import gameService from '../services/gameService';
 import ReactPaginate from 'react-paginate';
+import history from '../history';
 
 import '../styles/search.css';
 import SearchResult from '../components/SearchResult';
@@ -10,8 +10,8 @@ const SearchPage = ({ searchTerm, pageNum }) => {
   const [gameComponents, setGameComponents] = useState('');
   const [numPages, setNumPages] = useState('');
 
-  const updateGameComponents = useCallback(
-    async (pageNum) => {
+  useEffect(() => {
+    const updateGameComponents = async () => {
       const res = await gameService.gameSearch({
         searchTerm: searchTerm,
         pageNum: pageNum,
@@ -19,28 +19,25 @@ const SearchPage = ({ searchTerm, pageNum }) => {
       if (res.status === 200) {
         setGameComponents(res.body.map((game) => <SearchResult key={game.id} {...game} />));
       }
-    },
-    [searchTerm],
-  );
+    };
 
-  const getTotalNumberOfPages = useCallback(async () => {
-    const res = await gameService.getSearchInfo({
-      searchTerm: searchTerm,
-    });
+    const getTotalNumberOfPages = async () => {
+      const res = await gameService.getSearchInfo({
+        searchTerm: searchTerm,
+      });
 
-    if (res.status === 200) {
-      setNumPages(res.body.maxNumPages + 1);
-    }
-  }, [searchTerm]);
+      if (res.status === 200) {
+        setNumPages(res.body.maxNumPages + 1);
+      }
+    };
+
+    updateGameComponents();
+    getTotalNumberOfPages();
+  }, [searchTerm, pageNum]);
 
   const onPageChange = (e) => {
-    updateGameComponents(e.selected);
+    history.push(`/search?term=${encodeURI(searchTerm)}&page=${e.selected}`);
   };
-
-  useEffect(() => {
-    updateGameComponents(pageNum);
-    getTotalNumberOfPages();
-  }, [updateGameComponents, pageNum, getTotalNumberOfPages]);
 
   return (
     <div data-testid="search-results" className="search">
