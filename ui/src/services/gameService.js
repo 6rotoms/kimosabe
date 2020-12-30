@@ -24,6 +24,29 @@ const gameService = {
       };
     }
   },
+
+  getSearchInfo: async ({ searchTerm }) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/games/searchInfo?searchTerm=${encodeURIComponent(searchTerm)}`,
+        {
+          method: 'GET',
+        },
+      );
+
+      const body = await response.json();
+
+      return {
+        status: response.status,
+        body: body,
+      };
+    } catch (error) {
+      return {
+        status: 500,
+        error: SEARCH_ERROR_MESSAGES[500],
+      };
+    }
+  },
 };
 
 export default gameService;
