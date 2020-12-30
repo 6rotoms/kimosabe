@@ -11,16 +11,6 @@ const SearchPage = ({ searchTerm, pageNum }) => {
   const [numPages, setNumPages] = useState('');
 
   useEffect(() => {
-    const updateGameComponents = async () => {
-      const res = await gameService.gameSearch({
-        searchTerm: searchTerm,
-        pageNum: pageNum,
-      });
-      if (res.status === 200) {
-        setGameComponents(res.body.map((game) => <SearchResult key={game.id} {...game} />));
-      }
-    };
-
     const getTotalNumberOfPages = async () => {
       const res = await gameService.getSearchInfo({
         searchTerm: searchTerm,
@@ -30,9 +20,20 @@ const SearchPage = ({ searchTerm, pageNum }) => {
         setNumPages(res.body.maxNumPages + 1);
       }
     };
-
-    updateGameComponents();
     getTotalNumberOfPages();
+  }, [searchTerm]);
+
+  useEffect(() => {
+    const updateGameComponents = async () => {
+      const res = await gameService.gameSearch({
+        searchTerm: searchTerm,
+        pageNum: pageNum,
+      });
+      if (res.status === 200) {
+        setGameComponents(res.body.map((game) => <SearchResult key={game.id} {...game} />));
+      }
+    };
+    updateGameComponents();
   }, [searchTerm, pageNum]);
 
   const onPageChange = (e) => {
