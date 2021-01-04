@@ -141,4 +141,36 @@ public class UserService {
         }
         userRepository.save(user);
     }
+
+    public void blockUser(String username, String targetName){
+        User user = getUserByUsername(username);
+        User targetUser = getUserByUsername(targetName);
+
+        Optional<UserRelationship> relationship =
+                relationshipRepository.findById(new UserRelationshipId(user, targetUser));
+        if (relationship.isEmpty()){
+            relationship =
+                    relationshipRepository.findById(new UserRelationshipId(targetUser, user));
+        }
+
+        if(!relationship.isEmpty()){
+            relationshipRepository.delete(relationship.get());
+        }
+
+        relationshipRepository.save(new UserRelationship(user, targetUser, RelationshipStatus.BLOCKED));
+    }
+
+    public void unblockUser(String username, String blockedName){
+        User user = getUserByUsername(username);
+        User blockedUser = getUserByUsername(blockedName);
+
+        Optional<UserRelationship> relationship =
+                relationshipRepository.findByIdAndRelationshipStatus(new UserRelationshipId(user, blockedUser),
+                        RelationshipStatus.BLOCKED);
+        if (relationship.isEmpty()){
+            throw new MissingDatabaseEntryException("Blocked Relationship");
+        }
+
+        relationshipRepository.delete(relationship.get());
+    }
 }

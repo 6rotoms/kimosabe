@@ -111,6 +111,8 @@ public class User implements UserDetails {
         return getUsersOnRelationshipStatus(RelationshipStatus.ACCEPTED);
     }
 
+    public Set<User> getBlocked() { return getUsersOnRelationshipStatus(RelationshipStatus.BLOCKED); }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof User) {
