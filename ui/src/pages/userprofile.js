@@ -4,6 +4,7 @@ import Tile from '../components/Tile';
 import UserBiography from '../components/UserBiography';
 import userService from '../services/userService';
 import '../styles/userprofile.css';
+import Layout from '../components/Layout';
 
 const UserProfilePage = ({ username }) => {
   const [groupItems, setGroupItems] = useState('');
@@ -29,23 +30,25 @@ const UserProfilePage = ({ username }) => {
   }, [username]);
 
   return (
-    <div className="userprofile-container">
-      <div className="col1">
-        <Tile></Tile>
-        <Tile title="Friends" titleAlign="left"></Tile>
+    <Layout>
+      <div className="userprofile-container">
+        <div className="col1">
+          <Tile></Tile>
+          <Tile title="Friends" titleAlign="left"></Tile>
+        </div>
+        <div className="col2">
+          <UserBiography isToggleable={true} />
+          <Tile></Tile>
+        </div>
+        <div className="col3">
+          <Tile title="Groups" titleAlign="left">
+            <div className="groups-container" data-testid="users-groups">
+              {groupItems}
+            </div>
+          </Tile>
+        </div>
       </div>
-      <div className="col2">
-        <UserBiography isToggleable={true} />
-        <Tile></Tile>
-      </div>
-      <div className="col3">
-        <Tile title="Groups" titleAlign="left">
-          <div className="groups-container" data-testid="users-groups">
-            {groupItems}
-          </div>
-        </Tile>
-      </div>
-    </div>
+    </Layout>
   );
 };
 
