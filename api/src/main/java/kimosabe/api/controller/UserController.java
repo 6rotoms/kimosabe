@@ -117,7 +117,7 @@ public class UserController {
         return user.getBlocked().stream().map(UserInfo::new).collect(Collectors.toSet());
     }
 
-    @PostMapping("/block/{username}")
+    @PostMapping("/block/{targetName}")
     @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.OK)
     public void blockUser(@PathVariable String targetName){
@@ -125,7 +125,7 @@ public class UserController {
         userService.blockUser(username, targetName);
     }
 
-    @DeleteMapping("/block/{username}")
+    @DeleteMapping("/block/{blockedName}")
     @PreAuthorize("hasRole('ROLE_USER')")
     public void unblockUser(@PathVariable String blockedName) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
