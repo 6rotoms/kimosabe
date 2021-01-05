@@ -13,7 +13,7 @@ import org.springframework.http.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class unblockUserTest extends AbstractBaseIntegrationTest {
+public class UnblockUserTest extends AbstractBaseIntegrationTest {
     @Autowired
     UserRelationshipRepository userRelationshipRepository;
 

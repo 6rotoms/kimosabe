@@ -14,7 +14,7 @@ import org.springframework.http.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class blockUserTest extends AbstractBaseIntegrationTest {
+public class BlockUserTest extends AbstractBaseIntegrationTest {
     @Autowired
     UserRelationshipRepository userRelationshipRepository;
 
@@ -83,5 +83,18 @@ public class blockUserTest extends AbstractBaseIntegrationTest {
         assertThat(userRelationshipRepository.findByIdAndRelationshipStatus(
                 new UserRelationshipId(TestUserConstants.user1Id,
                         TestUserConstants.user2Id), RelationshipStatus.ACCEPTED)).isEmpty();
+    }
+
+    @Test
+    @DisplayName("block user on self returns 403")
+    public void whenBlockSelf_thenReturn403(){
+        // Arrange
+        HttpHeaders headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(baseUrl, HttpMethod.POST, request, String.class, "user1");
+
+        // Assert
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 }

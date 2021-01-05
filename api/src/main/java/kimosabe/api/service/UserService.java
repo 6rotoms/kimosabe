@@ -1,12 +1,9 @@
 package kimosabe.api.service;
 
 import kimosabe.api.entity.UserProfileInfo;
-import kimosabe.api.exception.BadRequestException;
+import kimosabe.api.exception.*;
 import kimosabe.api.entity.FriendAnswerRequestBody;
 import kimosabe.api.entity.FriendInviteRequestBody;
-import kimosabe.api.exception.MissingDatabaseEntryException;
-import kimosabe.api.exception.MissingRoleException;
-import kimosabe.api.exception.EntityExistsException;
 import kimosabe.api.model.*;
 import kimosabe.api.repository.RoleRepository;
 import kimosabe.api.repository.UserRelationshipRepository;
@@ -145,6 +142,10 @@ public class UserService {
     public void blockUser(String username, String targetName){
         User user = getUserByUsername(username);
         User targetUser = getUserByUsername(targetName);
+
+        if (user.equals(targetUser)){
+            throw new ForbiddenException("Blocking yourself is forbidden");
+        }
 
         Optional<UserRelationship> relationship =
                 relationshipRepository.findById(new UserRelationshipId(user, targetUser));

@@ -127,6 +127,7 @@ public class UserController {
 
     @DeleteMapping("/block/{blockedName}")
     @PreAuthorize("hasRole('ROLE_USER')")
+    @ResponseStatus(HttpStatus.OK)
     public void unblockUser(@PathVariable String blockedName) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         userService.unblockUser(username, blockedName);
