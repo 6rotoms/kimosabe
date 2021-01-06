@@ -34,6 +34,12 @@ public class ExceptionController {
         return new ExceptionResponse(exception, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ExceptionResponse exception(ForbiddenException exception){
+        return new ExceptionResponse(exception, HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionResponse exception(BadRequestException exception) {

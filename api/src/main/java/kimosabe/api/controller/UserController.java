@@ -109,4 +109,27 @@ public class UserController {
         return user.getGroups().stream()
                 .map(group -> groupService.getGroupInfo(group.getGroupId())).collect(Collectors.toSet());
     }
+
+    @GetMapping("/profile/{username}/blocked")
+    @ResponseStatus(HttpStatus.OK)
+    public Set<UserInfo> getAllBlocked(@PathVariable String username){
+        User user = userService.getUserByUsername(username);
+        return user.getBlocked().stream().map(UserInfo::new).collect(Collectors.toSet());
+    }
+
+    @PostMapping("/block/{targetName}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @ResponseStatus(HttpStatus.OK)
+    public void blockUser(@PathVariable String targetName){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        userService.blockUser(username, targetName);
+    }
+
+    @DeleteMapping("/block/{blockedName}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @ResponseStatus(HttpStatus.OK)
+    public void unblockUser(@PathVariable String blockedName) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        userService.unblockUser(username, blockedName);
+    }
 }
