@@ -20,7 +20,7 @@ public class UnblockUserTest extends AbstractBaseIntegrationTest {
     @BeforeEach
     public void setup() {
         // Arrange
-        baseUrl = "http://localhost:"+ randomServerPort + "/user/block/{username}";
+        baseUrl = "http://localhost:" + randomServerPort + "/user/block/{username}";
     }
 
     @Test
@@ -44,7 +44,7 @@ public class UnblockUserTest extends AbstractBaseIntegrationTest {
 
     @Test
     @DisplayName("successful unblock of user removes the relationship")
-    public void whenUnblockSuccessful_thenRemoveRelationship(){
+    public void whenUnblockSuccessful_thenRemoveRelationship() {
         // Arrange
         HttpHeaders headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
         HttpEntity<String> request = new HttpEntity<>(headers);
@@ -65,7 +65,7 @@ public class UnblockUserTest extends AbstractBaseIntegrationTest {
 
     @Test
     @DisplayName("no blocked relationship exists returns 404")
-    public void noBlockedRelationship_thenReturn404(){
+    public void noBlockedRelationship_thenReturn404() {
         // Arrange
         HttpHeaders headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
         HttpEntity<String> request = new HttpEntity<>(headers);

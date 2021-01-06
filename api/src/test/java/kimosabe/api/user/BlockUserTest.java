@@ -21,12 +21,12 @@ public class BlockUserTest extends AbstractBaseIntegrationTest {
     @BeforeEach
     public void setup() {
         // Arrange
-        baseUrl = "http://localhost:"+ randomServerPort + "/user/block/{username}";
+        baseUrl = "http://localhost:" + randomServerPort + "/user/block/{username}";
     }
 
     @Test
     @DisplayName("successful block user returns 200")
-    public void whenBlockSuccessful_thenReturn200(){
+    public void whenBlockSuccessful_thenReturn200() {
         // Arrange
         HttpHeaders headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
         HttpEntity<String> request = new HttpEntity<>(headers);
@@ -39,7 +39,7 @@ public class BlockUserTest extends AbstractBaseIntegrationTest {
 
     @Test
     @DisplayName("successful block user adds BLOCKED relationship")
-    public void whenBlockSuccessful_thenAddBlocked(){
+    public void whenBlockSuccessful_thenAddBlocked() {
         // Arrange
         HttpHeaders headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
         HttpEntity<String> request = new HttpEntity<>(headers);
@@ -55,7 +55,7 @@ public class BlockUserTest extends AbstractBaseIntegrationTest {
 
     @Test
     @DisplayName("successful block user removes PENDING relationship")
-    public void whenBlockSuccessful_thenRemovePending(){
+    public void whenBlockSuccessful_thenRemovePending() {
         // Arrange
         HttpHeaders headers = TestUserUtils.user1RequestFriendUser2(restTemplate, randomServerPort);
         HttpEntity<String> request = new HttpEntity<>(headers);
@@ -71,7 +71,7 @@ public class BlockUserTest extends AbstractBaseIntegrationTest {
 
     @Test
     @DisplayName("successful block user removes ACCEPTED relationship")
-    public void whenBlockSuccessful_thenRemoveAccepted(){
+    public void whenBlockSuccessful_thenRemoveAccepted() {
         // Arrange
         HttpHeaders headers = TestUserUtils.user2AcceptUser1FriendRequest(restTemplate, randomServerPort);
         HttpEntity<String> request = new HttpEntity<>(headers);
@@ -87,7 +87,7 @@ public class BlockUserTest extends AbstractBaseIntegrationTest {
 
     @Test
     @DisplayName("block user on self returns 403")
-    public void whenBlockSelf_thenReturn403(){
+    public void whenBlockSelf_thenReturn403() {
         // Arrange
         HttpHeaders headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
         HttpEntity<String> request = new HttpEntity<>(headers);
