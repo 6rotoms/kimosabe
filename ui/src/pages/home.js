@@ -1,12 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Layout from '../components/Layout';
 
 const HomePage = () => {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
   return (
-    <div>
+    <Layout>
       <p>{loggedIn ? 'Welcome!' : 'Kimosabe placeholder'}</p>
-    </div>
+    </Layout>
   );
 };
 

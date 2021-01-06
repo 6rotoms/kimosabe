@@ -5,6 +5,7 @@ import history from '../history';
 
 import '../styles/search.css';
 import SearchResult from '../components/SearchResult';
+import Layout from '../components/Layout';
 
 const SearchPage = ({ searchTerm, pageNum }) => {
   const [gameComponents, setGameComponents] = useState('');
@@ -41,29 +42,31 @@ const SearchPage = ({ searchTerm, pageNum }) => {
   };
 
   return (
-    <div data-testid="search-results" className="search">
-      {gameComponents}
-      <ReactPaginate
-        previousLabel="<<"
-        nextLabel=">>"
-        breakLabel="..."
-        pageCount={numPages}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={3}
-        onPageChange={onPageChange}
-        containerClassName="pagination"
-        subContainerClassName="pages pagination"
-        breakClassName="pagination-break"
-        pageClassName="pagination-page"
-        pageLinkClassName="pagination-page-link"
-        activeClassName="pagination-active"
-        activeLinkClassName="pagination-active-link"
-        nextClassName="pagination-next"
-        nextLinkClassName="pagination-next-link"
-        previousClassName="pagination-previous"
-        previousLinkClassName="pagination-previous-link"
-      />
-    </div>
+    <Layout>
+      <div data-testid="search-results" className="search">
+        {gameComponents}
+        <ReactPaginate
+          previousLabel="<<"
+          nextLabel=">>"
+          breakLabel="..."
+          pageCount={numPages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={onPageChange}
+          containerClassName="pagination"
+          subContainerClassName="pages pagination"
+          breakClassName="pagination-break"
+          pageClassName="pagination-page"
+          pageLinkClassName="pagination-page-link"
+          activeClassName="pagination-active"
+          activeLinkClassName="pagination-active-link"
+          nextClassName="pagination-next"
+          nextLinkClassName="pagination-next-link"
+          previousClassName="pagination-previous"
+          previousLinkClassName="pagination-previous-link"
+        />
+      </div>
+    </Layout>
   );
 };
 
