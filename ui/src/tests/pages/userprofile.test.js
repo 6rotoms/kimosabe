@@ -1,8 +1,9 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor } from '../test-utils';
 import history from '../../history';
 import UserProfilePage from '../../pages/userprofile';
 import { getGroups } from '../../services/userService';
+import { makeStore } from '../../redux/store';
 
 jest.mock('../../history', () => ({
   push: jest.fn(),
@@ -61,9 +62,10 @@ describe('pages/userprofile.js', () => {
   it('it should render', async () => {
     // Arrange
     mockWithGoodResponse();
+    const store = makeStore();
 
     // Act
-    render(<UserProfilePage />);
+    render(<UserProfilePage />, { store });
 
     // Assert
     await waitFor(() => {});
@@ -74,9 +76,10 @@ describe('pages/userprofile.js', () => {
     it('then it should redirect to group', async () => {
       // Arrange
       mockWithGoodResponse();
+      const store = makeStore();
 
       // Act
-      render(<UserProfilePage />);
+      render(<UserProfilePage />, { store });
 
       // Assert
       await waitFor(() => {});
@@ -89,9 +92,10 @@ describe('pages/userprofile.js', () => {
     it('then ellipses should be added at end', async () => {
       // Arrange
       mockWithEllipseResponse();
+      const store = makeStore();
 
       // Act
-      render(<UserProfilePage />);
+      render(<UserProfilePage />, { store });
 
       // Assert
       await waitFor(() => {});
@@ -103,9 +107,10 @@ describe('pages/userprofile.js', () => {
     it('then no groups should be listed', async () => {
       // Arrange
       mockWithBadResponse();
+      const store = makeStore();
 
       // Act
-      render(<UserProfilePage />);
+      render(<UserProfilePage />, { store });
 
       // Assert
       expect(screen.getByTestId('users-groups').children).toHaveLength(0);

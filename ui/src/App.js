@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
-import Header from './components/Header';
 import { HomePage, LoginPage, RegisterPage, SearchPage, UserProfilePage } from './pages';
 
 import './styles/global.css';
@@ -13,28 +12,23 @@ function App() {
   const query = useQuery();
 
   return (
-    <div className="layout">
-      <Header siteTitle="kimosabe" />
-      <main className="main">
-        <Switch>
-          <Route exact path="/login">
-            <LoginPage />
-          </Route>
-          <Route exact path="/register">
-            <RegisterPage />
-          </Route>
-          <Route exact path="/user/:username">
-            <UserProfilePage />
-          </Route>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/search">
-            <SearchPage searchTerm={query.get('term')} pageNum={query.get('page')} />
-          </Route>
-        </Switch>
-      </main>
-    </div>
+    <Switch>
+      <Route exact path="/login">
+        <LoginPage />
+      </Route>
+      <Route exact path="/register">
+        <RegisterPage />
+      </Route>
+      <Route exact path="/user/:username">
+        <UserProfilePage />
+      </Route>
+      <Route exact path="/">
+        <HomePage />
+      </Route>
+      <Route path="/search">
+        <SearchPage searchTerm={query.get('term')} pageNum={query.get('page')} />
+      </Route>
+    </Switch>
   );
 }
 
