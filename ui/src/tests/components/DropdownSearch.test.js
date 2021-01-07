@@ -129,7 +129,10 @@ describe('components/DropdownSearch.js', () => {
 
         describe('and searchbar gets unfocused', () => {
           it('then suggestions should hide', async () => {
+            // Act
             fireEvent.blur(screen.getByTestId('dropdown'));
+
+            // Assert
             await waitFor(() => {
               expect(screen.queryByTestId('suggestions')).toBeNull();
             });
@@ -140,11 +143,13 @@ describe('components/DropdownSearch.js', () => {
 
     describe('and enter key is pressed', () => {
       beforeEach(() => {
+        // Act
         const searchBar = screen.getByTestId('searchbar');
         fireEvent.keyUp(searchBar, { key: 'Enter', code: 13, keyCode: 13});
       });
 
       it('then onSearch should fire', () => {
+        // Assert
         expect(onSearch).toHaveBeenCalledTimes(1);
       });
     });
