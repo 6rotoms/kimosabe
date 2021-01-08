@@ -1,0 +1,65 @@
+.suggestions {
+    position: absolute;
+    margin-top: 2px;
+    z-index: 1;
+    width: 100%;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown>.searchbar:focus {
+    background-color: var(--color-text);
+}
+
+.suggestfooter {
+    background-color: var(--color-orange);
+    padding: 1px 0px 1px 5px;
+    border-radius: 0px 0px 5px 5px;
+    -webkit-box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--color-grey);
+    border-top: none;
+    width: calc(100% - 7px);
+}
+
+.suggestion-container {
+  background-color: var(--color-text);
+  width: calc(99%-2px);
+  border-color: var(--color-grey);
+  -webkit-box-shadow: 1px 4px 4px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 4px 4px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 4px 4px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--color-grey);
+  border-top: none;
+  display: flex;
+}
+
+.suggestion-container:hover {
+    background-color: var(--color-text-shaded);
+}
+
+.suggestion-container:first-child {
+    border-top: 1px solid var(--color-grey);
+}
+
+.suggestion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 4px;
+}
+
+.suggestion img {
+  width: 49px;
+  padding-right: 9px;
+}
+
+.suggestiontitle {
+  display: flex;
+  color: var(--color-grey);
+  font-size: 17px;
+}

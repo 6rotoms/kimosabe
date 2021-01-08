@@ -10,6 +10,7 @@
   --color-grey-dark: #424651;
   --color-grey-darker: #2e3440;
   --color-text: #ebe9f0;
+  --color-text-shaded: #d8dee9;
 }
 
 * {
@@ -97,15 +98,6 @@ h2 {
 .bgh-green:hover {
   background-color: var(--color-green-light);
   transition: 0.25s;
-}
-
-.search-field {
-  width: 40vw;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 5px;
-  background-color: var(--color-search);
-  color: var(--color-text);
 }
 
 .loading-text {
