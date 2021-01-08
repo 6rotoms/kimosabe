@@ -11,26 +11,18 @@ import DropdownSearch from './DropdownSearch';
 const Header = ({ siteTitle }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  const suggestionsMapper = async (searchTerm) => {
+  const suggestionsCallback = async (searchTerm) => {
     const response = await gameService.getSuggestions({ searchTerm });
     if (response.status !== 200) {
       return [];
     }
     const newSuggestions = response.body;
-    return newSuggestions.map((suggestion) => (
-      <Link
-        to={`/group/${suggestion.id}`}
-        className="suggestion-container"
-        key={suggestion.id}
-      >
-        <div className="suggestion">
-          <img alt={suggestion.thumbUrl} src={suggestion.thumbUrl}/>
-          <div className="suggestiontitle">
-            {suggestion.name}
-          </div>
-        </div>
-      </Link>
-    ));
+    return newSuggestions.map(suggestion => ({
+      id: suggestion.id,
+      link: `/group/${suggestion.id}`,
+      text: suggestion.name,
+      imgUrl: suggestion.thumbUrl,
+    }));
   };
   return (
     <header className="header-container">
@@ -40,9 +32,10 @@ const Header = ({ siteTitle }) => {
         </Link>
       </div>
       <DropdownSearch
-        suggestionsCallback={suggestionsMapper}
-        debounceTime={500}
+        suggestionsCallback={suggestionsCallback}
         onSearch={(searchTerm) => history.push(`/search?term=${encodeURI(searchTerm)}&page=0`)}
+        debounceTime={500}
+        showImage
         data-testid="header-search"
         placeholder="Look For Group..."
         className="search-field header-title__search"

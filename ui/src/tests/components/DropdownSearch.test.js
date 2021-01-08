@@ -34,11 +34,46 @@ describe('components/DropdownSearch.js', () => {
     });
   });
 
-  describe('when dropdown is not in focus', () => {
-    beforeEach(() => {});
+  describe('when showImage is toggled', () => {
+    beforeEach(() => {
+      // Act
+      const store = makeStore();
+      render(
+          <DropdownSearch
+              suggestionsCallback={suggestCallback}
+              onSearch={onSearch}
+              showImage
+          />,
+          { store }
+      );
+      screen.getByTestId('searchbar').focus();
+    });
+
+    describe('and text is entered', () => {
+      let searchBar;
+      beforeEach(() => {
+        // Act
+        suggestCallback.mockResolvedValueOnce([
+          {id:1, text: 'some-item', link:'anywhere', imgUrl: 'some-img'},
+          {id:2, text: 'some-item', link:'anywhere', imgUrl: 'some-img'},
+          {id:3, text: 'some-item', link:'anywhere', imgUrl: 'some-img'},
+        ]);
+        searchBar = screen.getByTestId('searchbar');
+        fireEvent.change(searchBar, { target: {value: 'b' } });
+      });
+
+      describe('and showImages is toggled', () => {
+        it('then images should be shown', async () => {
+          // Assert
+          await waitFor(() => {
+            expect(screen.queryAllByTestId('suggestion-img')).toHaveLength(3);
+          });
+        });
+      });
+    });
   });
 
-  describe('when dropdown is in focus', () => {
+  describe('when dropdown is not toggled', () => {
     beforeEach(() => {
       // Arrange
       const store = makeStore();
@@ -53,8 +88,8 @@ describe('components/DropdownSearch.js', () => {
       );
       screen.getByTestId('searchbar').focus();
     });
-
     it('then suggestions should not show up', async () => {
+      // Act
       await waitFor(() => {
         expect(screen.queryByTestId('suggestions')).toBeNull();
       });
@@ -102,9 +137,9 @@ describe('components/DropdownSearch.js', () => {
       beforeEach(() => {
         // Act
         suggestCallback.mockResolvedValueOnce([
-          (<div key={1}>some-item</div>),
-          (<div key={2}>some-item</div>),
-          (<div key={3}>some-item</div>),
+          {id:1, text: 'some-item', link:'anywhere', imgUrl: 'some-img'},
+          {id:2, text: 'some-item', link:'anywhere', imgUrl: 'some-img'},
+          {id:3, text: 'some-item', link:'anywhere', imgUrl: 'some-img'},
         ]);
         searchBar = screen.getByTestId('searchbar');
         fireEvent.change(searchBar, { target: {value: 'b' } });
@@ -117,25 +152,26 @@ describe('components/DropdownSearch.js', () => {
         });
       });
 
-      describe('and suggestCallback returns data', () => {
-        beforeEach(() => {
-        });
+      it('then there should be the correct suggestions', async () => {
+        // Assert
+        const elements = await screen.findAllByText('some-item');
+        expect(elements).toHaveLength(3);
+      });
 
-        it('then there should be the correct suggestions', async () => {
+      it('then there should be no images', () => {
+        // Assert
+        const elements = screen.queryAllByTestId('suggestion-img');
+        expect(elements).toHaveLength(0);
+      });
+
+      describe('and searchbar gets unfocused', () => {
+        it('then suggestions should hide', async () => {
+          // Act
+          fireEvent.blur(screen.getByTestId('dropdown'));
+
           // Assert
-          const elements = await screen.findAllByText('some-item');
-          expect(elements).toHaveLength(3);
-        });
-
-        describe('and searchbar gets unfocused', () => {
-          it('then suggestions should hide', async () => {
-            // Act
-            fireEvent.blur(screen.getByTestId('dropdown'));
-
-            // Assert
-            await waitFor(() => {
-              expect(screen.queryByTestId('suggestions')).toBeNull();
-            });
+          await waitFor(() => {
+            expect(screen.queryByTestId('suggestions')).toBeNull();
           });
         });
       });

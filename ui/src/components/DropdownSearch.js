@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useDebounce } from '../utils/helpers';
 import '../styles/dropdownsearch.css';
@@ -11,6 +12,7 @@ const DropdownSearch = ({
   suggestionsCallback,
   onSearch,
   debounceTime,
+  showImage,
   ...other
 }) => {
   const [suggestions, setSuggestions] = useState([]);
@@ -21,18 +23,40 @@ const DropdownSearch = ({
 
   useEffect(() => {
     let mounted = true;
+
     if (alreadyRan.current) {
       if (!debouncedSearchTerm || !/\S/.test(debouncedSearchTerm)) return;
       const promise = suggestionsCallback(debouncedSearchTerm);
-      promise.then((suggestionComponents) => {
-        if (mounted)
+      promise.then((suggestionsData) => {
+        if (mounted) {
+          const suggestionComponents = suggestionsData.map((suggestion) => (
+            <Link
+              to={suggestion.link}
+              key={suggestion.id}
+              className="suggestion-container"
+            >
+              <div className="suggestion">
+                { showImage &&
+                  <img
+                    data-testid="suggestion-img"
+                    alt={suggestion.imgUrl}
+                    src={suggestion.imgUrl}
+                  />
+                }
+                <div className="suggestiontitle">
+                  {suggestion.text}
+                </div>
+              </div>
+            </Link>
+          ));
           setSuggestions(suggestionComponents);
+        }
       });
     } else {
       alreadyRan.current = true;
     }
     return () => mounted = false;
-  }, [suggestionsCallback, debouncedSearchTerm]);
+  }, [suggestionsCallback, debouncedSearchTerm, showImage]);
 
   return (
     <div
@@ -77,12 +101,20 @@ const DropdownSearch = ({
 };
 
 DropdownSearch.propTypes = {
-  // Callback used to fetch data for the suggestions (should be raw data)
+  // Callback used to fetch data for the suggestions
+  // Returned data should be in this format:
+  // {
+  //   link: string - link to redirect to on click
+  //   text: string - text to display for each suggestion
+  //   imgUrl: string - url to image icon
+  // }
   suggestionsCallback: PropTypes.func.isRequired,
   // function called when search is invoked by enter key
   onSearch: PropTypes.func,
   // time interval to wait between calls to suggestionsCallback
   debounceTime: PropTypes.number,
+  // should images be shown for each suggestion
+  showImage: PropTypes.bool,
 };
 
 export default DropdownSearch;
