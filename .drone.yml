@@ -43,3 +43,70 @@ trigger:
   - master
   event:
   - pull_request
+
+---
+name: deploy-dev
+kind: pipeline
+type: docker
+
+platform:
+  os: linux
+  arch: amd64
+
+workspace:
+  path: /workspace
+
+steps:
+- name: build-backend
+  image: openjdk:11-jdk-slim
+  commands:
+  - mkdir -p /workspace/final
+  - cd ./api
+  - ./mvnw clean install
+  - cp ./target/*.jar /workspace/final/
+  - cp ../dev-compose.yml /workspace/final/
+
+- name: build-frontend
+  image: mhart/alpine-node:12
+  commands:
+  - cd ./ui
+  - npm install
+  - npm run-script build
+  - cp -r ./build /workspace/final/
+
+- name: deploy
+  image: appleboy/drone-scp
+  settings:
+    host:
+      from_secret: host_address
+    username:
+      from_secret: username
+    key:
+      from_secret: ssh_key
+    port: 22
+    target: /var/www/kimosabe
+    source: /workspace/final/*
+
+- name: run
+  image: appleboy/drone-ssh
+  settings:
+    host:
+      from_secret: host_address
+    username:
+      from_secret: username
+    key:
+      from_secret: ssh_key
+    port: 22
+    script:
+    - cd /var/www/kimosabe
+    - docker-compose -f dev-compose.yml down 
+    - docker-compose -f dev-compose.yml up -d
+    - sudo systemctl restart kimosabe-api.service
+    - echo "env updated $(date)" >> ~/drone-pipe
+
+trigger:
+  branch:
+  - master
+  event:
+  - push
+
