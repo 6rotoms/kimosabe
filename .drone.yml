@@ -100,6 +100,7 @@ steps:
     script:
     - cd /var/www/kimosabe
     - docker-compose -f dev-compose.yml down 
+    - docker-compose -f dev-compose.yml pull
     - docker-compose -f dev-compose.yml up -d
     - sudo systemctl restart kimosabe-api.service
     - echo "env updated $(date)" >> ~/drone-pipe
