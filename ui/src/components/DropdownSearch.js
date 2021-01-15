@@ -1,23 +1,13 @@
-import React, {
-  useRef,
-  useEffect,
-  useState,
-} from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useDebounce } from '../utils/helpers';
-import '../styles/dropdownsearch.css';
+import Input from './Input';
+import Dropdown from './Dropdown';
 
-const DropdownSearch = ({
-  suggestionsCallback,
-  onSearch,
-  debounceTime,
-  showImage,
-  ...other
-}) => {
+const DropdownSearch = ({ suggestionsCallback, onSearch, debounceTime, showImage, ...other }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [inFocus, setFocus] = useState(false);
   const alreadyRan = useRef(false);
   const debouncedSearchTerm = useDebounce(searchTerm, debounceTime);
 
@@ -30,22 +20,17 @@ const DropdownSearch = ({
       promise.then((suggestionsData) => {
         if (mounted) {
           const suggestionComponents = suggestionsData.map((suggestion) => (
-            <Link
-              to={suggestion.link}
-              key={suggestion.id}
-              className="suggestion-container"
-            >
-              <div className="suggestion">
-                { showImage &&
+            <Link to={suggestion.link} key={suggestion.id} className="suggestion-container w-auto">
+              <div className="suggestion flex border-b border-orange">
+                {showImage && (
                   <img
                     data-testid="suggestion-img"
                     alt={suggestion.imgUrl}
                     src={suggestion.imgUrl}
+                    className="h-16 rounded-lg m-4"
                   />
-                }
-                <div className="suggestiontitle">
-                  {suggestion.text}
-                </div>
+                )}
+                <div className="suggestiontitle flex items-center m-4 ml-0">{suggestion.text}</div>
               </div>
             </Link>
           ));
@@ -55,47 +40,33 @@ const DropdownSearch = ({
     } else {
       alreadyRan.current = true;
     }
-    return () => mounted = false;
+    return () => (mounted = false);
   }, [suggestionsCallback, debouncedSearchTerm, showImage]);
 
   return (
-    <div
-      onFocus={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget)) {
-          setFocus(true);
-        }
-      }}
-      onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget)) {
-          setFocus(false);
-        }
-      }}
-      className="dropdown"
-      data-testid="dropdown"
-    >
-      <input
-        type="text"
-        data-testid="searchbar"
-        {...other}
-        onChange={(e) => {
-          e.preventDefault();
-          setSearchTerm(e.target.value);
-        }}
-        onKeyUp={(e) => {
-          if (e.keyCode === 13) {
+    <div data-testid="dropdown" className="w-5/12">
+      <Dropdown
+        content={suggestions}
+        footer={`Results for "${searchTerm}"`}
+        visible={searchTerm && /\S/.test(searchTerm)}
+        data-testid="suggestions"
+      >
+        <Input
+          type="text"
+          data-testid="searchbar"
+          {...other}
+          onChange={(e) => {
             e.preventDefault();
-            onSearch(searchTerm);
-          }
-        }}
-      />
-      { inFocus && searchTerm && /\S/.test(searchTerm) &&
-        (<div className="suggestions" data-testid="suggestions">
-          {suggestions}
-          <div className="suggestfooter">
-            results for &quot;{searchTerm}&quot;
-          </div>
-        </div>)
-      }
+            setSearchTerm(e.target.value);
+          }}
+          onKeyUp={(e) => {
+            if (e.keyCode === 13) {
+              e.preventDefault();
+              onSearch(searchTerm);
+            }
+          }}
+        />
+      </Dropdown>
     </div>
   );
 };

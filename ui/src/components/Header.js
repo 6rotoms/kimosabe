@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import history from '../history';
-import '../styles/header.css';
 import { logoutUser } from '../redux/actions';
 import gameService from '../services/gameService';
 import DropdownSearch from './DropdownSearch';
+import Button from './Button';
+import Text from './Text';
+import Grid from './Grid';
 
 const Header = ({ siteTitle }) => {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const Header = ({ siteTitle }) => {
       return [];
     }
     const newSuggestions = response.body;
-    return newSuggestions.map(suggestion => ({
+    return newSuggestions.map((suggestion) => ({
       id: suggestion.id,
       link: `/group/${suggestion.id}`,
       text: suggestion.name,
@@ -25,12 +27,12 @@ const Header = ({ siteTitle }) => {
     }));
   };
   return (
-    <header className="header-container">
-      <div className="header-title">
-        <Link to="/" className="header-title__text">
+    <Grid cols="header" gap={4} className="bg-orange p-4">
+      <Link to="/">
+        <Text size="5xl" weight="bold">
           {siteTitle}
-        </Link>
-      </div>
+        </Text>
+      </Link>
       <DropdownSearch
         suggestionsCallback={suggestionsCallback}
         onSearch={(searchTerm) => history.push(`/search?term=${encodeURI(searchTerm)}&page=0`)}
@@ -38,20 +40,15 @@ const Header = ({ siteTitle }) => {
         showImage
         data-testid="header-search"
         placeholder="Look For Group..."
-        className="search-field header-title__search"
       />
-      <div className="header-login">
-        {isLoggedIn ? (
-          <button className="input-button bgh-red" onClick={() => dispatch(logoutUser())}>
-            Logout
-          </button>
-        ) : (
-          <Link to="/login/" className="input-button bgh-red">
-            Login
-          </Link>
-        )}
-      </div>
-    </header>
+      {isLoggedIn ? (
+        <Button onClick={() => dispatch(logoutUser())}>Logout</Button>
+      ) : (
+        <Link to="/login/">
+          <Button>Login</Button>
+        </Link>
+      )}
+    </Grid>
   );
 };
 
