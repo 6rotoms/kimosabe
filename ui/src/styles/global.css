@@ -1,4 +1,10 @@
-:root {
+html,
+body,
+#root {
+  height: 100%;
+  overflow: hidden;
+}
+/*:root {
   --color-orange: #d08770;
   --color-orange-light: #d79682;
   --color-search: #9f6e62;
@@ -133,4 +139,4 @@ select:focus {
 
 .display-textarea-dark {
   background-color: var(--color-grey-darker);
-}
+}*/

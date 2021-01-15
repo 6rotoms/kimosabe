@@ -4,6 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loginUser } from '../redux/actions';
 import Layout from '../components/Layout';
+import Input from '../components/Input';
+import Button from '../components/Button';
+import Text from '../components/Text';
+import Form from '../components/Form';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -13,45 +17,42 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   return (
     <Layout>
-      <form
+      <Form
         onSubmit={(e) => {
           e.preventDefault();
           dispatch(loginUser({ username, password }));
         }}
-        className="register-form"
+        className="flex flex-row justify-center items-center"
       >
-        <input
+        <Input
           value={username}
           data-testid="username-field"
           onChange={(event) => setUsername(event.target.value)}
           placeholder="Username"
-          className="input-field register-form-input"
         />
-        <input
+        <Input
           value={password}
           type="password"
           data-testid="password-field"
           onChange={(event) => setPassword(event.target.value)}
           placeholder="Password"
-          className="input-field register-form-input"
         />
-        <span data-testid="error-span" className="error">
-          {loginError}
-        </span>
-        {isLoading ? <span>Loading...</span> : null}
-        <input
-          data-testid="login-submit-button"
-          type="submit"
-          value="Login"
-          className="input-button bgh-red register-form-input"
-        />
-        <p>
+        {loginError && (
+          <Text type="error" data-testid="error-span">
+            {loginError}
+          </Text>
+        )}
+        {isLoading && <Text fontStyle="italic">Loading...</Text>}
+        <Button data-testid="login-submit-button" type="submit">
+          Login
+        </Button>
+        <Text color="ivory">
           Not registered?{' '}
-          <Link to="/register/" className="link">
-            Create an account
+          <Link to="/register/">
+            <Text type="link">Create an account</Text>
           </Link>
-        </p>
-      </form>
+        </Text>
+      </Form>
     </Layout>
   );
 };

@@ -4,7 +4,10 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.0.0",
+    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "autoprefixer": "^9.8.6",
     "cross-fetch": "^3.0.6",
+    "postcss": "^7.0.35",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-paginate": "^6.5.0",
@@ -12,7 +15,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
   },
   "scripts": {
     "start": "PORT=8000 craco start",
