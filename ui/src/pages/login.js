@@ -27,16 +27,20 @@ const LoginPage = () => {
         >
           <Input
             value={username}
+            label="Username"
+            required={true}
             data-testid="username-field"
             onChange={(event) => setUsername(event.target.value)}
-            placeholder="Username"
+            placeholder="Enter your username"
           />
           <Input
             value={password}
+            label="Password"
+            required={true}
             type="password"
             data-testid="password-field"
             onChange={(event) => setPassword(event.target.value)}
-            placeholder="Password"
+            placeholder="Enter your password"
           />
           {loginError && (
             <Text type="error" data-testid="error-span">
