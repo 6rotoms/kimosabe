@@ -49,11 +49,13 @@ const RegisterPage = () => {
         >
           <div>
             <Input
+              label="Username"
+              required={true}
               data-testid="rp-username"
               type="text"
               value={username}
               onChange={(event) => setUsername(event.target.value)}
-              placeholder="Username"
+              placeholder="Enter your username"
             />
             <Text type="error" data-testid="rp-username-error" id="error-username">
               {inlineErrors.username || registerError}
@@ -61,11 +63,13 @@ const RegisterPage = () => {
           </div>
           <div>
             <Input
+              label="Password"
+              required={true}
               data-testid="rp-password"
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              placeholder="Password"
+              placeholder="Enter your password"
             />
             <Text type="error" data-testid="rp-password-error" id="error-password">
               {inlineErrors.password}
@@ -73,11 +77,13 @@ const RegisterPage = () => {
           </div>
           <div>
             <Input
+              label="Confirm Password"
+              required={true}
               data-testid="rp-cpassword"
               type="password"
               value={cpassword}
               onChange={(event) => setCPassword(event.target.value)}
-              placeholder="Confirm Password"
+              placeholder="Re-enter your password"
             />
             <Text type="error" data-testid="rp-cpassword-error" id="error-compare">
               {inlineErrors.compare}
