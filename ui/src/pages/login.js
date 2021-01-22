@@ -9,6 +9,7 @@ import Button from '../components/Button';
 import Text from '../components/Text';
 import Form from '../components/Form';
 import Flex from '../components/Flex';
+import Container from '../components/Container';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -19,47 +20,52 @@ const LoginPage = () => {
   return (
     <Layout>
       <Flex justify="center" align="center">
-        <Form
-          onSubmit={(e) => {
-            e.preventDefault();
-            dispatch(loginUser({ username, password }));
-          }}
-        >
-          <Input
-            value={username}
-            label="Username"
-            required={true}
-            data-testid="username-field"
-            onChange={(event) => setUsername(event.target.value)}
-            placeholder="Enter your username"
-          />
-          <Input
-            value={password}
-            label="Password"
-            required={true}
-            type="password"
-            data-testid="password-field"
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="Enter your password"
-          />
-          {loginError && (
-            <Text type="error" data-testid="error-span">
-              {loginError}
-            </Text>
-          )}
-          {isLoading && <Text fontStyle="italic">Loading...</Text>}
-          <Button data-testid="login-submit-button" type="submit" className="w-full">
-            Login
-          </Button>
-          <Flex justify="center">
-            <Text color="ivory">
-              Not registered?{' '}
-              <Link to="/register/">
-                <Text type="link">Create an account</Text>
-              </Link>
-            </Text>
-          </Flex>
-        </Form>
+        <Container className="max-w-xl">
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              dispatch(loginUser({ username, password }));
+            }}
+          >
+            <Flex justify="center">
+              <Text size="3xl">Sign In</Text>
+            </Flex>
+            <Input
+              value={username}
+              label="Username"
+              required={true}
+              data-testid="username-field"
+              onChange={(event) => setUsername(event.target.value)}
+              placeholder="Enter your username"
+            />
+            <Input
+              value={password}
+              label="Password"
+              required={true}
+              type="password"
+              data-testid="password-field"
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Enter your password"
+            />
+            {loginError && (
+              <Text type="error" data-testid="error-span">
+                {loginError}
+              </Text>
+            )}
+            <Flex justify="center">
+              <Text color="ivory">
+                Not registered?{' '}
+                <Link to="/register/">
+                  <Text type="link">Create an account</Text>
+                </Link>
+              </Text>
+            </Flex>
+            {isLoading && <Text fontStyle="italic">Loading...</Text>}
+            <Button data-testid="login-submit-button" type="submit" className="w-full">
+              Login
+            </Button>
+          </Form>
+        </Container>
       </Flex>
     </Layout>
   );

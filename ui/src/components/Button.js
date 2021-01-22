@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Button = (props) => {
-  const { color = 'red', className, ...other } = props;
+  const { color = 'red', className = '', ...other } = props;
 
   return (
     <button

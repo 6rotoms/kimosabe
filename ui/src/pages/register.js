@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../redux/actions';
 
-import '../styles/register.css';
 import { REGISTER_ERROR_MESSAGES } from '../constants';
 import Layout from '../components/Layout';
 import Form from '../components/Form';
@@ -11,6 +10,7 @@ import Flex from '../components/Flex';
 import Input from '../components/Input';
 import Text from '../components/Text';
 import Button from '../components/Button';
+import Container from '../components/Container';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -39,61 +39,66 @@ const RegisterPage = () => {
   return (
     <Layout>
       <Flex justify="center" align="center">
-        <Form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (fieldsAreValid()) {
-              dispatch(registerUser({ username, password }));
-            }
-          }}
-        >
-          <div>
-            <Input
-              label="Username"
-              required={true}
-              data-testid="rp-username"
-              type="text"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-              placeholder="Enter your username"
-            />
-            <Text type="error" data-testid="rp-username-error" id="error-username">
-              {inlineErrors.username || registerError}
-            </Text>
-          </div>
-          <div>
-            <Input
-              label="Password"
-              required={true}
-              data-testid="rp-password"
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              placeholder="Enter your password"
-            />
-            <Text type="error" data-testid="rp-password-error" id="error-password">
-              {inlineErrors.password}
-            </Text>
-          </div>
-          <div>
-            <Input
-              label="Confirm Password"
-              required={true}
-              data-testid="rp-cpassword"
-              type="password"
-              value={cpassword}
-              onChange={(event) => setCPassword(event.target.value)}
-              placeholder="Re-enter your password"
-            />
-            <Text type="error" data-testid="rp-cpassword-error" id="error-compare">
-              {inlineErrors.compare}
-            </Text>
-          </div>
-          {isLoading ? <Text>Loading...</Text> : null}
-          <Button data-testid="rp-register-button" type="submit" className="w-full">
-            Register
-          </Button>
-        </Form>
+        <Container className="max-w-xl">
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (fieldsAreValid()) {
+                dispatch(registerUser({ username, password }));
+              }
+            }}
+          >
+            <Flex justify="center">
+              <Text size="3xl">Sign Up</Text>
+            </Flex>
+            <div>
+              <Input
+                label="Username"
+                required={true}
+                data-testid="rp-username"
+                type="text"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+                placeholder="Enter your username"
+              />
+              <Text type="error" data-testid="rp-username-error" id="error-username">
+                {inlineErrors.username || registerError}
+              </Text>
+            </div>
+            <div>
+              <Input
+                label="Password"
+                required={true}
+                data-testid="rp-password"
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Enter your password"
+              />
+              <Text type="error" data-testid="rp-password-error" id="error-password">
+                {inlineErrors.password}
+              </Text>
+            </div>
+            <div>
+              <Input
+                label="Confirm Password"
+                required={true}
+                data-testid="rp-cpassword"
+                type="password"
+                value={cpassword}
+                onChange={(event) => setCPassword(event.target.value)}
+                placeholder="Re-enter your password"
+              />
+              <Text type="error" data-testid="rp-cpassword-error" id="error-compare">
+                {inlineErrors.compare}
+              </Text>
+            </div>
+            {isLoading ? <Text>Loading...</Text> : null}
+            <Button data-testid="rp-register-button" type="submit" className="w-full">
+              Register
+            </Button>
+          </Form>
+        </Container>
       </Flex>
     </Layout>
   );
