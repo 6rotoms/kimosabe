@@ -28,9 +28,11 @@ module.exports = {
         DEFAULT: '#a3be8c',
       },
       grey: {
-        darkest: '#2e3440',
-        dark: '#424651',
+        darkest: '#3C4454',
+        dark: '#444D5F',
         DEFAULT: '#4c566a',
+        light: '#5D6678',
+        lighter: '#6F7787',
       },
     },
     spacing: {
@@ -343,7 +345,6 @@ module.exports = {
       11: 'repeat(11, minmax(0, 1fr))',
       12: 'repeat(12, minmax(0, 1fr))',
       header: 'auto minmax(auto, 1fr) auto',
-      auth: 'auto minmax(300px, 1fr) auto',
     },
     gridTemplateRows: {
       none: 'none',

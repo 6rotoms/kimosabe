@@ -44,7 +44,7 @@ const DropdownSearch = ({ suggestionsCallback, onSearch, debounceTime, showImage
   }, [suggestionsCallback, debouncedSearchTerm, showImage]);
 
   return (
-    <div data-testid="dropdown" className="w-5/12">
+    <div data-testid="dropdown">
       <Dropdown
         content={suggestions}
         footer={`Results for "${searchTerm}"`}
