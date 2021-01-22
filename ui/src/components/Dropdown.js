@@ -13,7 +13,7 @@ const Dropdown = (props) => {
   };
 
   return (
-    <div onFocus={handleActivity} onBlur={handleInactivity} className="relative">
+    <div onFocus={handleActivity} onBlur={handleInactivity} className="relative max-w-lg">
       {children}
       {visible && active && (
         <div {...other} className={`absolute z-10 bg-ivory rounded-lg shadow-md w-full mt-2 ${className}`}>
