@@ -8,7 +8,7 @@ const Text = (props) => {
     fontStyle,
     weight = 'normal',
     size = 'base',
-    className,
+    className = '',
     ...other
   } = props;
 
