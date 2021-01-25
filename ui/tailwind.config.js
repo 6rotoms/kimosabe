@@ -37,6 +37,8 @@ module.exports = {
     },
     spacing: {
       px: '1px',
+      px5: '5px',
+      px10: '10px',
       0: '0px',
       0.5: '0.125rem',
       1: '0.25rem',
@@ -344,6 +346,8 @@ module.exports = {
       10: 'repeat(10, minmax(0, 1fr))',
       11: 'repeat(11, minmax(0, 1fr))',
       12: 'repeat(12, minmax(0, 1fr))',
+      'groups-small': 'repeat(auto-fit, 2.5rem)',
+      groups: 'repeat(auto-fit, 4.5rem)',
       header: 'auto minmax(auto, 1fr) auto',
     },
     gridTemplateRows: {
@@ -374,6 +378,7 @@ module.exports = {
       '3/6': '50%',
       '4/6': '66.666667%',
       '5/6': '83.333333%',
+      97: '97%',
       full: '100%',
       screen: '100vh',
     }),
@@ -486,6 +491,7 @@ module.exports = {
     minHeight: {
       0: '0px',
       full: '100%',
+      90: '90%',
       screen: '100vh',
     },
     minWidth: {
@@ -715,6 +721,7 @@ module.exports = {
       '11/12': '91.666667%',
       full: '100%',
       screen: '100vw',
+      content: '1200px',
       min: 'min-content',
       max: 'max-content',
     }),

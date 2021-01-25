@@ -8,6 +8,7 @@ const Flex = (props) => {
     justify = 'start',
     align = 'stretch',
     className = '',
+    height = 'full',
     children,
     ...other
   } = props;
@@ -15,7 +16,14 @@ const Flex = (props) => {
   return (
     <div
       {...other}
-      className={`flex flex-${direction} flex-${wrap} justify-${justify} items-${align} h-full w-full ${className}`}
+      className={
+        `flex flex-${direction} ` +
+        `flex-${wrap} ` +
+        `justify-${justify} ` +
+        `h-${height} ` +
+        `items-${align} ` +
+        `w-full ${className}`
+      }
     >
       {children}
     </div>

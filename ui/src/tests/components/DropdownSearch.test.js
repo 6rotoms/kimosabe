@@ -13,12 +13,7 @@ describe('components/DropdownSearch.js', () => {
       const store = makeStore();
 
       // Act
-      render(
-          <DropdownSearch
-              suggestionsCallback={suggestCallback}
-          />,
-          { store }
-      );
+      render(<DropdownSearch suggestionsCallback={suggestCallback} />, { store });
     });
 
     it('it should render', () => {
@@ -38,14 +33,7 @@ describe('components/DropdownSearch.js', () => {
     beforeEach(() => {
       // Act
       const store = makeStore();
-      render(
-          <DropdownSearch
-              suggestionsCallback={suggestCallback}
-              onSearch={onSearch}
-              showImage
-          />,
-          { store }
-      );
+      render(<DropdownSearch suggestionsCallback={suggestCallback} onSearch={onSearch} showImage />, { store });
       screen.getByTestId('searchbar').focus();
     });
 
@@ -54,12 +42,12 @@ describe('components/DropdownSearch.js', () => {
       beforeEach(() => {
         // Act
         suggestCallback.mockResolvedValueOnce([
-          {id:1, text: 'some-item', link:'anywhere', imgUrl: 'some-img'},
-          {id:2, text: 'some-item', link:'anywhere', imgUrl: 'some-img'},
-          {id:3, text: 'some-item', link:'anywhere', imgUrl: 'some-img'},
+          { id: 1, text: 'some-item', link: 'anywhere', imgUrl: 'some-img' },
+          { id: 2, text: 'some-item', link: 'anywhere', imgUrl: 'some-img' },
+          { id: 3, text: 'some-item', link: 'anywhere', imgUrl: 'some-img' },
         ]);
         searchBar = screen.getByTestId('searchbar');
-        fireEvent.change(searchBar, { target: {value: 'b' } });
+        fireEvent.change(searchBar, { target: { value: 'b' } });
       });
 
       describe('and showImages is toggled', () => {
@@ -79,13 +67,7 @@ describe('components/DropdownSearch.js', () => {
       const store = makeStore();
 
       // Act
-      render(
-          <DropdownSearch
-              suggestionsCallback={suggestCallback}
-              onSearch={onSearch}
-          />,
-          { store }
-      );
+      render(<DropdownSearch suggestionsCallback={suggestCallback} onSearch={onSearch} />, { store });
       screen.getByTestId('searchbar').focus();
     });
     it('then suggestions should not show up', async () => {
@@ -100,7 +82,7 @@ describe('components/DropdownSearch.js', () => {
       beforeEach(() => {
         // Act
         searchBar = screen.getByTestId('searchbar');
-        fireEvent.change(searchBar, { target: {value: undefined } });
+        fireEvent.change(searchBar, { target: { value: undefined } });
       });
 
       it('then suggestions should not show up', async () => {
@@ -116,7 +98,7 @@ describe('components/DropdownSearch.js', () => {
       beforeEach(() => {
         // Act
         searchBar = screen.getByTestId('searchbar');
-        fireEvent.change(searchBar, { target: {value: '     ' } });
+        fireEvent.change(searchBar, { target: { value: '     ' } });
       });
 
       it('then value in input should match', () => {
@@ -137,12 +119,12 @@ describe('components/DropdownSearch.js', () => {
       beforeEach(() => {
         // Act
         suggestCallback.mockResolvedValueOnce([
-          {id:1, text: 'some-item', link:'anywhere', imgUrl: 'some-img'},
-          {id:2, text: 'some-item', link:'anywhere', imgUrl: 'some-img'},
-          {id:3, text: 'some-item', link:'anywhere', imgUrl: 'some-img'},
+          { id: 1, text: 'some-item', link: 'anywhere', imgUrl: 'some-img' },
+          { id: 2, text: 'some-item', link: 'anywhere', imgUrl: 'some-img' },
+          { id: 3, text: 'some-item', link: 'anywhere', imgUrl: 'some-img' },
         ]);
         searchBar = screen.getByTestId('searchbar');
-        fireEvent.change(searchBar, { target: {value: 'b' } });
+        fireEvent.change(searchBar, { target: { value: 'b' } });
       });
 
       it('then suggestions should show up', async () => {
@@ -181,7 +163,7 @@ describe('components/DropdownSearch.js', () => {
       beforeEach(() => {
         // Act
         const searchBar = screen.getByTestId('searchbar');
-        fireEvent.keyUp(searchBar, { key: 'Enter', code: 13, keyCode: 13});
+        fireEvent.keyUp(searchBar, { key: 'Enter', code: 13, keyCode: 13 });
       });
 
       it('then onSearch should fire', () => {

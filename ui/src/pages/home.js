@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Layout from '../components/Layout';
+import { Layout } from '../components';
 
 const HomePage = () => {
   const loggedIn = useSelector((state) => state.auth.loggedIn);

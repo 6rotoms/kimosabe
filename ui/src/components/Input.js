@@ -14,7 +14,7 @@ const Input = (props) => {
       )}
       <input
         {...other}
-        className={`w-full max-w-lg bg-ivory p-2.5 rounded-lg shadow-md focus:outline-none ${className}`}
+        className={`w-full max-w-lg bg-ivory p-2.5 rounded-lg focus:shadow-md focus:outline-none ${className}`}
       />
     </div>
   );
