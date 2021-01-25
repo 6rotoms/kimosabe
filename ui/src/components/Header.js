@@ -5,10 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import history from '../history';
 import { logoutUser } from '../redux/actions';
 import gameService from '../services/gameService';
-import DropdownSearch from './DropdownSearch';
-import Button from './Button';
-import Text from './Text';
-import Grid from './Grid';
+import { Grid, DropdownSearch, Button, Text } from './index';
 
 const Header = ({ siteTitle }) => {
   const dispatch = useDispatch();
