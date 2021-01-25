@@ -1,20 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/tile.css';
+import Text from './Text';
 
-const Tile = ({ title, children, className = '', titleAlign = 'center' }) => {
-  const alignment = { textAlign: titleAlign };
+const Tile = ({
+  title,
+  width = 'full',
+  height = 'auto',
+  children,
+  pd = '8',
+  className = '',
+  titleAlign = 'center',
+}) => {
   return (
-    <div className={`tile-container ${className}`}>
-      {title && (
-        <div data-testid="title-div">
-          <div data-testid="title-content" className="title" style={alignment}>
-            {title}
+    <div className={`w-${width} h-${height} bg-grey-dark rounded-lg shadow-lg ${className}`}>
+      <div className={`w-${width} h-${height} p-${pd}`}>
+        {title && (
+          <div data-testid="title-div">
+            <Text alignment={titleAlign}>{title}</Text>
+            <div className="my-px10 bg-grey w-full h-px" />
           </div>
-          <div className="underline" />
-        </div>
-      )}
-      {children}
+        )}
+        {children}
+      </div>
     </div>
   );
 };
@@ -22,6 +29,10 @@ const Tile = ({ title, children, className = '', titleAlign = 'center' }) => {
 Tile.propTypes = {
   // Pass in element or string.
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  pd: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  className: PropTypes.string,
   children: PropTypes.element,
   // Alignment of title: Either left, right, or center.
   titleAlign: PropTypes.string,

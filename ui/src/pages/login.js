@@ -3,13 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loginUser } from '../redux/actions';
-import Layout from '../components/Layout';
-import Input from '../components/Input';
-import Button from '../components/Button';
-import Text from '../components/Text';
-import Form from '../components/Form';
-import Flex from '../components/Flex';
-import Container from '../components/Container';
+import { Layout, Input, Button, Text, Form, Flex, Tile } from '../components';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -20,7 +14,7 @@ const LoginPage = () => {
   return (
     <Layout>
       <Flex justify="center" align="center">
-        <Container className="max-w-xl">
+        <Tile className="max-w-xl">
           <Form
             onSubmit={(e) => {
               e.preventDefault();
@@ -65,7 +59,7 @@ const LoginPage = () => {
               Login
             </Button>
           </Form>
-        </Container>
+        </Tile>
       </Flex>
     </Layout>
   );

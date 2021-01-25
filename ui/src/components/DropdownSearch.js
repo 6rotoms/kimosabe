@@ -2,8 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useDebounce } from '../utils/helpers';
-import Input from './Input';
-import Dropdown from './Dropdown';
+import { Input, Dropdown } from './index';
 
 const DropdownSearch = ({ suggestionsCallback, onSearch, debounceTime, showImage, ...other }) => {
   const [suggestions, setSuggestions] = useState([]);

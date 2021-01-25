@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import '../styles/editabletextarea.css';
+import Button from './Button';
+import Flex from './Flex';
 
 const EditableTextArea = ({ initialText = '', onSave, isToggleable = false, charLimit = -1 }) => {
   const [bio, setBio] = useState(initialText);
@@ -30,32 +31,43 @@ const EditableTextArea = ({ initialText = '', onSave, isToggleable = false, char
   };
 
   return (
-    <div className="edit-display-wrapper">
+    <Flex wrap="wrap" direction="col" minHeight="full" className="w-full">
       {editable ? (
         <textarea
           data-testid="display-textarea"
-          className="display-textarea-dark edit-text"
+          className={
+            'flex-1 ' +
+            'bg-grey-darkest ' +
+            'px-px5 ' +
+            'py-px10 ' +
+            'h-inherit ' +
+            'border-none ' +
+            'rounded-md ' +
+            'resize-none' +
+            'break-words' +
+            'whitespace-pre-wrap'
+          }
           onChange={(e) => handleChange(e.target.value)}
           value={unsavedBio}
         />
       ) : (
-        <div data-testid="display-text" className="display-text-light display-text">
+        <Flex data-testid="display-text" className="flex-1 px-px5 py-px10">
           {bio}
-        </div>
+        </Flex>
       )}
       {isToggleable && (
-        <div className="button-container" data-testid="button-container">
+        <Flex justify="end" height="auto" data-testid="button-container">
           {editable && (
-            <button className="input-button bgh-red" onClick={handleCancel}>
+            <Button onClick={handleCancel} className="m-2.5 mr-0">
               Cancel
-            </button>
+            </Button>
           )}
-          <button className="input-button bgh-green" onClick={handleSave}>
+          <Button color="green" onClick={handleSave} className="m-2.5 mr-0">
             {editable ? 'Save' : 'Edit'}
-          </button>
-        </div>
+          </Button>
+        </Flex>
       )}
-    </div>
+    </Flex>
   );
 };
 

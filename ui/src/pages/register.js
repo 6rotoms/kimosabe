@@ -4,13 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../redux/actions';
 
 import { REGISTER_ERROR_MESSAGES } from '../constants';
-import Layout from '../components/Layout';
-import Form from '../components/Form';
-import Flex from '../components/Flex';
-import Input from '../components/Input';
-import Text from '../components/Text';
-import Button from '../components/Button';
-import Container from '../components/Container';
+import { Layout, Input, Button, Text, Form, Flex, Tile } from '../components';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -39,7 +33,7 @@ const RegisterPage = () => {
   return (
     <Layout>
       <Flex justify="center" align="center">
-        <Container className="max-w-xl">
+        <Tile className="max-w-xl">
           <Form
             onSubmit={(e) => {
               e.preventDefault();
@@ -98,7 +92,7 @@ const RegisterPage = () => {
               Register
             </Button>
           </Form>
-        </Container>
+        </Tile>
       </Flex>
     </Layout>
   );
