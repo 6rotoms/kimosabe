@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EditableTextArea, Layout, Grid, Cell, Tile, Flex } from '../components';
+import {
+  EditableTextArea,
+  Layout,
+  Grid,
+  Cell,
+  Tile,
+  Tabs,
+  Flex,
+} from '../components';
 import userService from '../services/userService';
 
 const UserProfilePage = ({ username }) => {
@@ -40,10 +48,13 @@ const UserProfilePage = ({ username }) => {
             </Tile>
           </Cell>
           <Cell rowSpan={1} colSpan={1} rowStart={4} colStart={1}>
-            <Tile height="full" pd={6} title="Groups">
-              <Grid cols="groups" rows="o" gap={1} justify="center" className="grid-flow-row">
-                {groupItems}
-              </Grid>
+            <Tile height="full" pd={6}>
+              <Tabs tabNames={['Friends', 'Groups']}>
+                <div>Friends!</div>
+                <Grid cols="groups" rows="o" gap={1} justify="center" className="grid-flow-row overflow-auto">
+                  {groupItems}
+                </Grid>
+              </Tabs>
             </Tile>
           </Cell>
           <Cell rowSpan={2} colSpan={3} rowStart={3} colStart={2}>
