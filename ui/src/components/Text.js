@@ -4,7 +4,7 @@ const Text = (props) => {
   const {
     type = 'DEFAULT',
     color,
-    fontStyle,
+    fontStyle = '',
     weight = 'normal',
     size = 'base',
     className = '',

@@ -1,6 +1,7 @@
 export { default as Cell } from './Cell';
 export { default as Grid } from './Grid';
 export { default as Tile } from './Tile';
+export { default as Tabs } from './Tabs';
 export { default as Text } from './Text';
 export { default as Form } from './Form';
 export { default as Flex } from './Flex';
