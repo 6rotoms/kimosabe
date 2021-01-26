@@ -14,6 +14,7 @@ module.exports = {
       current: 'currentColor',
       ivory: {
         DEFAULT: '#ebe9f0',
+        dark: '#908D97',
       },
       orange: {
         light: '#d79682',
