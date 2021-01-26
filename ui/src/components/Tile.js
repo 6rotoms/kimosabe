@@ -17,7 +17,7 @@ const Tile = ({
         {title && (
           <div data-testid="title-div">
             <Text alignment={titleAlign}>{title}</Text>
-            <div className="my-px10 bg-grey w-full h-px" />
+            <div className="my-px10 bg-grey-lighter w-full h-px" />
           </div>
         )}
         {children}
