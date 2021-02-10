@@ -53,18 +53,15 @@ platform:
   os: linux
   arch: amd64
 
-workspace:
-  path: /workspace
-
 steps:
 - name: build-backend
   image: openjdk:11-jdk-slim
   commands:
-  - mkdir -p /workspace/final
+  - mkdir -p target
   - cd ./api
   - ./mvnw clean install
-  - cp ./target/*.jar /workspace/final/
-  - cp ../dev-compose.yml /workspace/final/
+  - cp ./target/*.jar target
+  - cp ../dev-compose.yml target
 
 - name: build-frontend
   image: mhart/alpine-node:12
@@ -72,7 +69,7 @@ steps:
   - cd ./ui
   - npm install
   - npm run-script build
-  - cp -r ./build /workspace/final/
+  - cp -r ./build target
 
 - name: deploy
   image: appleboy/drone-scp
@@ -85,7 +82,7 @@ steps:
       from_secret: ssh_key
     port: 22
     target: /var/www/kimosabe
-    source: /workspace/final/*
+    source: target
 
 - name: run
   image: appleboy/drone-ssh
@@ -98,7 +95,7 @@ steps:
       from_secret: ssh_key
     port: 22
     script:
-    - cd /var/www/kimosabe
+    - cd /var/www/kimosabe/target
     - docker-compose -f dev-compose.yml down 
     - docker-compose -f dev-compose.yml pull
     - docker-compose -f dev-compose.yml up -d
