@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  EditableTextArea,
-  Layout,
-  Grid,
-  Cell,
-  Tile,
-  Tabs,
-  Flex,
-} from '../components';
+import { EditableTextArea, Layout, Grid, Cell, Tile, Tabs, Flex } from '../components';
 import userService from '../services/userService';
 
 const UserProfilePage = ({ username }) => {
@@ -44,14 +36,27 @@ const UserProfilePage = ({ username }) => {
           </Cell>
           <Cell rowSpan={2} colSpan={3} rowStart={1} colStart={2}>
             <Tile pd={6} height="full">
-              <EditableTextArea initialText={''} isToggleable={true} onSave={handleBioSave} charLimit={2500} />
+              <EditableTextArea
+                data-testid="user-bio"
+                initialText={''}
+                isToggleable={true}
+                onSave={handleBioSave}
+                charLimit={2500}
+              />
             </Tile>
           </Cell>
           <Cell rowSpan={1} colSpan={1} rowStart={4} colStart={1}>
             <Tile height="full" pd={6}>
               <Tabs tabNames={['Friends', 'Groups']}>
-                <div>Friends!</div>
-                <Grid cols="groups" rows="o" gap={1} justify="center" className="grid-flow-row overflow-auto">
+                <div data-testid="users-friends">Friends!</div>
+                <Grid
+                  cols="groups"
+                  rows="o"
+                  gap={1}
+                  justify="center"
+                  className="grid-flow-row overflow-auto"
+                  data-testid="users-groups"
+                >
                   {groupItems}
                 </Grid>
               </Tabs>

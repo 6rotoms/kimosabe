@@ -21,7 +21,7 @@
   "scripts": {
     "start": "PORT=8000 craco start",
     "build": "craco build",
-    "test": "craco test --env=jsdom-sixteen --coverage",
+    "test": "craco test --env=jsdom-sixteen --coverage --collectCoverageFrom=!src/**/index.js",
     "lint": "./node_modules/.bin/eslint .",
     "pretty": "./node_modules/.bin/prettier --write .",
     "eject": "react-scripts eject"

@@ -15,7 +15,6 @@ describe('pages/register.js', () => {
     const store = makeStore();
     // Act
     render(<RegisterPage />, { store });
-
     // Assert
     expect(screen.getByTestId('rp-username').value).toBe('');
     expect(screen.getByTestId('rp-password').value).toBe('');

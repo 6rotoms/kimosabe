@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { render, fireEvent, screen, makeTestStore, waitFor } from '../test-utils';
 import LoginPage from '../../pages/login';
 import { login } from '../../services/authService';
@@ -41,7 +40,7 @@ describe('pages/login.js', () => {
     describe('and login succeeds', () => {
       beforeEach(() => {});
 
-      test('then error should be set', async () => {
+      test('then error should not exist', async () => {
         // Arrange
         const store = makeStore();
         const response = {
@@ -55,7 +54,7 @@ describe('pages/login.js', () => {
         await waitFor(() => {});
 
         // Assert
-        expect(screen.getByTestId('error-span').textContent).toBe('');
+        expect(screen.queryByTestId('error-span')).toBeNull();
       });
     });
 
