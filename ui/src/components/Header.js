@@ -41,7 +41,7 @@ const Header = ({ siteTitle }) => {
       {isLoggedIn ? (
         <Button onClick={() => dispatch(logoutUser())}>Logout</Button>
       ) : (
-        <Link to="/login/">
+        <Link to="/login/" data-testid="header-login">
           <Button>Login</Button>
         </Link>
       )}
