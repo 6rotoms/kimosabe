@@ -8,6 +8,7 @@ platform:
 
 steps:
 - name: test-backend
+  depends_on: [ clone ]
   image: openjdk:11-jdk-slim
   commands:
   - cd ./api
@@ -15,6 +16,7 @@ steps:
   - ./mvnw test -P it
 
 - name: test-frontend
+  depends_on: [ clone ] 
   image: mhart/alpine-node:12
   commands:
   - cd ./ui
@@ -55,24 +57,28 @@ platform:
 
 steps:
 - name: build-backend
+  depends_on: [ clone ]
   image: openjdk:11-jdk-slim
   commands:
   - mkdir -p target
   - cd ./api
   - ./mvnw clean install
-  - cp ./target/*.jar target
-  - cp ../dev-compose.yml target
+  - cp ./target/*.jar ../target
+  - cp ../ssh-compose.yml ../target
 
 - name: build-frontend
+  depends_on: [ clone ]
   image: mhart/alpine-node:12
   commands:
+  - mkdir -p target
   - cd ./ui
   - npm install
   - npm run-script build
-  - cp -r ./build target
+  - cp -r ./build ../target
 
 - name: deploy
   image: appleboy/drone-scp
+  depends_on: [ build-frontend, build-backend ]
   settings:
     host:
       from_secret: host_address
@@ -86,6 +92,7 @@ steps:
 
 - name: run
   image: appleboy/drone-ssh
+  depends_on: [ deploy ]
   settings:
     host:
       from_secret: host_address
@@ -95,10 +102,11 @@ steps:
       from_secret: ssh_key
     port: 22
     script:
+    - sudo systemctl stop kimosabe-api.service
     - cd /var/www/kimosabe/target
-    - docker-compose -f dev-compose.yml down 
-    - docker-compose -f dev-compose.yml pull
-    - docker-compose -f dev-compose.yml up -d
+    - docker-compose -f ssh-compose.yml down 
+    - docker-compose -f ssh-compose.yml pull
+    - docker-compose -f ssh-compose.yml up -d
     - sudo systemctl restart kimosabe-api.service
     - echo "env updated $(date)" >> ~/drone-pipe
 
