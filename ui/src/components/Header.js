@@ -1,3 +1,4 @@
+/* eslint-disable tailwind/class-order */
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';

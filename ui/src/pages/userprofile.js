@@ -6,9 +6,9 @@ import userService from '../services/userService';
 const UserProfilePage = ({ username }) => {
   const [groupItems, setGroupItems] = useState('');
 
+  // eslint-disable-next-line no-unused-vars
   const handleBioSave = (text) => {
     // TODO: Implement Redux action and API call for updating bio
-    console.log(text);
   };
   useEffect(() => {
     const getGroups = async () => {
@@ -30,7 +30,7 @@ const UserProfilePage = ({ username }) => {
   return (
     <Layout>
       <Flex justify="justify-center" align="items-center">
-        <Grid rows="grid-rows-4" cols="grid-cols-4" gap="gap-4" className="h-97 w-full min-h-90">
+        <Grid rows="grid-rows-4" cols="grid-cols-4" gap="gap-4" className="w-full h-97 min-h-90">
           <div className="row-span-3 col-span-1 row-start-1 col-start-1">
             <Tile height="h-full" title="username" titleAlign="text-center"></Tile>
           </div>
@@ -54,7 +54,7 @@ const UserProfilePage = ({ username }) => {
                   rows="grid-rows-o"
                   gap="gap-1"
                   justify="justify-center"
-                  className="grid-flow-row overflow-auto"
+                  className="overflow-auto grid-flow-row"
                   data-testid="users-groups"
                 >
                   {groupItems}

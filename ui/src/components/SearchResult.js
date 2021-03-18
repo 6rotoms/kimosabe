@@ -1,17 +1,17 @@
 import React from 'react';
+import {Tile, Text, Flex} from './index';
 
-const SearchResult = (props) => {
+const SearchResult = ({ name, summary, coverUrl }) => {
   return (
-    <div className="search-result">
-      <div className="search-result__cover-container">
-        <img src={props.coverUrl} alt="" className="search-result__cover" />
-      </div>
-      <div className="search-result-text">
-        <h2 className="search-result-text__title">{props.name}</h2>
-        <p className="search-result-text__desc">{props.summary}</p>
-      </div>
-    </div>
+    <Tile pd="p-3" height="h-32" width="w-11/12" className="justify-center" data-testid="search-result">
+      <Flex>
+        <img src={coverUrl} alt="" className="inline h-full"/>
+        <div className="overflow-hidden">
+          <Text size="text-xl" className="inline-block w-full px-5">{name}</Text>
+          <Text className="inline-block px-5">{summary.length > 380 ? `${summary.slice(0,377)}...` : summary}</Text>
+        </div>
+        </Flex>
+      </Tile>
   );
 };
-
 export default SearchResult;

@@ -24,7 +24,7 @@ const Tabs = ({ tabNames, children }) => {
   });
   return (
     <Flex direction="flex-col">
-      <Flex height="h-auto" className="pb-px5 border-ivory-dark border-b-2 mb-px10">
+      <Flex height="h-auto" className="border-b-2 pb-px5 border-ivory-dark mb-px10">
         {tabs}
       </Flex>
       {children.length > activeTab && children[activeTab]}

@@ -348,8 +348,8 @@ module.exports = {
       11: 'repeat(11, minmax(0, 1fr))',
       12: 'repeat(12, minmax(0, 1fr))',
       'groups-small': 'repeat(auto-fit, 2.5rem)',
-      groups: 'repeat(auto-fit, 4.5rem)',
-      header: 'auto minmax(auto, 1fr) auto',
+      'groups': 'repeat(auto-fit, 4.5rem)',
+      'header': 'auto minmax(auto, 1fr) auto',
     },
     gridTemplateRows: {
       none: 'none',
@@ -382,6 +382,8 @@ module.exports = {
       97: '97%',
       full: '100%',
       screen: '100vh',
+      'search-result': '115px',
+      inherit: 'inherit',
     }),
     inset: (theme, { negative }) => ({
       auto: 'auto',
@@ -725,6 +727,7 @@ module.exports = {
       content: '1200px',
       min: 'min-content',
       max: 'max-content',
+      inherit: 'inherit',
     }),
     zIndex: {
       auto: 'auto',

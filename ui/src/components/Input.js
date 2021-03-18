@@ -1,8 +1,7 @@
 import React from 'react';
 import Text from './Text';
 
-const Input = (props) => {
-  const { label, required, className, ...other } = props;
+const Input = ({ label, required, className = '', ...other }) => {
 
   return (
     <div>

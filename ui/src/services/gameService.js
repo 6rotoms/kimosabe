@@ -48,41 +48,35 @@ const gameService = {
     }
   },
 
+  // eslint-disable-next-line no-unused-vars
   getSuggestions: async ({ searchTerm }) => {
-    try {
-      // TODO: Write gameSuggestions request function for real endpoint
-      console.log(searchTerm);
-      return {
-        status: 200,
-        body: [
-          {
-            name: 'baldurs gate',
-            coverUrl: 'https://path.to.file.com',
-            thumbUrl: '//images.igdb.com/igdb/image/upload/t_thumb/co1ndn.jpg',
-            summary: 'info about baldurs gate here',
-            id: 'baldurs-gate-3',
-          },
-          {
-            name: 'baldurs gate',
-            coverUrl: 'https://path.to.file.com',
-            thumbUrl: '//images.igdb.com/igdb/image/upload/t_thumb/co1ndn.jpg',
-            summary: 'info about baldurs gate here',
-            id: 'baldurs-gate-2',
-          },
-          {
-            name: 'baldurs gate',
-            coverUrl: 'https://path.to.file.com',
-            thumbUrl: '//images.igdb.com/igdb/image/upload/t_thumb/co1ndn.jpg',
-            summary: 'info about baldurs gate here',
-            id: 'baldurs-gate-1',
-          },
-        ],
-      };
-    } catch (error) {
-      return {
-        status: 500,
-      };
-    }
+    // TODO: Write gameSuggestions request function for real endpoint
+    return {
+      status: 200,
+      body: [
+        {
+          name: 'baldurs gate',
+          coverUrl: 'https://path.to.file.com',
+          thumbUrl: '//images.igdb.com/igdb/image/upload/t_thumb/co1ndn.jpg',
+          summary: 'info about baldurs gate here',
+          id: 'baldurs-gate-3',
+        },
+        {
+          name: 'baldurs gate',
+          coverUrl: 'https://path.to.file.com',
+          thumbUrl: '//images.igdb.com/igdb/image/upload/t_thumb/co1ndn.jpg',
+          summary: 'info about baldurs gate here',
+          id: 'baldurs-gate-2',
+        },
+        {
+          name: 'baldurs gate',
+          coverUrl: 'https://path.to.file.com',
+          thumbUrl: '//images.igdb.com/igdb/image/upload/t_thumb/co1ndn.jpg',
+          summary: 'info about baldurs gate here',
+          id: 'baldurs-gate-1',
+        },
+      ],
+    };
   },
 };
 
