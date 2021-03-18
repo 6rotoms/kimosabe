@@ -18,7 +18,7 @@
     "quotes": [2, "single", { "avoidEscape": true }],
     "max-len": [2, { "code": 120 }]
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:tailwind/recommended"],
   "plugins": ["jest"],
   "env": {
     "browser": true,

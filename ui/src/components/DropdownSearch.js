@@ -19,17 +19,17 @@ const DropdownSearch = ({ suggestionsCallback, onSearch, debounceTime, showImage
       promise.then((suggestionsData) => {
         if (mounted) {
           const suggestionComponents = suggestionsData.map((suggestion) => (
-            <Link to={suggestion.link} key={suggestion.id} className="suggestion-container w-auto">
-              <div className="suggestion flex border-b border-orange">
+            <Link to={suggestion.link} data-testid="suggestion" key={suggestion.id} className="w-auto">
+              <div className="flex border-b border-orange">
                 {showImage && (
                   <img
                     data-testid="suggestion-img"
                     alt={suggestion.imgUrl}
                     src={suggestion.imgUrl}
-                    className="h-16 rounded-lg m-4"
+                    className="h-16 m-4 rounded-lg"
                   />
                 )}
-                <div className="suggestiontitle flex items-center m-4 ml-0">{suggestion.text}</div>
+                <div className="flex items-center m-4 ml-0 suggestiontitle">{suggestion.text}</div>
               </div>
             </Link>
           ));

@@ -15,12 +15,15 @@ const Dropdown = (props) => {
   };
 
   return (
-    <div onFocus={handleActivity} onBlur={handleInactivity} className="relative max-w-lg">
+    <div onFocus={handleActivity} onBlur={handleInactivity} className="relative max-w-lg" data-test-id="dropdown">
       {children}
       {visible && active && (
-        <div {...other} className={`absolute z-10 bg-ivory rounded-lg shadow-md w-full mt-2 ${className}`}>
+        <div
+          {...other}
+          className={`absolute z-10 bg-ivory rounded-lg shadow-md w-full mt-2 ${className}`}
+        >
           {content}
-          {footer && <div className="bg-orange text-ivory rounded-b-lg p-2">{footer}</div>}
+          {footer && <div className="p-2 rounded-b-lg bg-orange text-ivory">{footer}</div>}
         </div>
       )}
     </div>

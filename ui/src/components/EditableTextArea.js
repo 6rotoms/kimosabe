@@ -58,11 +58,11 @@ const EditableTextArea = ({ initialText = '', onSave, isToggleable = false, char
       {isToggleable && (
         <Flex justify="justify-end" height="h-auto" data-testid="button-container">
           {editable && (
-            <Button onClick={handleCancel} className="m-2.5 mr-0">
+            <Button onClick={handleCancel} className="mr-0 m-2.5">
               Cancel
             </Button>
           )}
-          <Button color="green" onClick={handleSave} className="m-2.5 mr-0">
+          <Button color="green" onClick={handleSave} className="mr-0 m-2.5">
             {editable ? 'Save' : 'Edit'}
           </Button>
         </Flex>
