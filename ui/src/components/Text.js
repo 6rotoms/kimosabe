@@ -5,31 +5,24 @@ const Text = (props) => {
     type = 'DEFAULT',
     color,
     fontStyle = '',
-    weight = 'normal',
-    size = 'base',
+    weight = 'font-normal',
+    size = 'text-base',
     className = '',
-    alignment = 'left',
     ...other
   } = props;
   let finalColor;
   let finalClassName;
   if (type === 'link') {
-    if (!color) finalColor = 'orange';
-    finalColor = color ? color : 'orange';
+    finalColor = color ?? 'text-orange';
     finalClassName = 'underline hover:text-orange-light ' + className;
   } else if (type === 'error') {
-    finalColor = color ? color : 'red';
+    finalColor = color ?? 'text-red';
     finalClassName = className;
   } else {
-    finalColor = color ? color : 'ivory';
+    finalColor = color ?? 'text-ivory';
     finalClassName = className;
   }
-  return (
-    <span
-      {...other}
-      className={`text-${finalColor} ${fontStyle} text-${size} text-${alignment} font-${weight} ${finalClassName}`}
-    />
-  );
+  return <span {...other} className={`${finalColor} ${fontStyle} ${size} ${weight} ${finalClassName}`} />;
 };
 
 export default Text;

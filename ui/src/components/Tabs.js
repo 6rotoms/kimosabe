@@ -10,15 +10,11 @@ const Tabs = ({ tabNames, children }) => {
     setActiveTab(i);
   };
   const tabs = tabNames.map((name, i) => {
-    let color = 'ivory-dark';
-    if (i === activeTab) {
-      color = 'ivory';
-    }
     return (
       <Text
-        color={color}
+        color={i === activeTab ? 'text-ivory' : 'text-ivory-dark'}
         key={name}
-        size="xs"
+        size="text-xs"
         onClick={() => onTabSwitch(i)}
         className="pr-4 cursor-pointer md:text-base"
       >
@@ -27,8 +23,10 @@ const Tabs = ({ tabNames, children }) => {
     );
   });
   return (
-    <Flex direction="col">
-      <Flex height="auto pb-px5 border-ivory-dark border-b-2 mb-px10">{tabs}</Flex>
+    <Flex direction="flex-col">
+      <Flex height="h-auto" className="pb-px5 border-ivory-dark border-b-2 mb-px10">
+        {tabs}
+      </Flex>
       {children.length > activeTab && children[activeTab]}
     </Flex>
   );

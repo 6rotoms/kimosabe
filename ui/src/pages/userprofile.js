@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EditableTextArea, Layout, Grid, Cell, Tile, Tabs, Flex } from '../components';
+import { EditableTextArea, Layout, Grid, Tile, Tabs, Flex } from '../components';
 import userService from '../services/userService';
 
 const UserProfilePage = ({ username }) => {
@@ -29,13 +29,13 @@ const UserProfilePage = ({ username }) => {
 
   return (
     <Layout>
-      <Flex justify="center" align="center">
-        <Grid rows={4} cols={4} gap={4} className="h-97 w-full min-h-90">
-          <Cell rowSpan={3} colSpan={1} rowStart={1} colStart={1}>
-            <Tile pd={6} height="full"></Tile>
-          </Cell>
-          <Cell rowSpan={2} colSpan={3} rowStart={1} colStart={2}>
-            <Tile pd={6} height="full">
+      <Flex justify="justify-center" align="items-center">
+        <Grid rows="grid-rows-4" cols="grid-cols-4" gap="gap-4" className="h-97 w-full min-h-90">
+          <div className="row-span-3 col-span-1 row-start-1 col-start-1">
+            <Tile height="h-full" title="username" titleAlign="text-center"></Tile>
+          </div>
+          <div className="row-span-2 col-span-3 row-start-1 col-start-2">
+            <Tile height="h-full">
               <EditableTextArea
                 data-testid="user-bio"
                 initialText={''}
@@ -44,16 +44,16 @@ const UserProfilePage = ({ username }) => {
                 charLimit={2500}
               />
             </Tile>
-          </Cell>
-          <Cell rowSpan={1} colSpan={1} rowStart={4} colStart={1}>
-            <Tile height="full" pd={6}>
+          </div>
+          <div className="row-span-1 col-span-1 row-start-4 col-start-1">
+            <Tile height="h-full">
               <Tabs tabNames={['Friends', 'Groups']}>
                 <div data-testid="users-friends">Friends!</div>
                 <Grid
-                  cols="groups"
-                  rows="o"
-                  gap={1}
-                  justify="center"
+                  cols="grid-cols-groups"
+                  rows="grid-rows-o"
+                  gap="gap-1"
+                  justify="justify-center"
                   className="grid-flow-row overflow-auto"
                   data-testid="users-groups"
                 >
@@ -61,10 +61,10 @@ const UserProfilePage = ({ username }) => {
                 </Grid>
               </Tabs>
             </Tile>
-          </Cell>
-          <Cell rowSpan={2} colSpan={3} rowStart={3} colStart={2}>
-            <Tile pd={4} height="full"></Tile>
-          </Cell>
+          </div>
+          <div className="row-span-2 col-span-3 row-start-3 col-start-2">
+            <Tile height="h-full"></Tile>
+          </div>
         </Grid>
       </Flex>
     </Layout>

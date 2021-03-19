@@ -8,8 +8,10 @@ const Dropdown = (props) => {
     setActive(true);
   };
 
-  const handleInactivity = () => {
-    setActive(false);
+  const handleInactivity = (e) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setActive(false);
+    }
   };
 
   return (

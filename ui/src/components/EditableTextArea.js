@@ -31,7 +31,7 @@ const EditableTextArea = ({ initialText = '', onSave, isToggleable = false, char
   };
 
   return (
-    <Flex wrap="wrap" direction="col" className="w-full" {...props}>
+    <Flex wrap={true} direction="flex-col" className="w-full" {...props}>
       {editable ? (
         <textarea
           data-testid="display-textarea"
@@ -56,7 +56,7 @@ const EditableTextArea = ({ initialText = '', onSave, isToggleable = false, char
         </Flex>
       )}
       {isToggleable && (
-        <Flex justify="end" height="auto" data-testid="button-container">
+        <Flex justify="justify-end" height="h-auto" data-testid="button-container">
           {editable && (
             <Button onClick={handleCancel} className="m-2.5 mr-0">
               Cancel

@@ -32,7 +32,7 @@ const RegisterPage = () => {
 
   return (
     <Layout>
-      <Flex justify="center" align="center">
+      <Flex justify="justify-center" align="items-center">
         <Tile className="max-w-xl">
           <Form
             onSubmit={(e) => {
@@ -42,8 +42,8 @@ const RegisterPage = () => {
               }
             }}
           >
-            <Flex justify="center">
-              <Text size="3xl">Sign Up</Text>
+            <Flex justify="justify-center">
+              <Text size="text-3xl">Sign Up</Text>
             </Flex>
             <div>
               <Input
@@ -55,7 +55,7 @@ const RegisterPage = () => {
                 onChange={(event) => setUsername(event.target.value)}
                 placeholder="Enter your username"
               />
-              <Text type="error" data-testid="rp-username-error" id="error-username">
+              <Text type="error" data-testid="rp-username-error">
                 {inlineErrors.username || registerError}
               </Text>
             </div>
@@ -69,7 +69,7 @@ const RegisterPage = () => {
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Enter your password"
               />
-              <Text type="error" data-testid="rp-password-error" id="error-password">
+              <Text type="error" data-testid="rp-password-error">
                 {inlineErrors.password}
               </Text>
             </div>
@@ -83,7 +83,7 @@ const RegisterPage = () => {
                 onChange={(event) => setCPassword(event.target.value)}
                 placeholder="Re-enter your password"
               />
-              <Text type="error" data-testid="rp-cpassword-error" id="error-compare">
+              <Text type="error" data-testid="rp-cpassword-error">
                 {inlineErrors.compare}
               </Text>
             </div>

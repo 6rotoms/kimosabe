@@ -24,9 +24,9 @@ const Header = ({ siteTitle }) => {
     }));
   };
   return (
-    <Grid cols="header" gap={4} className="bg-orange p-4">
+    <Grid rows="grid-rows-1" cols="grid-cols-header" gap="gap-4" className="bg-orange p-4">
       <Link to="/">
-        <Text size="5xl" weight="bold">
+        <Text size="text-5xl" weight="text-bold">
           {siteTitle}
         </Text>
       </Link>
