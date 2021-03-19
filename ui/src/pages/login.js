@@ -13,7 +13,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   return (
     <Layout>
-      <Flex justify="center" align="center">
+      <Flex justify="justify-center" align="items-center">
         <Tile className="max-w-xl">
           <Form
             onSubmit={(e) => {
@@ -21,8 +21,8 @@ const LoginPage = () => {
               dispatch(loginUser({ username, password }));
             }}
           >
-            <Flex justify="center">
-              <Text size="3xl">Sign In</Text>
+            <Flex justify="justify-center">
+              <Text size="text-3xl">Sign In</Text>
             </Flex>
             <Input
               value={username}
@@ -46,15 +46,15 @@ const LoginPage = () => {
                 {loginError}
               </Text>
             )}
-            <Flex justify="center">
-              <Text color="ivory">
+            <Flex justify="justify-center">
+              <Text color="text-ivory">
                 Not registered?{' '}
                 <Link to="/register/">
                   <Text type="link">Create an account</Text>
                 </Link>
               </Text>
             </Flex>
-            {isLoading && <Text fontStyle="italic">Loading...</Text>}
+            {isLoading && <Text fontStyle="text-italic">Loading...</Text>}
             <Button data-testid="login-submit-button" type="submit" className="w-full">
               Login
             </Button>

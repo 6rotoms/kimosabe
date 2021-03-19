@@ -1,14 +1,14 @@
 import React from 'react';
 
-const Grid = (props) => {
-  const { cols = '0', rows = '0', gap = 0, className = '', justify = 'normal', ...other } = props;
-
-  return (
-    <div
-      {...other}
-      className={`grid grid-cols-${cols} justify-${justify} grid-rows-${rows} gap-${gap} ${className}`}
-    />
-  );
+const Grid = ({
+  cols = 'grid-cols-0',
+  rows = 'grid-rows-0',
+  gap = 'gap-0',
+  justify = 'justify-normal',
+  className = '',
+  ...other
+}) => {
+  return <div {...other} className={`grid ${rows} ${cols} ${justify} ${gap} ${className}`} />;
 };
 
 export default Grid;

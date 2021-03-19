@@ -7,8 +7,8 @@ const Input = (props) => {
   return (
     <div>
       {label && (
-        <Text weight="bold">
-          {required && <Text color="red">* </Text>}
+        <Text weight="text-bold">
+          {required && <Text color="text-red">* </Text>}
           {label}
         </Text>
       )}

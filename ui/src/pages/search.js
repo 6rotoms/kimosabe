@@ -3,7 +3,6 @@ import gameService from '../services/gameService';
 import ReactPaginate from 'react-paginate';
 import history from '../history';
 
-import '../styles/search.css';
 import SearchResult from '../components/SearchResult';
 import Layout from '../components/Layout';
 

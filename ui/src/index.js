@@ -6,7 +6,7 @@ import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { makeStore } from './redux/store';
 import history from './history';
-import 'tailwindcss/tailwind.css';
+import './index.css';
 
 const store = makeStore();
 ReactDOM.render(
