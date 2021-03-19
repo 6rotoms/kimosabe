@@ -62,6 +62,7 @@ const DropdownSearch = ({ suggestionsCallback, onSearch, debounceTime, showImage
             if (e.keyCode === 13) {
               e.preventDefault();
               onSearch(searchTerm);
+              e.target.blur();
             }
           }}
         />

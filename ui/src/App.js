@@ -2,8 +2,6 @@ import React from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { HomePage, LoginPage, RegisterPage, SearchPage, UserProfilePage } from './pages';
 
-import './styles/global.css';
-
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }

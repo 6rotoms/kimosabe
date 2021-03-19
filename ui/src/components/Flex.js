@@ -3,12 +3,12 @@ import React from 'react';
 /* Container that will take up all available space, useful for aligning other elements */
 const Flex = (props) => {
   const {
-    direction = 'row',
-    wrap = 'nowrap',
-    justify = 'start',
-    align = 'stretch',
+    direction = 'flex-row',
+    wrap = false,
+    justify = 'justify-start',
+    align = 'items-stretch',
     className = '',
-    height = 'full',
+    height = 'h-full',
     children,
     ...other
   } = props;
@@ -16,14 +16,9 @@ const Flex = (props) => {
   return (
     <div
       {...other}
-      className={
-        `flex flex-${direction} ` +
-        `flex-${wrap} ` +
-        `justify-${justify} ` +
-        `h-${height} ` +
-        `items-${align} ` +
-        `w-full ${className}`
-      }
+      className={`flex w-full ${direction} ${
+        wrap ? 'flex-wrap' : 'flex-nowrap'
+      } ${justify} ${height} ${align} ${className}`}
     >
       {children}
     </div>
