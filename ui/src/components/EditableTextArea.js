@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Button from './Button';
-import Flex from './Flex';
+
+import { Button, Flex } from './index';
 
 const EditableTextArea = ({ initialText = '', onSave, isToggleable = false, charLimit = -1, ...props }) => {
   const [bio, setBio] = useState(initialText);
@@ -43,15 +43,16 @@ const EditableTextArea = ({ initialText = '', onSave, isToggleable = false, char
             'h-inherit ' +
             'border-none ' +
             'rounded-md ' +
-            'resize-none' +
-            'break-words' +
+            'text-ivory ' +
+            'resize-none ' +
+            'break-words ' +
             'whitespace-pre-wrap'
           }
           onChange={(e) => handleChange(e.target.value)}
           value={unsavedBio}
         />
       ) : (
-        <Flex data-testid="display-text" className="flex-1 px-px5 py-px10">
+        <Flex data-testid="display-text" className="flex-1 px-px5 py-px10 text-ivory">
           {bio}
         </Flex>
       )}
