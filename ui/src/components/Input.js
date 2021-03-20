@@ -2,7 +2,6 @@ import React from 'react';
 import Text from './Text';
 
 const Input = ({ label, required, className = '', ...other }) => {
-
   return (
     <div>
       {label && (
