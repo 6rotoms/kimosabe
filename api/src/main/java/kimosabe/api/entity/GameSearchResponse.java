@@ -1,6 +1,6 @@
 package kimosabe.api.entity;
 
-import com.redislabs.lettusearch.search.Document;
+import com.redislabs.lettusearch.Document;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
