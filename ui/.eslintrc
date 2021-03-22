@@ -1,6 +1,6 @@
 {
   "parser": "babel-eslint",
-  "ignorePatterns": "_this_is_virtual_fs_path_",
+  "ignorePatterns": ["build/**"],
   "rules": {
     "strict": 0,
     "semi": [2, "always"],
