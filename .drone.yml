@@ -22,7 +22,7 @@ steps:
   - cd ./ui
   - npm install
   - npm run-script lint
-  - npm test
+  - npm test -- --watchAll=false
 
 services:
 - name: db
