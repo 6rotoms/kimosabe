@@ -1,27 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/tile.css';
+import Text from './Text';
 
-const Tile = ({ title, children, className = '', titleAlign = 'center' }) => {
-  const alignment = { textAlign: titleAlign };
+const Tile = ({
+  title = '',
+  width = 'w-full',
+  height = 'h-auto',
+  children,
+  pd = 'p-6',
+  className = '',
+  titleAlign = 'center',
+  ...other
+}) => {
   return (
-    <div className={`tile-container ${className}`}>
-      {title && (
-        <div data-testid="title-div">
-          <div data-testid="title-content" className="title" style={alignment}>
-            {title}
+    <div className={`${width} ${height} bg-grey-dark rounded-lg shadow-lg ${className}`} {...other}>
+      <div className={`w-full h-full ${pd}`}>
+        {title && (
+          <div data-testid="title-div" className={`${titleAlign} border-b-2 pb-px5 mb-px10 border-ivory-dark`}>
+            <Text>{title}</Text>
           </div>
-          <div className="underline" />
-        </div>
-      )}
-      {children}
+        )}
+        {children}
+      </div>
     </div>
   );
 };
 
 Tile.propTypes = {
   // Pass in element or string.
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  title: PropTypes.string,
+  width: PropTypes.string,
+  height: PropTypes.string,
+  pd: PropTypes.string,
+  className: PropTypes.string,
   children: PropTypes.element,
   // Alignment of title: Either left, right, or center.
   titleAlign: PropTypes.string,

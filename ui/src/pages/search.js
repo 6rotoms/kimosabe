@@ -3,9 +3,8 @@ import gameService from '../services/gameService';
 import ReactPaginate from 'react-paginate';
 import history from '../history';
 
-import '../styles/search.css';
 import SearchResult from '../components/SearchResult';
-import Layout from '../components/Layout';
+import { Layout, Grid } from '../components';
 
 const SearchPage = ({ searchTerm, pageNum }) => {
   const [gameComponents, setGameComponents] = useState('');
@@ -43,29 +42,29 @@ const SearchPage = ({ searchTerm, pageNum }) => {
 
   return (
     <Layout>
-      <div data-testid="search-results" className="search">
+      <Grid rows="grid-rows-25" cols="grid-cols-1" gap="gap-6" className="pt-2 justify-items-center">
         {gameComponents}
-        <ReactPaginate
-          previousLabel="<<"
-          nextLabel=">>"
-          breakLabel="..."
-          pageCount={numPages}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={3}
-          onPageChange={onPageChange}
-          containerClassName="pagination"
-          subContainerClassName="pages pagination"
-          breakClassName="pagination-break"
-          pageClassName="pagination-page"
-          pageLinkClassName="pagination-page-link"
-          activeClassName="pagination-active"
-          activeLinkClassName="pagination-active-link"
-          nextClassName="pagination-next"
-          nextLinkClassName="pagination-next-link"
-          previousClassName="pagination-previous"
-          previousLinkClassName="pagination-previous-link"
-        />
-      </div>
+      </Grid>
+      <ReactPaginate
+        previousLabel="<<"
+        nextLabel=">>"
+        breakLabel="..."
+        pageCount={numPages}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={3}
+        onPageChange={onPageChange}
+        containerClassName="justify-center flex mb-2"
+        subContainerClassName="pages pagination"
+        breakClassName="text-ivory mx-1 p-2"
+        pageClassName="text-ivory mx-1 p-2"
+        pageLinkClassName="cursor-pointer outline-none"
+        activeClassName="underline"
+        activeLinkClassName="cursor-pointer outline-none"
+        nextClassName="text-ivory mx-1 p-2"
+        nextLinkClassName="cursor-pointer outline-none"
+        previousClassName="text-ivory mx-1 p-2"
+        previousLinkClassName="cursor-pointer outline-none"
+      />
     </Layout>
   );
 };

@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import history from '../history';
-import Tile from '../components/Tile';
-import UserBiography from '../components/UserBiography';
+import { Link } from 'react-router-dom';
+import { EditableTextArea, Layout, Grid, Tile, Tabs, Flex } from '../components';
 import userService from '../services/userService';
-import '../styles/userprofile.css';
-import Layout from '../components/Layout';
 
 const UserProfilePage = ({ username }) => {
   const [groupItems, setGroupItems] = useState('');
 
+  // eslint-disable-next-line no-unused-vars
+  const handleBioSave = (text) => {
+    // TODO: Implement Redux action and API call for updating bio
+  };
   useEffect(() => {
     const getGroups = async () => {
       const response = await userService.getGroups({ username });
       if (response.status !== 200) {
         return;
       }
-      const newGroupItems = response.body.map((group) => (
-        <div key={group.groupId} className="user-group" onClick={() => history.push(`/group/${group.groupId}`)}>
-          <img className="group-coverart" src={group.coverUrl} alt={group.coverUrl} />
-          <div className="user-group_title">
-            {group.groupName.length > 34 ? `${group.groupName.substring(0, 32)}...` : group.groupName}
-          </div>
-        </div>
+      const newGroupItems = response.body.slice(0, 6).map((group) => (
+        <Link key={group.groupId} className="relative w-16" to={`/group/${group.groupId}`}>
+          <img className="w-16 rounded-lg" src={group.coverUrl} alt={group.coverUrl} />
+        </Link>
       ));
       setGroupItems(newGroupItems);
     };
@@ -31,23 +29,44 @@ const UserProfilePage = ({ username }) => {
 
   return (
     <Layout>
-      <div className="userprofile-container">
-        <div className="col1">
-          <Tile></Tile>
-          <Tile title="Friends" titleAlign="left"></Tile>
-        </div>
-        <div className="col2">
-          <UserBiography isToggleable={true} />
-          <Tile></Tile>
-        </div>
-        <div className="col3">
-          <Tile title="Groups" titleAlign="left">
-            <div className="groups-container" data-testid="users-groups">
-              {groupItems}
-            </div>
-          </Tile>
-        </div>
-      </div>
+      <Flex justify="justify-center" align="items-center">
+        <Grid rows="grid-rows-4" cols="grid-cols-4" gap="gap-4" className="w-full h-97 min-h-90">
+          <div className="row-span-3 col-span-1 row-start-1 col-start-1">
+            <Tile height="h-full" title="username" titleAlign="text-center"></Tile>
+          </div>
+          <div className="row-span-2 col-span-3 row-start-1 col-start-2">
+            <Tile height="h-full">
+              <EditableTextArea
+                data-testid="user-bio"
+                initialText={''}
+                isToggleable={true}
+                onSave={handleBioSave}
+                charLimit={2500}
+              />
+            </Tile>
+          </div>
+          <div className="row-span-1 col-span-1 row-start-4 col-start-1">
+            <Tile height="h-full">
+              <Tabs tabNames={['Friends', 'Groups']}>
+                <div data-testid="users-friends">Friends!</div>
+                <Grid
+                  cols="grid-cols-groups"
+                  rows="grid-rows-o"
+                  gap="gap-1"
+                  justify="justify-center"
+                  className="overflow-auto grid-flow-row"
+                  data-testid="users-groups"
+                >
+                  {groupItems}
+                </Grid>
+              </Tabs>
+            </Tile>
+          </div>
+          <div className="row-span-2 col-span-3 row-start-3 col-start-2">
+            <Tile height="h-full"></Tile>
+          </div>
+        </Grid>
+      </Flex>
     </Layout>
   );
 };
