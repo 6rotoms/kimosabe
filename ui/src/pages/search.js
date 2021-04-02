@@ -11,29 +11,37 @@ const SearchPage = ({ searchTerm, pageNum }) => {
   const [numPages, setNumPages] = useState('');
 
   useEffect(() => {
+    let mounted = true;
+
     const getTotalNumberOfPages = async () => {
       const res = await gameService.getSearchInfo({
         searchTerm: searchTerm,
       });
 
-      if (res.status === 200) {
+      if (res.status === 200 && mounted) {
         setNumPages(res.body.maxNumPages + 1);
       }
     };
     getTotalNumberOfPages();
+
+    return () => (mounted = false);
   }, [searchTerm]);
 
   useEffect(() => {
+    let mounted = true;
+
     const updateGameComponents = async () => {
       const res = await gameService.gameSearch({
         searchTerm: searchTerm,
         pageNum: pageNum,
       });
-      if (res.status === 200) {
+      if (res.status === 200 && mounted) {
         setGameComponents(res.body.map((game) => <SearchResult key={game.id} {...game} />));
       }
     };
     updateGameComponents();
+
+    return () => (mounted = false);
   }, [searchTerm, pageNum]);
 
   const onPageChange = (e) => {

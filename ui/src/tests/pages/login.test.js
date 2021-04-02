@@ -2,8 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen, makeTestStore, waitFor } from '../test-utils';
 import LoginPage from '../../pages/login';
 import { login } from '../../services/authService';
-import { makeStore } from '../../redux/store';
-import { LOGIN_ERROR_MESSAGES } from '../../constants/auth';
+import { LOGIN_ERROR_MESSAGES } from '../../constants';
 
 jest.mock('../../services/authService', () => ({
   login: jest.fn(),
@@ -12,9 +11,8 @@ jest.mock('../../services/authService', () => ({
 describe('pages/login.js', () => {
   it('should render', () => {
     // Arrange
-    const store = makeStore();
     // Act
-    render(<LoginPage />, { store });
+    render(<LoginPage />);
 
     // Assert
     expect(screen.getByTestId('username-field').value).toBe('');
@@ -42,14 +40,13 @@ describe('pages/login.js', () => {
 
       test('then error should not exist', async () => {
         // Arrange
-        const store = makeStore();
         const response = {
           status: 200,
         };
         login.mockReturnValueOnce(response);
 
         // Act
-        render(<LoginPage />, { store });
+        render(<LoginPage />);
         fireEvent.click(screen.getByTestId('login-submit-button'));
         await waitFor(() => {});
 
@@ -61,7 +58,6 @@ describe('pages/login.js', () => {
     describe('and login fails', () => {
       test('then error should be set', async () => {
         // Arrange
-        const store = makeStore();
         const response = {
           status: 403,
           error: LOGIN_ERROR_MESSAGES[403],
@@ -69,7 +65,7 @@ describe('pages/login.js', () => {
         login.mockReturnValueOnce(response);
 
         // Act
-        const { getByText } = render(<LoginPage />, { store });
+        const { getByText } = render(<LoginPage />);
         fireEvent.click(screen.getByTestId('login-submit-button'));
         await waitFor(() => {});
 
@@ -82,11 +78,8 @@ describe('pages/login.js', () => {
 
   describe('when username is changed', () => {
     test('then state should change', async () => {
-      // Arrange
-      const store = makeStore();
-
       // Act
-      const { findByTestId } = render(<LoginPage />, { store });
+      const { findByTestId } = render(<LoginPage />);
       const field = await findByTestId('username-field');
       fireEvent.change(field, { target: { value: 'newusername' } });
 
@@ -97,11 +90,8 @@ describe('pages/login.js', () => {
 
   describe('when password is changed', () => {
     test('then state should change', async () => {
-      // Arrange
-      const store = makeStore();
-
       // Act
-      const { findByTestId } = render(<LoginPage />, { store });
+      const { findByTestId } = render(<LoginPage />);
       const field = await findByTestId('password-field');
       fireEvent.change(field, { target: { value: 'newpassword' } });
 

@@ -4,17 +4,19 @@ import { SEARCH_ERROR_MESSAGES } from '../constants';
 import fetchResource from '../utils/fetchResource';
 
 const gameService = {
-  gameSearch: ({ searchTerm, pageNum }) => fetchResource({
-    method: 'GET',
-    url: `${process.env.REACT_APP_API_URL}/games?searchTerm=${encodeURIComponent(searchTerm)}&pageNum=${pageNum}`,
-    messageMapping: SEARCH_ERROR_MESSAGES,
-  }),
+  gameSearch: ({ searchTerm, pageNum }) =>
+    fetchResource({
+      method: 'GET',
+      url: `${process.env.REACT_APP_API_URL}/games?searchTerm=${encodeURIComponent(searchTerm)}&pageNum=${pageNum}`,
+      messageMapping: SEARCH_ERROR_MESSAGES,
+    }),
 
-  getSearchInfo: ({ searchTerm }) => fetchResource({
-    method: 'GET',
-    url: `${process.env.REACT_APP_API_URL}/games/searchInfo?searchTerm=${encodeURIComponent(searchTerm)}`,
-    messageMapping: SEARCH_ERROR_MESSAGES,
-  }),
+  getSearchInfo: ({ searchTerm }) =>
+    fetchResource({
+      method: 'GET',
+      url: `${process.env.REACT_APP_API_URL}/games/searchInfo?searchTerm=${encodeURIComponent(searchTerm)}`,
+      messageMapping: SEARCH_ERROR_MESSAGES,
+    }),
   // eslint-disable-next-line no-unused-vars
   getSuggestions: async ({ searchTerm }) => {
     // TODO: Write gameSuggestions request function for real endpoint

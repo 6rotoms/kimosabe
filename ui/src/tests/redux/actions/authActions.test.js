@@ -5,7 +5,12 @@ import * as actions from '../../../redux/actions/authActions';
 import * as types from '../../../constants/actions';
 import { initialState as initialAuthState } from '../../../redux/reducers/authReducer';
 import { initialState as initialErrorState } from '../../../redux/reducers/errorReducer';
-import { REGISTER_ERROR_MESSAGES, LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../../../constants';
+import {
+  REGISTER_ERROR_MESSAGES,
+  LOGIN_ERROR_MESSAGES,
+  LOGOUT_ERROR_MESSAGES,
+  UNDEFINED_ERROR_MESSAGE,
+} from '../../../constants';
 import history from '../../../history';
 import { register, login, logout } from '../../../services/authService';
 
@@ -143,14 +148,14 @@ describe('redux/actions/authActions.js', () => {
           // Arrange
           const response = {
             status: 501,
-            error: REGISTER_ERROR_MESSAGES.UNDEFINED,
+            error: UNDEFINED_ERROR_MESSAGE,
           };
           register.mockReturnValueOnce(response);
           expectedActions = [
             { type: types.REGISTER_REQUEST },
             {
               type: types.REGISTER_FAILED,
-              errorMessage: REGISTER_ERROR_MESSAGES.UNDEFINED,
+              errorMessage: UNDEFINED_ERROR_MESSAGE,
             },
           ];
 
@@ -250,14 +255,14 @@ describe('redux/actions/authActions.js', () => {
           // Arrange
           const response = {
             status: 501,
-            error: LOGIN_ERROR_MESSAGES.UNDEFINED,
+            error: UNDEFINED_ERROR_MESSAGE,
           };
           login.mockReturnValueOnce(response);
           expectedActions = [
             { type: types.LOGIN_REQUEST },
             {
               type: types.LOGIN_FAILED,
-              errorMessage: LOGIN_ERROR_MESSAGES.UNDEFINED,
+              errorMessage: UNDEFINED_ERROR_MESSAGE,
             },
           ];
 

@@ -2,18 +2,28 @@
 import React from 'react';
 import { render as rtlRender } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 import { makeStore } from '../redux/store';
 
-const TestWrapper = ({ store, children }) => (
+const TestWrapper = ({ history, store, children }) => (
   <Provider store={store}>
-    <BrowserRouter>{children}</BrowserRouter>
+    <Router history={history}>{children}</Router>
   </Provider>
 );
 
-function render(ui, { store, ...otherOpts }) {
-  return rtlRender(<TestWrapper store={store}>{ui}</TestWrapper>, otherOpts);
+function render(
+  ui,
+  { route = '/', history = createMemoryHistory({ initialEntries: [route] }), store = makeStore(), ...otherOpts } = {},
+) {
+  return rtlRender(
+    <TestWrapper store={store} history={history}>
+      {ui}
+    </TestWrapper>,
+    otherOpts,
+  );
 }
+
 export function makeTestStore() {
   const store = makeStore();
   const origDispatch = store.dispatch;

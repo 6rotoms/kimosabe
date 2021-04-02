@@ -2,8 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen, waitFor } from '../test-utils';
 import RegisterPage from '../../pages/register';
 import { register } from '../../services/authService';
-import { makeStore } from '../../redux/store';
-import { REGISTER_ERROR_MESSAGES } from '../../constants/auth';
+import { REGISTER_ERROR_MESSAGES } from '../../constants';
 
 jest.mock('../../services/authService', () => ({
   register: jest.fn(),
@@ -11,10 +10,8 @@ jest.mock('../../services/authService', () => ({
 
 describe('pages/register.js', () => {
   it('should render', () => {
-    // Arrange
-    const store = makeStore();
     // Act
-    render(<RegisterPage />, { store });
+    render(<RegisterPage />);
     // Assert
     expect(screen.getByTestId('rp-username').value).toBe('');
     expect(screen.getByTestId('rp-password').value).toBe('');
@@ -23,11 +20,8 @@ describe('pages/register.js', () => {
 
   describe('when username is changed', () => {
     test('then state should change', async () => {
-      // Arrange
-      const store = makeStore();
-
       // Act
-      const { findByTestId } = render(<RegisterPage />, { store });
+      const { findByTestId } = render(<RegisterPage />);
       const field = await findByTestId('rp-username');
       fireEvent.change(field, { target: { value: 'newusername' } });
 
@@ -38,11 +32,8 @@ describe('pages/register.js', () => {
 
   describe('when password is changed', () => {
     test('then state should change', async () => {
-      // Arrange
-      const store = makeStore();
-
       // Act
-      const { findByTestId } = render(<RegisterPage />, { store });
+      const { findByTestId } = render(<RegisterPage />);
       const field = await findByTestId('rp-password');
       fireEvent.change(field, { target: { value: 'newpassword' } });
 
@@ -53,11 +44,8 @@ describe('pages/register.js', () => {
 
   describe('when confirm password is changed', () => {
     test('then state should change', async () => {
-      // Arrange
-      const store = makeStore();
-
       // Act
-      const { findByTestId } = render(<RegisterPage />, { store });
+      const { findByTestId } = render(<RegisterPage />);
       const field = await findByTestId('rp-cpassword');
       fireEvent.change(field, { target: { value: 'newpassword' } });
 
@@ -70,14 +58,13 @@ describe('pages/register.js', () => {
     describe('all fields valid and register succeeds', () => {
       test('no errors should be displayed', async () => {
         // Arrange
-        const store = makeStore();
         const response = {
           status: 200,
         };
         register.mockReturnValueOnce(response);
 
         // Act
-        render(<RegisterPage />, { store });
+        render(<RegisterPage />);
         fireEvent.change(screen.getByTestId('rp-username'), { target: { value: 'user' } });
         fireEvent.change(screen.getByTestId('rp-password'), { target: { value: 'pass' } });
         fireEvent.change(screen.getByTestId('rp-cpassword'), { target: { value: 'pass' } });
@@ -94,7 +81,6 @@ describe('pages/register.js', () => {
     describe('all fields valid but username is taken', () => {
       test('error should be returned and displayed', async () => {
         // Arrange
-        const store = makeStore();
         const response = {
           status: 409,
           error: REGISTER_ERROR_MESSAGES[409],
@@ -102,7 +88,7 @@ describe('pages/register.js', () => {
         register.mockReturnValueOnce(response);
 
         // Act
-        render(<RegisterPage />, { store });
+        render(<RegisterPage />);
         fireEvent.change(screen.getByTestId('rp-username'), { target: { value: 'user' } });
         fireEvent.change(screen.getByTestId('rp-password'), { target: { value: 'pass' } });
         fireEvent.change(screen.getByTestId('rp-cpassword'), { target: { value: 'pass' } });
@@ -116,11 +102,8 @@ describe('pages/register.js', () => {
 
     describe('username/password fields less than 3 characters long', () => {
       test('error should be displayed', () => {
-        // Arrange
-        const store = makeStore();
-
         // Act
-        render(<RegisterPage />, { store });
+        render(<RegisterPage />);
         fireEvent.click(screen.getByTestId('rp-register-button'));
 
         // Assert
@@ -131,11 +114,8 @@ describe('pages/register.js', () => {
 
     describe('password and confirm password fields do not match', () => {
       test('error should be displayed', async () => {
-        // Arrange
-        const store = makeStore();
-
         // Act
-        render(<RegisterPage />, { store });
+        render(<RegisterPage />);
         const field = screen.getByTestId('rp-password');
         fireEvent.change(field, { target: { value: 'pass' } });
         fireEvent.click(screen.getByTestId('rp-register-button'));

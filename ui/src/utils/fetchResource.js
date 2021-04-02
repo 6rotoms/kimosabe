@@ -1,9 +1,9 @@
 import { UNDEFINED_ERROR_MESSAGE } from '../constants';
 
-export default async function fetchResource({method, url, headers, requestBody, messageMapping}) {
+export default async function fetchResource({ method, url, headers, requestBody, messageMapping }) {
   const options = {
     method,
-    headers: {...headers},
+    headers: { ...headers },
   };
   if (requestBody) {
     options.body = JSON.stringify(requestBody);
@@ -20,11 +20,11 @@ export default async function fetchResource({method, url, headers, requestBody, 
     }
     let body;
     const contentType = response.headers.get('Content-Type');
-    if (contentType &&  contentType === 'application/json') {
+    if (contentType && contentType === 'application/json') {
       body = await response.json();
     }
     return { status: response.status, ...(body && { body }) };
-  } catch(error) {
+  } catch (error) {
     return {
       status: 500,
       error: UNDEFINED_ERROR_MESSAGE,

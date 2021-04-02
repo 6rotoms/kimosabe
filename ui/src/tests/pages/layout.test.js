@@ -3,10 +3,10 @@ import { Layout } from '../../components';
 import { render, fireEvent, screen } from '../test-utils';
 import { login } from '../../services/authService';
 import { getSuggestions } from '../../services/gameService';
-import { makeStore } from '../../redux/store';
 import { loginUser } from '../../redux/actions/authActions';
 import history from '../../history';
 import { waitFor } from '@testing-library/react';
+import { makeStore } from '../../redux/store';
 
 jest.spyOn(history, 'push');
 jest.mock('../../services/authService', () => ({
@@ -19,10 +19,8 @@ jest.mock('../../services/gameService', () => ({
 
 describe('components/layout.js', () => {
   it('should render', async () => {
-    // Arrange
-    const store = makeStore();
     // Act
-    render(<Layout />, { store });
+    render(<Layout />);
 
     // Assert
     await waitFor(() => {
@@ -35,7 +33,6 @@ describe('components/layout.js', () => {
     let field;
     beforeEach(async () => {
       // Arrange
-      const store = makeStore();
       const responseSuggestions = {
         status: 200,
         body: [
@@ -51,7 +48,7 @@ describe('components/layout.js', () => {
 
       // Act
       getSuggestions.mockReturnValueOnce(responseSuggestions);
-      const { findByTestId } = render(<Layout />, { store });
+      const { findByTestId } = render(<Layout />);
       field = await findByTestId('header-search');
       field.focus();
       fireEvent.change(field, { target: { value: 'test' } });
@@ -85,11 +82,8 @@ describe('components/layout.js', () => {
 
   describe('when user is not logged in', () => {
     it('then login should be displayed', () => {
-      // Arrange
-      const store = makeStore();
-
       // Act
-      render(<Layout />, { store });
+      render(<Layout />);
       const loginButton = screen.queryByText('Login');
 
       // Assert

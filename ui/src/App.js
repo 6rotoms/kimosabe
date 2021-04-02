@@ -1,6 +1,6 @@
 import React from 'react';
-import { Route, Switch, useLocation } from 'react-router-dom';
-import { HomePage, LoginPage, RegisterPage, SearchPage, UserProfilePage } from './pages';
+import { Route, Redirect, Switch, useLocation } from 'react-router-dom';
+import { HomePage, LoginPage, RegisterPage, SearchPage, UserProfilePage, Error404Page } from './pages';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -26,6 +26,8 @@ function App() {
       <Route path="/search">
         <SearchPage searchTerm={query.get('term')} pageNum={query.get('page')} />
       </Route>
+      <Route path="/404" component={Error404Page} />
+      <Redirect path="*" to="/404" />
     </Switch>
   );
 }

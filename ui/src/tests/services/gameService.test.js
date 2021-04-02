@@ -1,7 +1,7 @@
 import fetchMock from 'fetch-mock';
 
 import gameService from '../../services/gameService';
-import { SEARCH_ERROR_MESSAGES } from '../../constants/game';
+import { SEARCH_ERROR_MESSAGES } from '../../constants';
 
 describe('services/gameService.js', () => {
   afterEach(() => {
