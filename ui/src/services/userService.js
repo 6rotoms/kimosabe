@@ -1,48 +1,24 @@
+import { USER_PROFILE_MESSAGES } from '../constants';
+import fetchResource from '../utils/fetchResource';
+
 const userService = {
-  // TODO: Replace with real getGroups call...
-  // eslint-disable-next-line no-unused-vars
-  getGroups: async ({ username }) => {
-    return {
-      status: 200,
-      body: [
-        {
-          coverUrl: '//images.igdb.com/igdb/image/upload/t_cover_big/co1ndn.jpg',
-          groupName: 'Baldur’s Gate I: Enhanced Edition',
-          groupId: 'some-string1',
-        },
-        {
-          coverUrl: '//images.igdb.com/igdb/image/upload/t_cover_big/co1ndn.jpg',
-          groupName: 'Really Long Title here to test flexbox and overlap',
-          groupId: 'some-string2',
-        },
-        {
-          coverUrl: '//images.igdb.com/igdb/image/upload/t_cover_big/co1ndn.jpg',
-          groupName: 'bg3',
-          groupId: 'some-string3',
-        },
-        {
-          coverUrl: '//images.igdb.com/igdb/image/upload/t_cover_big/co1ndn.jpg',
-          groupName: 'bg3',
-          groupId: 'some-string4',
-        },
-        {
-          coverUrl: '//images.igdb.com/igdb/image/upload/t_cover_big/co1ndn.jpg',
-          groupName: '0123456789a123456789b123456789c1234',
-          groupId: 'some-string5',
-        },
-        {
-          coverUrl: '//images.igdb.com/igdb/image/upload/t_cover_big/co1ndn.jpg',
-          groupName: 'bg3',
-          groupId: 'some-string6',
-        },
-        {
-          coverUrl: '//images.igdb.com/igdb/image/upload/t_cover_big/co1ndn.jpg',
-          groupName: 'bg3',
-          groupId: 'some-string7',
-        },
-      ],
-    };
-  },
+  getFriends: ({ username }) => fetchResource({
+    method: 'GET',
+    url: `${process.env.REACT_APP_API_URL}/user/profile/${username}/friends`,
+    messageMapping: USER_PROFILE_MESSAGES,
+  }),
+
+  getGroups: ({ username }) => fetchResource({
+    method: 'GET',
+    url: `${process.env.REACT_APP_API_URL}/user/profile/${username}/groups`,
+    messageMapping: USER_PROFILE_MESSAGES,
+  }),
+
+  getUserData: ({ username }) => fetchResource({
+    method: 'GET',
+    url: `${process.env.REACT_APP_API_URL}/user/profile/${username}`,
+    messageMapping: USER_PROFILE_MESSAGES,
+  }),
 };
 
 export default userService;
