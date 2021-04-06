@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Button, Flex } from './index';
 
-const EditableTextArea = ({ initialText = '', onSave, isToggleable = false, charLimit = -1, ...props }) => {
+const EditableTextArea = ({ initialText = '', onSave, isToggleable = false, ...props }) => {
   const [bio, setBio] = useState(initialText);
   const [unsavedBio, setUnsavedBio] = useState(bio);
   const [editable, setEditable] = useState(false);
@@ -18,11 +18,7 @@ const EditableTextArea = ({ initialText = '', onSave, isToggleable = false, char
   };
 
   const handleChange = (text) => {
-    let newText = text;
-    if (charLimit > 0) {
-      newText = newText.substring(0, Math.min(text.length, charLimit));
-    }
-    setUnsavedBio(newText);
+    setUnsavedBio(text);
   };
 
   const handleCancel = () => {
@@ -52,7 +48,10 @@ const EditableTextArea = ({ initialText = '', onSave, isToggleable = false, char
           value={unsavedBio}
         />
       ) : (
-        <Flex data-testid="display-text" className="flex-1 px-px5 py-px10 text-ivory">
+        <Flex
+          data-testid="display-text"
+          className="flex-1 overflow-hidden break-all whitespace-pre-line px-px5 py-px10 text-ivory"
+        >
           {bio}
         </Flex>
       )}
@@ -76,7 +75,6 @@ EditableTextArea.propTypes = {
   initialText: PropTypes.string,
   onSave: PropTypes.func.isRequired,
   isToggleable: PropTypes.bool,
-  charLimit: PropTypes.number,
 };
 
 export default EditableTextArea;

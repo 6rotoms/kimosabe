@@ -1,8 +1,8 @@
 import React from 'react';
-import { within, render, fireEvent, screen, waitFor } from '../test-utils';
+import { render, fireEvent, screen, waitFor } from '../test-utils';
 import UserProfilePage from '../../pages/userprofile';
-import { getGroups } from '../../services/userService';
-import { makeStore } from '../../redux/store';
+import { getGroups, getUserData, getFriends } from '../../services/userService';
+import { Route } from 'react-router';
 
 jest.mock('../../history', () => ({
   push: jest.fn(),
@@ -10,6 +10,8 @@ jest.mock('../../history', () => ({
 
 jest.mock('../../services/userService', () => ({
   getGroups: jest.fn(),
+  getFriends: jest.fn(),
+  getUserData: jest.fn(),
 }));
 
 const mockWithGoodResponse = () => {
@@ -33,96 +35,94 @@ const mockWithGoodResponse = () => {
       },
     ],
   };
-  getGroups.mockReturnValueOnce(response);
+  getGroups.mockResolvedValueOnce(response);
 };
 
 const mockWithBadResponse = () => {
   const response = {
     status: 500,
   };
-  getGroups.mockReturnValueOnce(response);
+  getGroups.mockResolvedValueOnce(response);
 };
 
 describe('pages/userprofile.js', () => {
-  let store;
   beforeEach(() => {
     // Arrange
-    mockWithGoodResponse();
-    store = makeStore();
+    getUserData.mockResolvedValue({
+      status: 200,
+      body: {
+        age: '18',
+        gender: 'Female',
+        location: 'California',
+        lastLogin: '2021-04-02T03:02:18.229798Z',
+        biography: 'some bio here',
+      },
+    });
+    getFriends.mockResolvedValue({
+      status: 200,
+      body: [{ username: 'user2' }],
+    });
   });
 
   afterEach(() => {
     jest.resetAllMocks();
   });
 
-  it('it should render', async () => {
-    // Act
-    render(<UserProfilePage />, { store });
-
-    // Assert
-    await waitFor(() => {
-      expect(screen.queryByTestId('users-friends')).not.toBeNull();
-      expect(screen.queryByText('Edit')).not.toBeNull();
-      expect(screen.queryByText('Save')).toBeNull();
-      expect(screen.queryByText('Cancel')).toBeNull();
+  describe('and apis all return 200', () => {
+    beforeEach(() => {
+      mockWithGoodResponse();
     });
-  });
-
-  describe('when user clicks edit user bio', () => {
-    beforeEach(async () => {
+    it('it should render', async () => {
       // Act
-      await waitFor(() => {
-        render(<UserProfilePage />, { store });
-        fireEvent.click(screen.getByText('Edit'));
-      });
-    });
-    it('then textarea should be editable', async () => {
+      render(
+        <Route path="/users/:username">
+          <UserProfilePage />
+        </Route>,
+        { route: '/users/user1' },
+      );
+
       // Assert
       await waitFor(() => {
-        expect(screen.queryByText('Edit')).toBeNull();
-        expect(screen.queryByText('Save')).not.toBeNull();
-        expect(screen.queryByText('Cancel')).not.toBeNull();
+        expect(screen.queryByTestId('users-friends')).not.toBeNull();
+        expect(screen.queryByText('user1')).not.toBeNull();
+        const expectedDateString = new Date('2021-04-02T03:02:18.229798Z').toDateString();
+        expect(screen.queryByText(new RegExp(expectedDateString))).not.toBeNull();
+        expect(screen.queryByText('18')).not.toBeNull();
+        expect(screen.queryByText('Female')).not.toBeNull();
+        expect(screen.queryByText('California')).not.toBeNull();
+        expect(screen.queryByText('some bio here')).not.toBeNull();
       });
     });
 
-    describe('and user edits bio', () => {
-      it('then value should update on save', async () => {
-        const textElement = within(screen.getByTestId('user-bio')).getByRole('textbox');
-        fireEvent.change(textElement, { target: { value: 'new bio' } });
-        fireEvent.click(screen.getByText('Save'));
+    describe('when user clicks group', () => {
+      it('then it should display groups tab', async () => {
+        // Act
+        render(
+          <Route path="/users/:username">
+            <UserProfilePage />
+          </Route>,
+          { route: '/users/user1' },
+        );
+        fireEvent.click(screen.getByText('Groups'));
+        // Assert
         await waitFor(() => {
-          expect(screen.queryByText('new bio')).not.toBeNull();
+          expect(screen.queryByTestId('users-groups')).not.toBeNull();
         });
       });
-      it('then value should not persist on cancel', async () => {
-        const textElement = within(screen.getByTestId('user-bio')).getByRole('textbox');
-        fireEvent.change(textElement, { target: { value: 'new bio' } });
-        fireEvent.click(screen.getByText('Cancel'));
+
+      it('then it should redirect to group', async () => {
+        // Act
+        render(
+          <Route path="/users/:username">
+            <UserProfilePage />
+          </Route>,
+          { route: '/users/user1' },
+        );
+        fireEvent.click(screen.getByText('Groups'));
+        // Assert
         await waitFor(() => {
-          expect(screen.queryByText('new bio')).toBeNull();
+          expect(screen.getByTestId('users-groups').children[0].getAttribute('href')).toBe('/group/some-string1');
         });
-      });
-    });
-  });
-
-  describe('when user clicks group', () => {
-    it('then it should display groups tab', async () => {
-      // Act
-      render(<UserProfilePage />, { store });
-      fireEvent.click(screen.getByText('Groups'));
-      // Assert
-      await waitFor(() => {
-        expect(screen.queryByTestId('users-groups')).not.toBeNull();
-      });
-    });
-
-    it('then it should redirect to group', async () => {
-      // Act
-      render(<UserProfilePage />, { store });
-      fireEvent.click(screen.getByText('Groups'));
-      // Assert
-      await waitFor(() => {
-        expect(screen.getByTestId('users-groups').children[0].getAttribute('href')).toBe('/group/some-string1');
       });
     });
   });
@@ -130,11 +130,15 @@ describe('pages/userprofile.js', () => {
   describe('when group api call returns non 200 status code', () => {
     it('then no groups should be listed', async () => {
       // Arrange
-      jest.resetAllMocks();
       mockWithBadResponse();
 
       // Act
-      render(<UserProfilePage />, { store });
+      render(
+        <Route path="/users/:username">
+          <UserProfilePage />
+        </Route>,
+        { route: '/users/user1' },
+      );
       fireEvent.click(screen.getByText('Groups'));
 
       // Assert

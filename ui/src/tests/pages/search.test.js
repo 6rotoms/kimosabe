@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen } from '../test-utils';
 import { gameSearch, getSearchInfo } from '../../services/gameService';
-import { makeStore } from '../../redux/store';
 import SearchPage from '../../pages/search';
 import { waitFor } from '@testing-library/dom';
 
@@ -13,7 +12,6 @@ jest.mock('../../services/gameService', () => ({
 describe('pages/search.js', () => {
   beforeEach(async () => {
     // Arrange
-    const store = makeStore();
     const responseSearch = {
       status: 200,
       body: [
@@ -48,7 +46,7 @@ describe('pages/search.js', () => {
     // Act
     gameSearch.mockReturnValueOnce(responseSearch);
     getSearchInfo.mockReturnValueOnce(responseSearchInfo);
-    render(<SearchPage />, { store });
+    render(<SearchPage />);
     await waitFor(() => {
       expect(gameSearch).toHaveBeenCalledTimes(1);
       expect(getSearchInfo).toHaveBeenCalledTimes(1);

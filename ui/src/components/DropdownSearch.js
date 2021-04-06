@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useDebounce } from '../utils/helpers';
+import { useDebounce } from '../hooks';
 import { Input, Dropdown } from './index';
 
 const DropdownSearch = ({ suggestionsCallback, onSearch, debounceTime, showImage, ...other }) => {
@@ -13,32 +13,35 @@ const DropdownSearch = ({ suggestionsCallback, onSearch, debounceTime, showImage
   useEffect(() => {
     let mounted = true;
 
+    async function populateSuggestions() {
+      const suggestionsData = await suggestionsCallback(debouncedSearchTerm);
+      const suggestionComponents = suggestionsData?.map((suggestion) => (
+        <Link to={suggestion.link} data-testid="suggestion" key={suggestion.id} className="w-auto">
+          <div className="flex border-b border-orange">
+            {showImage && (
+              <img
+                data-testid="suggestion-img"
+                alt={suggestion.imgUrl}
+                src={suggestion.imgUrl}
+                className="h-16 m-4 rounded-lg"
+              />
+            )}
+            <div className="flex items-center m-4 ml-0 suggestiontitle">{suggestion.text}</div>
+          </div>
+        </Link>
+      ));
+      if (mounted) {
+        setSuggestions(suggestionComponents);
+      }
+    }
+
     if (alreadyRan.current) {
       if (!debouncedSearchTerm || !/\S/.test(debouncedSearchTerm)) return;
-      const promise = suggestionsCallback(debouncedSearchTerm);
-      promise.then((suggestionsData) => {
-        if (mounted) {
-          const suggestionComponents = suggestionsData.map((suggestion) => (
-            <Link to={suggestion.link} data-testid="suggestion" key={suggestion.id} className="w-auto">
-              <div className="flex border-b border-orange">
-                {showImage && (
-                  <img
-                    data-testid="suggestion-img"
-                    alt={suggestion.imgUrl}
-                    src={suggestion.imgUrl}
-                    className="h-16 m-4 rounded-lg"
-                  />
-                )}
-                <div className="flex items-center m-4 ml-0 suggestiontitle">{suggestion.text}</div>
-              </div>
-            </Link>
-          ));
-          setSuggestions(suggestionComponents);
-        }
-      });
+      populateSuggestions();
     } else {
       alreadyRan.current = true;
     }
+
     return () => (mounted = false);
   }, [suggestionsCallback, debouncedSearchTerm, showImage]);
 

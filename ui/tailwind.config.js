@@ -348,7 +348,7 @@ module.exports = {
       11: 'repeat(11, minmax(0, 1fr))',
       12: 'repeat(12, minmax(0, 1fr))',
       'groups-small': 'repeat(auto-fit, 2.5rem)',
-      'groups': 'repeat(auto-fit, 4.5rem)',
+      'groups': 'repeat(auto-fit, 4rem)',
       'header': 'auto minmax(auto, 1fr) auto',
     },
     gridTemplateRows: {

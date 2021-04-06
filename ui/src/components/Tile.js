@@ -9,12 +9,12 @@ const Tile = ({
   children,
   pd = 'p-6',
   className = '',
-  titleAlign = 'center',
+  titleAlign = 'text-center',
   ...other
 }) => {
   return (
     <div className={`${width} ${height} bg-grey-dark rounded-lg shadow-lg ${className}`} {...other}>
-      <div className={`w-full h-full ${pd}`}>
+      <div className={`flex flex-col w-full h-full ${pd}`}>
         {title && (
           <div data-testid="title-div" className={`${titleAlign} border-b-2 pb-px5 mb-px10 border-ivory-dark`}>
             <Text>{title}</Text>

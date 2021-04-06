@@ -54,7 +54,7 @@ const LoginPage = () => {
                 </Link>
               </Text>
             </Flex>
-            {isLoading && <Text fontStyle="text-italic">Loading...</Text>}
+            {isLoading && <Text className="text-italic">Loading...</Text>}
             <Button data-testid="login-submit-button" type="submit" className="w-full">
               Login
             </Button>

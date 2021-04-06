@@ -1,3 +1,5 @@
+export const UNDEFINED_ERROR_MESSAGE = 'Something went wrong';
+
 export const REGISTER_ERROR_MESSAGES = {
   409: 'Username Taken',
   403: 'Invalid Username or Password',
@@ -5,16 +7,22 @@ export const REGISTER_ERROR_MESSAGES = {
   USERNAME_TOO_SHORT: 'Username should be at least 3 characters',
   PASSWORD_TOO_SHORT: 'Password should be at least 3 characters',
   CONFIRM_PASSWORD_FAILED: 'Passwords should match',
-  UNDEFINED: 'Something went wrong.',
 };
 
 export const LOGIN_ERROR_MESSAGES = {
   403: 'Username or Password Incorrect',
   500: 'Internal Server Error, Please try again Later',
-  UNDEFINED: 'Something went wrong.',
 };
 
 export const LOGOUT_ERROR_MESSAGES = {
   500: 'Internal Server Error, Please try again Later',
-  UNDEFINED: 'Something went wrong.',
+};
+
+export const SEARCH_ERROR_MESSAGES = {
+  500: 'Internal Server Error, Please try again Later',
+};
+
+export const USER_PROFILE_MESSAGES = {
+  500: 'Internal Server Error, Please try again Later',
+  404: 'User does not exist',
 };

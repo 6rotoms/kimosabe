@@ -1,81 +1,37 @@
 import 'cross-fetch/polyfill';
 
-import { REGISTER_ERROR_MESSAGES, LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../constants/auth';
+import { REGISTER_ERROR_MESSAGES, LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../constants/messages';
+import fetchResource from '../utils/fetchResource';
 
 const authService = {
-  register: async ({ username, password }) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
-      if (response.status !== 200) {
-        return {
-          status: response.status,
-          error: REGISTER_ERROR_MESSAGES[response.status] || REGISTER_ERROR_MESSAGES.UNDEFINED,
-        };
-      }
-      return { status: response.status };
-    } catch (error) {
-      return {
-        status: 500,
-        error: REGISTER_ERROR_MESSAGES.UNDEFINED,
-      };
-    }
-  },
+  register: ({ username, password }) =>
+    fetchResource({
+      method: 'POST',
+      url: `${process.env.REACT_APP_API_URL}/auth/register`,
+      requestBody: {
+        username,
+        password,
+      },
+      messageMapping: REGISTER_ERROR_MESSAGES,
+    }),
 
-  login: async ({ username, password }) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
-      if (response.status !== 200) {
-        return {
-          status: response.status,
-          error: LOGIN_ERROR_MESSAGES[response.status] || LOGIN_ERROR_MESSAGES.UNDEFINED,
-        };
-      }
-      return { status: response.status };
-    } catch (error) {
-      return {
-        status: 500,
-        error: LOGIN_ERROR_MESSAGES.UNDEFINED,
-      };
-    }
-  },
+  login: ({ username, password }) =>
+    fetchResource({
+      method: 'POST',
+      url: `${process.env.REACT_APP_API_URL}/auth/login`,
+      requestBody: {
+        username,
+        password,
+      },
+      messageMapping: LOGIN_ERROR_MESSAGES,
+    }),
 
-  logout: async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/logout`, {
-        method: 'POST',
-      });
-      if (response.status !== 200) {
-        return {
-          status: response.status,
-          error: LOGOUT_ERROR_MESSAGES[response.status] || LOGOUT_ERROR_MESSAGES.UNDEFINED,
-        };
-      }
-      return { status: response.status };
-    } catch (error) {
-      return {
-        status: 500,
-        error: LOGOUT_ERROR_MESSAGES.UNDEFINED,
-      };
-    }
-  },
+  logout: () =>
+    fetchResource({
+      method: 'POST',
+      url: `${process.env.REACT_APP_API_URL}/auth/logout`,
+      messageMapping: LOGOUT_ERROR_MESSAGES,
+    }),
 };
 
 export default authService;

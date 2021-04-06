@@ -1,15 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const Text = (props) => {
-  const {
-    type = 'DEFAULT',
-    color,
-    fontStyle = '',
-    weight = 'font-normal',
-    size = 'text-base',
-    className = '',
-    ...other
-  } = props;
+const Text = ({ type, color, weight, size, className, ...other }) => {
   let finalColor;
   let finalClassName;
   if (type === 'link') {
@@ -22,7 +14,22 @@ const Text = (props) => {
     finalColor = color ?? 'text-ivory';
     finalClassName = className;
   }
-  return <span {...other} className={`${finalColor} ${fontStyle} ${size} ${weight} ${finalClassName}`} />;
+  return <span {...other} className={`${finalColor} ${size} ${weight} ${finalClassName}`} />;
+};
+
+Text.propTypes = {
+  type: PropTypes.string,
+  color: PropTypes.string,
+  weight: PropTypes.string,
+  size: PropTypes.string,
+  className: PropTypes.string,
+};
+
+Text.defaultProps = {
+  type: 'DEFAULT',
+  weight: 'font-normal',
+  size: 'text-base',
+  className: '',
 };
 
 export default Text;

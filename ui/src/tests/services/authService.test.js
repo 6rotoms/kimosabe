@@ -1,7 +1,7 @@
 import fetchMock from 'fetch-mock';
 
 import authService from '../../services/authService';
-import { LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../../constants';
+import { LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES, UNDEFINED_ERROR_MESSAGE } from '../../constants';
 
 describe('services/authService.js', () => {
   afterEach(() => {
@@ -79,11 +79,11 @@ describe('services/authService.js', () => {
         serviceResponse = await authService.login({ username: '', password: '' });
       });
 
-      test('then status 200 should be returned', () => {
+      test('then status 501 should be returned', () => {
         // Assert
         expect(serviceResponse).toEqual({
           status: 501,
-          error: LOGIN_ERROR_MESSAGES.UNDEFINED,
+          error: UNDEFINED_ERROR_MESSAGE,
         });
       });
     });
@@ -100,11 +100,11 @@ describe('services/authService.js', () => {
         serviceResponse = await authService.login({ username: '', password: '' });
       });
 
-      test('then status 200 should be returned', () => {
+      test('then status 500 should be returned', () => {
         // Assert
         expect(serviceResponse).toEqual({
           status: 500,
-          error: LOGIN_ERROR_MESSAGES.UNDEFINED,
+          error: UNDEFINED_ERROR_MESSAGE,
         });
       });
     });
@@ -143,7 +143,7 @@ describe('services/authService.js', () => {
         serviceResponse = await authService.logout();
       });
 
-      test('then status 200 should be returned', () => {
+      test('then status 500 should be returned', () => {
         // Assert
         expect(serviceResponse).toEqual({ status: 500, error: LOGOUT_ERROR_MESSAGES[500] });
       });
@@ -162,11 +162,11 @@ describe('services/authService.js', () => {
         serviceResponse = await authService.logout();
       });
 
-      test('then status 200 should be returned', () => {
+      test('then status 501 should be returned', () => {
         // Assert
         expect(serviceResponse).toEqual({
           status: 501,
-          error: LOGOUT_ERROR_MESSAGES.UNDEFINED,
+          error: UNDEFINED_ERROR_MESSAGE,
         });
       });
     });
@@ -183,11 +183,11 @@ describe('services/authService.js', () => {
         serviceResponse = await authService.logout();
       });
 
-      test('then status 200 should be returned', () => {
+      test('then status 500 should be returned', () => {
         // Assert
         expect(serviceResponse).toEqual({
           status: 500,
-          error: LOGOUT_ERROR_MESSAGES.UNDEFINED,
+          error: UNDEFINED_ERROR_MESSAGE,
         });
       });
     });

@@ -1,16 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { EditableTextArea, Layout, Grid, Tile, Tabs, Flex } from '../components';
+import { Link, useParams, useHistory } from 'react-router-dom';
+import { Layout, Grid, Tile, Tabs, Flex, Text } from '../components';
 import userService from '../services/userService';
 
-const UserProfilePage = ({ username }) => {
+const UserProfilePage = () => {
+  const { username } = useParams();
+  const history = useHistory();
   const [groupItems, setGroupItems] = useState('');
+  const [friendItems, setFriendItems] = useState('');
+  const [userData, setUserData] = useState({});
 
-  // eslint-disable-next-line no-unused-vars
-  const handleBioSave = (text) => {
-    // TODO: Implement Redux action and API call for updating bio
-  };
   useEffect(() => {
+    let mounted = true;
+
+    const getFriends = async () => {
+      const response = await userService.getFriends({ username });
+      if (response.status !== 200) {
+        return;
+      }
+      const newFriendItems = response.body
+        .slice(0, 6)
+        .map((friend) => <div key={friend.username}>{friend.username}</div>);
+      if (mounted) {
+        setFriendItems(newFriendItems);
+      }
+    };
+
     const getGroups = async () => {
       const response = await userService.getGroups({ username });
       if (response.status !== 200) {
@@ -21,10 +36,24 @@ const UserProfilePage = ({ username }) => {
           <img className="w-16 rounded-lg" src={group.coverUrl} alt={group.coverUrl} />
         </Link>
       ));
-      setGroupItems(newGroupItems);
+      if (mounted) {
+        setGroupItems(newGroupItems);
+      }
     };
 
-    getGroups();
+    const getUserData = async () => {
+      const newUserData = await userService.getUserData({ username });
+      if (newUserData.status !== 200) {
+        history.push('/404');
+        return;
+      }
+      setUserData(newUserData.body);
+      await Promise.all([getFriends(), getGroups()]);
+    };
+
+    getUserData();
+
+    return () => (mounted = false);
   }, [username]);
 
   return (
@@ -32,33 +61,59 @@ const UserProfilePage = ({ username }) => {
       <Flex justify="justify-center" align="items-center">
         <Grid rows="grid-rows-4" cols="grid-cols-4" gap="gap-4" className="w-full h-97 min-h-90">
           <div className="row-span-3 col-span-1 row-start-1 col-start-1">
-            <Tile height="h-full" title="username" titleAlign="text-center"></Tile>
+            <Tile height="h-full">
+              <Flex direction="flex-col">
+                <Flex height="h-auto" align="items-center" className="border-b-2 pb-px10 mb-px10 border-ivory-dark">
+                  <img
+                    src="https://qph.fs.quoracdn.net/main-qimg-2b21b9dd05c757fe30231fac65b504dd"
+                    className="object-cover w-16 h-16 rounded-full"
+                  />
+                  <Flex direction="flex-col" className="justify-center text-center">
+                    <Text size="text-2xl">{username}</Text>
+                    <Text size="text-sm">Last Online: {new Date(userData.lastLogin).toDateString()}</Text>
+                  </Flex>
+                </Flex>
+                <Text className="pt-2 pb-2 font-bold">
+                  Age:
+                  <Text className="float-right">{userData.age}</Text>
+                </Text>
+                <Text className="pb-2 font-bold">
+                  Gender:
+                  <Text className="float-right">{userData.gender}</Text>
+                </Text>
+                <Text className="pb-2 font-bold">
+                  Location:
+                  <Text className="float-right">{userData.location}</Text>
+                </Text>
+              </Flex>
+            </Tile>
           </div>
           <div className="row-span-2 col-span-3 row-start-1 col-start-2">
-            <Tile height="h-full">
-              <EditableTextArea
-                data-testid="user-bio"
-                initialText={''}
-                isToggleable={true}
-                onSave={handleBioSave}
-                charLimit={2500}
-              />
+            <Tile height="h-full" title="About" titleAlign="text-center">
+              <Flex
+                data-testid="display-text"
+                className="flex-1 overflow-y-auto break-all whitespace-pre-line px-px5 py-px10 text-ivory"
+              >
+                {userData.biography}
+              </Flex>
             </Tile>
           </div>
           <div className="row-span-1 col-span-1 row-start-4 col-start-1">
             <Tile height="h-full">
               <Tabs tabNames={['Friends', 'Groups']}>
-                <div data-testid="users-friends">Friends!</div>
-                <Grid
-                  cols="grid-cols-groups"
-                  rows="grid-rows-o"
-                  gap="gap-1"
-                  justify="justify-center"
-                  className="overflow-auto grid-flow-row"
-                  data-testid="users-groups"
-                >
-                  {groupItems}
-                </Grid>
+                <div data-testid="users-friends">{friendItems}</div>
+                <Flex className="justify-center">
+                  <Grid
+                    cols="grid-cols-groups"
+                    rows="grid-rows-o"
+                    gap="gap-2"
+                    justify="justify-left"
+                    className="overflow-auto grid-flow-row w-52"
+                    data-testid="users-groups"
+                  >
+                    {groupItems}
+                  </Grid>
+                </Flex>
               </Tabs>
             </Tile>
           </div>
