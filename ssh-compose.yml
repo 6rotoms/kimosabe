@@ -12,7 +12,7 @@ services:
   populate-redis:
     container_name: populate-redis
     restart: always
-    image: 6rotom/igdb-pdt
+    image: 6rotom/igdb-pdt:latest
     ports:
       - '6400:6400'
     networks:
