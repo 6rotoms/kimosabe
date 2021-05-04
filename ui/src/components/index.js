@@ -12,3 +12,4 @@ export { default as Dropdown } from './Dropdown';
 export { default as SearchResult } from './SearchResult';
 export { default as DropdownSearch } from './DropdownSearch';
 export { default as EditableTextArea } from './EditableTextArea';
+export { default as LoadingWheel } from './LoadingWheel';

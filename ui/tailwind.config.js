@@ -431,6 +431,22 @@ module.exports = {
           animationTimingFunction: 'cubic-bezier(0,0,0.2,1)',
         },
       },
+      ripple: {
+        '0%': {
+          top: '50%',
+          left: '50%',
+          width: '0',
+          height: '0',
+          opacity: '1',
+        },
+        '100%': {
+          top: '0',
+          left: '0',
+          width: '100%',
+          height: '100%',
+          opacity: '0',
+        }
+      }
     },
     letterSpacing: {
       tighter: '-0.05em',

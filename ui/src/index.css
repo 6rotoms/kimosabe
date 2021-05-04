@@ -2,3 +2,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.lds-ripple {
+  @apply inline-block relative w-80 h-80;
+}
+
+.lds-ripple div {
+  @apply absolute border-8 border-grey-lighter opacity-100 rounded-full;
+  animation: ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}

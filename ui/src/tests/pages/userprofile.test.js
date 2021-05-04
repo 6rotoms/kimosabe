@@ -82,6 +82,7 @@ describe('pages/userprofile.js', () => {
       );
 
       // Assert
+      expect(screen.queryByText('Loading...')).not.toBeNull();
       await waitFor(() => {
         expect(screen.queryByTestId('users-friends')).not.toBeNull();
         expect(screen.queryByText('user1')).not.toBeNull();
@@ -103,9 +104,9 @@ describe('pages/userprofile.js', () => {
           </Route>,
           { route: '/users/user1' },
         );
-        fireEvent.click(screen.getByText('Groups'));
         // Assert
         await waitFor(() => {
+          fireEvent.click(screen.getByText('Groups'));
           expect(screen.queryByTestId('users-groups')).not.toBeNull();
         });
       });
@@ -118,9 +119,9 @@ describe('pages/userprofile.js', () => {
           </Route>,
           { route: '/users/user1' },
         );
-        fireEvent.click(screen.getByText('Groups'));
         // Assert
         await waitFor(() => {
+          fireEvent.click(screen.getByText('Groups'));
           expect(screen.getByTestId('users-groups').children[0].getAttribute('href')).toBe('/group/some-string1');
         });
       });
@@ -139,10 +140,10 @@ describe('pages/userprofile.js', () => {
         </Route>,
         { route: '/users/user1' },
       );
-      fireEvent.click(screen.getByText('Groups'));
 
       // Assert
       await waitFor(() => {
+        fireEvent.click(screen.getByText('Groups'));
         expect(screen.queryByTestId('users-groups').children).toHaveLength(0);
       });
     });

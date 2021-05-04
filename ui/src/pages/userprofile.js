@@ -8,6 +8,7 @@ const UserProfilePage = () => {
   const history = useHistory();
   const [groupItems, setGroupItems] = useState('');
   const [friendItems, setFriendItems] = useState('');
+  const [isLoading, setLoading] = useState(true);
   const [userData, setUserData] = useState({});
 
   useEffect(() => {
@@ -47,17 +48,25 @@ const UserProfilePage = () => {
         history.push('/404');
         return;
       }
-      setUserData(newUserData.body);
-      await Promise.all([getFriends(), getGroups()]);
+      if (mounted) {
+        setUserData(newUserData.body);
+      }
     };
 
-    getUserData();
+    const getAllData = async () => {
+      await Promise.all([getUserData() , getFriends(), getGroups()]);
+      if (mounted) {
+        setLoading(false);
+      }
+    };
+
+    getAllData();
 
     return () => (mounted = false);
   }, [username]);
 
   return (
-    <Layout>
+    <Layout isLoading={isLoading}>
       <Flex justify="justify-center" align="items-center">
         <Grid rows="grid-rows-4" cols="grid-cols-4" gap="gap-4" className="w-full h-97 min-h-90">
           <div className="row-span-3 col-span-1 row-start-1 col-start-1">
@@ -70,7 +79,7 @@ const UserProfilePage = () => {
                   />
                   <Flex direction="flex-col" className="justify-center text-center">
                     <Text size="text-2xl">{username}</Text>
-                    <Text size="text-sm">Last Online: {new Date(userData.lastLogin).toDateString()}</Text>
+                    <Text size="text-sm">Last on: {new Date(userData.lastLogin).toDateString()}</Text>
                   </Flex>
                 </Flex>
                 <Text className="pt-2 pb-2 font-bold">
