@@ -1,8 +1,9 @@
 export const UNDEFINED_ERROR_MESSAGE = 'Something went wrong';
 
 export const REGISTER_ERROR_MESSAGES = {
+  400: 'Bad Request',
+  401: 'Invalid Username or Password',
   409: 'Username Taken',
-  403: 'Invalid Username or Password',
   500: 'Internal Server Error, Please try again Later',
   USERNAME_TOO_SHORT: 'Username should be at least 3 characters',
   PASSWORD_TOO_SHORT: 'Password should be at least 3 characters',
@@ -10,7 +11,7 @@ export const REGISTER_ERROR_MESSAGES = {
 };
 
 export const LOGIN_ERROR_MESSAGES = {
-  403: 'Username or Password Incorrect',
+  401: 'Username or Password Incorrect',
   500: 'Internal Server Error, Please try again Later',
 };
 
