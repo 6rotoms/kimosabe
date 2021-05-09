@@ -6,6 +6,7 @@ import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 @Configuration
+@SuppressWarnings("unused")
 public class RedisSessionRegistryConfig {
     private final FindByIndexNameSessionRepository sessionRepository;
 

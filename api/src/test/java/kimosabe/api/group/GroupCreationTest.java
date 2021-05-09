@@ -1,17 +1,22 @@
 package kimosabe.api.group;
 
+import kimosabe.api.AbstractBaseIntegrationTest;
 import kimosabe.api.TestUserUtils;
 import kimosabe.api.model.Group;
 import kimosabe.api.repository.GroupRepository;
-import kimosabe.api.AbstractBaseIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.Instant;
 import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GroupCreationTest extends AbstractBaseIntegrationTest {
@@ -41,6 +46,20 @@ public class GroupCreationTest extends AbstractBaseIntegrationTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
+    @Test
+    @DisplayName("unverified user returns 403")
+    public void whenUserUnverified_thenReturn403() {
+        // Arrange
+        headers = TestUserUtils.loginUnverifiedUser(restTemplate, randomServerPort);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        // Act
+        ResponseEntity<String> response = restTemplate
+                .postForEntity(this.baseUrl + "/baldur-s-gate-enhanced-edition", request, String.class);
+
+        // Assert
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+    }
     @Test
     @DisplayName("valid group creation properly initializes all entries")
     @Transactional

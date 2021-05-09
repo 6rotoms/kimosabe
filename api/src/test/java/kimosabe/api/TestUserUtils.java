@@ -11,14 +11,19 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-import java.util.UUID;
 
 public class TestUserUtils {
-    public static HttpHeaders loginUser1(TestRestTemplate restTemplate, int portNumber) {
+
+    public static HttpHeaders loginUser (
+            TestRestTemplate restTemplate,
+            int portNumber,
+            String username,
+            String password)
+    {
         String loginUrl = "http://localhost:"+ portNumber + "/auth/login";
         LoginDetailsRequestBody requestBody = new LoginDetailsRequestBody();
-        requestBody.setUsername("user1");
-        requestBody.setPassword("password1");
+        requestBody.setUsername(username);
+        requestBody.setPassword(password);
         HttpEntity<LoginDetailsRequestBody> request = new HttpEntity<>(requestBody);
         ResponseEntity<String> resp = restTemplate.postForEntity(loginUrl, request, String.class);
         List<String> cookie = resp.getHeaders().get("Set-Cookie");
@@ -27,17 +32,16 @@ public class TestUserUtils {
         return headers;
     }
 
+    public static HttpHeaders loginUser1(TestRestTemplate restTemplate, int portNumber) {
+        return loginUser(restTemplate, portNumber, "user1", "password1");
+    }
+
     public static HttpHeaders loginUser2(TestRestTemplate restTemplate, int portNumber) {
-        String loginUrl = "http://localhost:"+ portNumber + "/auth/login";
-        LoginDetailsRequestBody requestBody = new LoginDetailsRequestBody();
-        requestBody.setUsername("user2");
-        requestBody.setPassword("password1");
-        HttpEntity<LoginDetailsRequestBody> request = new HttpEntity<>(requestBody);
-        ResponseEntity<String> resp = restTemplate.postForEntity(loginUrl, request, String.class);
-        List<String> cookie = resp.getHeaders().get("Set-Cookie");
-        HttpHeaders headers = new HttpHeaders();
-        headers.put(HttpHeaders.COOKIE, cookie);
-        return headers;
+        return loginUser(restTemplate, portNumber, "user2", "password1");
+    }
+
+    public static HttpHeaders loginUnverifiedUser(TestRestTemplate restTemplate, int portNumber) {
+        return loginUser(restTemplate, portNumber, "unverified", "password1");
     }
 
     public static HttpHeaders user1CreateNewGroupBaldursGate(TestRestTemplate restTemplate, int portNumber) {

@@ -1,6 +1,7 @@
 package kimosabe.api.service;
-import kimosabe.api.entity.SearchSummary;
+
 import kimosabe.api.entity.GameSearchResponse;
+import kimosabe.api.entity.SearchSummary;
 import kimosabe.api.repository.GameSearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -8,16 +8,19 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.time.Instant;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Table(name = "users")
 @Entity
+@Table(name = "users")
 @Getter @Setter @NoArgsConstructor
 public class User implements UserDetails {
+    private static long serialVersionUID = serialVersionUID = -1863853930634601625L;
     @Id
     @Column(columnDefinition = "UUID")
     private UUID id;
@@ -56,8 +59,12 @@ public class User implements UserDetails {
     @Column(name = "last_login")
     private Instant lastLogin;
 
-    public User(String username, String password) {
+    @Column(name = "email", unique = true)
+    private String email;
+
+    public User(String username, String email, String password) {
         this.username = username;
+        this.email = email;
         this.password = password;
         this.id = UUID.randomUUID();
     }
@@ -112,6 +119,13 @@ public class User implements UserDetails {
     }
 
     public Set<User> getBlocked() { return getUsersOnRelationshipStatus(RelationshipStatus.BLOCKED); }
+
+    public boolean hasRole(RoleName roleName) {
+        for (Role r : roles) {
+            if (r.getName() == roleName) return true;
+        }
+        return false;
+    }
 
     @Override
     public boolean equals(Object obj) {

@@ -9,9 +9,7 @@ import kimosabe.api.security.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
-import org.springframework.session.FindByIndexNameSessionRepository;
 
 @Configuration
 public class FilterConfig {

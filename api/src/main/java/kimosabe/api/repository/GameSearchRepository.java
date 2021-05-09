@@ -1,11 +1,11 @@
 package kimosabe.api.repository;
 
-import com.redislabs.lettusearch.StatefulRediSearchConnection;
 import com.redislabs.lettusearch.SearchOptions;
 import com.redislabs.lettusearch.SearchResults;
+import com.redislabs.lettusearch.StatefulRediSearchConnection;
 import kimosabe.api.constants.IgdbConstants;
-import kimosabe.api.entity.SearchSummary;
 import kimosabe.api.entity.GameSearchResponse;
+import kimosabe.api.entity.SearchSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
