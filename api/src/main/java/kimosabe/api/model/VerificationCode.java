@@ -10,7 +10,8 @@ import javax.persistence.*;
 @Table(name = "verification_codes")
 @NoArgsConstructor @Getter @Setter
 public class VerificationCode {
-    @Id @Column(name = "verification_code")
+    @Id
+    @Column(name = "verification_code")
     private String verificationCode;
 
     @ManyToOne(fetch = FetchType.EAGER)

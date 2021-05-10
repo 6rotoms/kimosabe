@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserInfoTest extends AbstractBaseIntegrationTest {
     @BeforeEach
     public void setup() {
+        super.cleanUpDb();
         this.baseUrl = "http://localhost:" + randomServerPort + "/user/profile/{username}";
     }
 

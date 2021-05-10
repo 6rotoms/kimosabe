@@ -28,6 +28,7 @@ public class GroupCreationTest extends AbstractBaseIntegrationTest {
     @BeforeEach
     public void setup() {
         // Arrange
+        super.cleanUpDb();
         baseUrl = "http://localhost:" + randomServerPort + "/groups";
         headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
     }

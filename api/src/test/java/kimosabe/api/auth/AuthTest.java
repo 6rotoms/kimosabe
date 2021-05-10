@@ -44,6 +44,7 @@ public class AuthTest extends AbstractBaseIntegrationTest {
 
     @BeforeEach
     public void setup() {
+        super.cleanUpDb();
         baseUrl = "http://localhost:"+ randomServerPort + "/auth";
         mailHostUrl = String.format("http://%s:8025", mailHost);
         restTemplate.delete(mailHostUrl + "/api/v1/messages");

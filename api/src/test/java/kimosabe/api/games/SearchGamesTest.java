@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SearchGamesTest extends AbstractBaseIntegrationTest {
     @BeforeEach
     public void setup() {
+        super.cleanUpDb();
         this.baseUrl = "http://localhost:" + randomServerPort + "/games";
     }
 

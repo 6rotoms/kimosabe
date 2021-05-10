@@ -31,6 +31,7 @@ public class AddUserToGroupTest extends AbstractBaseIntegrationTest {
 
     @BeforeEach
     public void setup() {
+        super.cleanUpDb();
         this.baseUrl = "http://localhost:" + randomServerPort + "/groups";
         headers = TestUserUtils.user1CreateNewGroupBaldursGate(restTemplate, randomServerPort);
     }

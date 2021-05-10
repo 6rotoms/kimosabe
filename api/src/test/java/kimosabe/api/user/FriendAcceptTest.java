@@ -25,6 +25,7 @@ public class FriendAcceptTest extends AbstractBaseIntegrationTest {
     @BeforeEach
     public void user1FriendRequestUser2() {
         // Arrange
+        super.cleanUpDb();
         baseUrl = "http://localhost:"+ randomServerPort + "/user/friends";
         TestUserUtils.user1RequestFriendUser2(restTemplate, randomServerPort);
     }

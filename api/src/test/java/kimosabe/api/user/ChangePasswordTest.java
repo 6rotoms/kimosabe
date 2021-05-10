@@ -28,6 +28,7 @@ public class ChangePasswordTest extends AbstractBaseIntegrationTest {
 
     @BeforeEach
     public void setup() {
+        super.cleanUpDb();
         baseUrl = "http://localhost:"+ randomServerPort + "/user/changePassword";
     }
 

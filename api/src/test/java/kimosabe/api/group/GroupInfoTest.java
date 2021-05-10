@@ -20,6 +20,7 @@ public class GroupInfoTest extends AbstractBaseIntegrationTest {
     @BeforeEach
     public void setup() {
         // Arrange
+        super.cleanUpDb();
         this.baseUrl = "http://localhost:"+randomServerPort+"/groups/";
         headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
     }
