@@ -54,7 +54,7 @@ const UserProfilePage = () => {
     };
 
     const getAllData = async () => {
-      await Promise.all([getUserData() , getFriends(), getGroups()]);
+      await Promise.all([getUserData(), getFriends(), getGroups()]);
       if (mounted) {
         setLoading(false);
       }
