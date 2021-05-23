@@ -1,6 +1,11 @@
 import 'cross-fetch/polyfill';
 
-import { REGISTER_ERROR_MESSAGES, LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } from '../constants/messages';
+import {
+  REGISTER_ERROR_MESSAGES,
+  LOGIN_ERROR_MESSAGES,
+  LOGOUT_ERROR_MESSAGES,
+  VERIFY_ERROR_MESSAGES,
+} from '../constants/messages';
 import fetchResource from '../utils/fetchResource';
 
 const authService = {
@@ -32,6 +37,13 @@ const authService = {
       method: 'POST',
       url: `${process.env.REACT_APP_API_URL}/auth/logout`,
       messageMapping: LOGOUT_ERROR_MESSAGES,
+    }),
+
+  verify: ({ token }) =>
+    fetchResource({
+      method: 'POST',
+      url: `${process.env.REACT_APP_API_URL}/auth/verify?token=${token}`,
+      messageMapping: VERIFY_ERROR_MESSAGES,
     }),
 };
 

@@ -19,6 +19,11 @@ export const LOGOUT_ERROR_MESSAGES = {
   500: 'Internal Server Error, Please try again Later',
 };
 
+export const VERIFY_ERROR_MESSAGES = {
+  404: 'Validation token already used.',
+  500: 'Internal Server Error, Please try again Later',
+};
+
 export const SEARCH_ERROR_MESSAGES = {
   500: 'Internal Server Error, Please try again Later',
 };

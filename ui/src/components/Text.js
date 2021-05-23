@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 
 const Text = ({ type, color, weight, size, className, ...other }) => {
   let finalColor;
-  let finalClassName;
+  let finalClassName = className;
   if (type === 'link') {
     finalColor = color ?? 'text-orange';
     finalClassName = 'underline hover:text-orange-light ' + className;
+  } else if (type == 'success') {
+    finalColor = color ?? 'text-green';
   } else if (type === 'error') {
     finalColor = color ?? 'text-red';
-    finalClassName = className;
   } else {
     finalColor = color ?? 'text-ivory';
-    finalClassName = className;
   }
   return <span {...other} className={`${finalColor} ${size} ${weight} ${finalClassName}`} />;
 };

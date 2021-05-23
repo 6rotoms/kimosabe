@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import gameService from '../services/gameService';
+import { useHistory } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
-import history from '../history';
 
+import gameService from '../services/gameService';
 import SearchResult from '../components/SearchResult';
 import { Layout, Grid } from '../components';
 
 const SearchPage = ({ searchTerm, pageNum }) => {
   const [gameComponents, setGameComponents] = useState('');
   const [numPages, setNumPages] = useState('');
+  const history = useHistory();
 
   useEffect(() => {
     let mounted = true;
