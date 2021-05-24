@@ -8,13 +8,13 @@ const Layout = ({ isLoading, children, ...other }) => (
     <main className="overflow-y-auto main bg-grey">
       <Flex justify="justify-center" align="items-center">
         <div className="h-full min-h-full ml-auto mr-auto w-content">
-          {
-            isLoading ?
+          {isLoading ? (
             <Flex justify="justify-center" align="items-center">
-              <LoadingWheel/>
-            </Flex> :
+              <LoadingWheel />
+            </Flex>
+          ) : (
             children
-          }
+          )}
         </div>
       </Flex>
     </main>
