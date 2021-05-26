@@ -64,20 +64,20 @@ describe('redux/actions/authActions.js', () => {
         });
       });
 
-      describe('and request returns 403', () => {
+      describe('and request returns 401', () => {
         let expectedActions;
         beforeEach(async () => {
           // Arrange
           const response = {
-            status: 403,
-            error: REGISTER_ERROR_MESSAGES[403],
+            status: 401,
+            error: REGISTER_ERROR_MESSAGES[401],
           };
           register.mockReturnValueOnce(response);
           expectedActions = [
             { type: types.REGISTER_REQUEST },
             {
               type: types.REGISTER_FAILED,
-              errorMessage: REGISTER_ERROR_MESSAGES[403],
+              errorMessage: REGISTER_ERROR_MESSAGES[401],
             },
           ];
 
@@ -197,20 +197,20 @@ describe('redux/actions/authActions.js', () => {
         });
       });
 
-      describe('and request returns 403', () => {
+      describe('and request returns 401', () => {
         let expectedActions;
         beforeEach(async () => {
           // Arrange
           const response = {
-            status: 403,
-            error: LOGIN_ERROR_MESSAGES[403],
+            status: 401,
+            error: LOGIN_ERROR_MESSAGES[401],
           };
           login.mockReturnValueOnce(response);
           expectedActions = [
             { type: types.LOGIN_REQUEST },
             {
               type: types.LOGIN_FAILED,
-              errorMessage: LOGIN_ERROR_MESSAGES[403],
+              errorMessage: LOGIN_ERROR_MESSAGES[401],
             },
           ];
 

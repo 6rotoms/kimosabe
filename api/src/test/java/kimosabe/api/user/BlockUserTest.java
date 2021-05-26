@@ -21,6 +21,7 @@ public class BlockUserTest extends AbstractBaseIntegrationTest {
     @BeforeEach
     public void setup() {
         // Arrange
+        super.cleanUpDb();
         baseUrl = "http://localhost:" + randomServerPort + "/user/block/{username}";
     }
 
@@ -86,7 +87,7 @@ public class BlockUserTest extends AbstractBaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("block user on self returns 403")
+    @DisplayName("block user on self returns 400")
     public void whenBlockSelf_thenReturn403() {
         // Arrange
         HttpHeaders headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
@@ -95,6 +96,6 @@ public class BlockUserTest extends AbstractBaseIntegrationTest {
         ResponseEntity<String> response = restTemplate.exchange(baseUrl, HttpMethod.POST, request, String.class, "user1");
 
         // Assert
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 }

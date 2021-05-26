@@ -10,12 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.session.FindByIndexNameSessionRepository;
-import org.springframework.session.Session;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,8 +37,8 @@ public class UserController {
     @PostMapping("/changePassword")
     @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.OK)
-    public void changePassword(@RequestBody ChangePasswordRequestBody changePassword) {
-        User user = userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+    public void changePassword(@RequestBody ChangePasswordRequestBody changePassword, Principal principal) {
+        User user = userService.getUserByUsername(principal.getName());
         if (userService.checkPassword(user, changePassword.getOldPassword())) {
             userService.changePassword(user, changePassword.getNewPassword());
         } else {
@@ -52,8 +49,8 @@ public class UserController {
     @PostMapping("/friends")
     @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.OK)
-    public void requestFriend(@RequestBody FriendInviteRequestBody friendInvite) {
-        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+    public void requestFriend(@RequestBody FriendInviteRequestBody friendInvite, Principal principal) {
+        String user = principal.getName();
         userService.createFriendRequest(user, friendInvite);
     }
 
@@ -72,14 +69,14 @@ public class UserController {
         userService.deleteFriend(username, friendName);
     }
 
-    @GetMapping("/sessions")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @ResponseStatus(HttpStatus.OK)
-    public void getSessions(Principal principal) {
-        String user = principal.getName();
-        sessionRegistry.getAllSessions(principal, true).size();
-        System.out.println(sessionRegistry.getAllSessions(principal, true).size());
-    }
+//    @GetMapping("/sessions")
+//    @PreAuthorize("hasRole('ROLE_USER')")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void getSessions(Principal principal) {
+//        String user = principal.getName();
+//        sessionRegistry.getAllSessions(principal, true).size();
+//        System.out.println(sessionRegistry.getAllSessions(principal, true).size());
+//    }
 
     @GetMapping("/profile/{username}")
     @ResponseStatus(HttpStatus.OK)
@@ -90,8 +87,8 @@ public class UserController {
 
     @PutMapping("/profile")
     @ResponseStatus(HttpStatus.OK)
-    public void updateUserInfo(@RequestBody UserProfileInfo profileInfo) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    public void updateUserInfo(@RequestBody UserProfileInfo profileInfo, Principal principal) {
+        String username = principal.getName();
         userService.updateUserInfo(username, profileInfo);
     }
 
@@ -120,16 +117,16 @@ public class UserController {
     @PostMapping("/block/{targetName}")
     @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.OK)
-    public void blockUser(@PathVariable String targetName){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    public void blockUser(@PathVariable String targetName, Principal principal){
+        String username = principal.getName();
         userService.blockUser(username, targetName);
     }
 
     @DeleteMapping("/block/{blockedName}")
     @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.OK)
-    public void unblockUser(@PathVariable String blockedName) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    public void unblockUser(@PathVariable String blockedName, Principal principal) {
+        String username = principal.getName();
         userService.unblockUser(username, blockedName);
     }
 }

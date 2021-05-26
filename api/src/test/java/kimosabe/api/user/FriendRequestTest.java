@@ -29,6 +29,7 @@ public class FriendRequestTest extends AbstractBaseIntegrationTest {
 
     @BeforeEach
     public void setup() {
+        super.cleanUpDb();
         baseUrl = "http://localhost:"+ randomServerPort + "/user/friends";
     }
 

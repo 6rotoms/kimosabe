@@ -66,6 +66,7 @@ describe('pages/register.js', () => {
         // Act
         render(<RegisterPage />);
         fireEvent.change(screen.getByTestId('rp-username'), { target: { value: 'user' } });
+        fireEvent.change(screen.getByTestId('rp-password'), { target: { value: 'email' } });
         fireEvent.change(screen.getByTestId('rp-password'), { target: { value: 'pass' } });
         fireEvent.change(screen.getByTestId('rp-cpassword'), { target: { value: 'pass' } });
         fireEvent.click(screen.getByTestId('rp-register-button'));
@@ -96,7 +97,7 @@ describe('pages/register.js', () => {
         await waitFor(() => {});
 
         // Assert
-        expect(screen.getByTestId('rp-username-error').textContent).toBe(REGISTER_ERROR_MESSAGES[409]);
+        expect(screen.getByTestId('rp-cpassword-error').textContent).toBe(REGISTER_ERROR_MESSAGES[409]);
       });
     });
 

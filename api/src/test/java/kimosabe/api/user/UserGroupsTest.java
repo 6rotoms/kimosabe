@@ -14,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserGroupsTest extends AbstractBaseIntegrationTest {
     @BeforeEach
     public void setup() {
+        super.cleanUpDb();
         this.baseUrl = "http://localhost:" + randomServerPort + "/user/profile/{username}/groups";
         TestUserUtils.user1CreateNewGroupBaldursGate(restTemplate, randomServerPort);
     }

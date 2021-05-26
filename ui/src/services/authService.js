@@ -4,12 +4,13 @@ import { REGISTER_ERROR_MESSAGES, LOGIN_ERROR_MESSAGES, LOGOUT_ERROR_MESSAGES } 
 import fetchResource from '../utils/fetchResource';
 
 const authService = {
-  register: ({ username, password }) =>
+  register: ({ username, email, password }) =>
     fetchResource({
       method: 'POST',
       url: `${process.env.REACT_APP_API_URL}/auth/register`,
       requestBody: {
         username,
+        email,
         password,
       },
       messageMapping: REGISTER_ERROR_MESSAGES,

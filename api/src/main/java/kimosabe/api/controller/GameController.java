@@ -1,7 +1,7 @@
 package kimosabe.api.controller;
 
-import kimosabe.api.entity.SearchSummary;
 import kimosabe.api.entity.GameSearchResponse;
+import kimosabe.api.entity.SearchSummary;
 import kimosabe.api.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

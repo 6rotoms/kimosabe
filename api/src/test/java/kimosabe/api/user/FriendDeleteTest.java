@@ -20,6 +20,7 @@ public class FriendDeleteTest extends AbstractBaseIntegrationTest {
     @BeforeEach
     public void setup() {
         // Arrange
+        super.cleanUpDb();
         baseUrl = "http://localhost:"+ randomServerPort + "/user/friends/{username}";
     }
 

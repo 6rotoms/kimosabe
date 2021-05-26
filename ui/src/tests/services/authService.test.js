@@ -28,12 +28,12 @@ describe('services/authService.js', () => {
       });
     });
 
-    describe('and request returns 403 error', () => {
+    describe('and request returns 401 error', () => {
       let serviceResponse;
       beforeEach(async () => {
         // Arrange
         const response = {
-          status: 403,
+          status: 401,
         };
         fetchMock.post(`${process.env.REACT_APP_API_URL}/auth/login`, response);
 
@@ -43,7 +43,7 @@ describe('services/authService.js', () => {
 
       test('then status 200 should be returned', () => {
         // Assert
-        expect(serviceResponse).toEqual({ status: 403, error: LOGIN_ERROR_MESSAGES[403] });
+        expect(serviceResponse).toEqual({ status: 401, error: LOGIN_ERROR_MESSAGES[401] });
       });
     });
 

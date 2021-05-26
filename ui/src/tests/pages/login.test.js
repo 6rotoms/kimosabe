@@ -59,8 +59,8 @@ describe('pages/login.js', () => {
       test('then error should be set', async () => {
         // Arrange
         const response = {
-          status: 403,
-          error: LOGIN_ERROR_MESSAGES[403],
+          status: 401,
+          error: LOGIN_ERROR_MESSAGES[401],
         };
         login.mockReturnValueOnce(response);
 
@@ -70,7 +70,7 @@ describe('pages/login.js', () => {
         await waitFor(() => {});
 
         // Assert
-        const element = getByText(LOGIN_ERROR_MESSAGES[403]);
+        const element = getByText(LOGIN_ERROR_MESSAGES[401]);
         expect(element).toBeDefined();
       });
     });

@@ -8,9 +8,10 @@ import { Layout, Input, Button, Text, Form, Flex, Tile } from '../components';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [cpassword, setCPassword] = useState('');
-  const [inlineErrors, setInlineErrors] = useState({ username: '', password: '', compare: '' });
+  const [inlineErrors, setInlineErrors] = useState({});
   const registerError = useSelector((state) => state.errors.registerError);
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const RegisterPage = () => {
             onSubmit={(e) => {
               e.preventDefault();
               if (fieldsAreValid()) {
-                dispatch(registerUser({ username, password }));
+                dispatch(registerUser({ username, email, password }));
               }
             }}
           >
@@ -56,7 +57,21 @@ const RegisterPage = () => {
                 placeholder="Enter your username"
               />
               <Text type="error" data-testid="rp-username-error">
-                {inlineErrors.username || registerError}
+                {inlineErrors.username}
+              </Text>
+            </div>
+            <div>
+              <Input
+                label="Email"
+                required={true}
+                data-testid="rp-email"
+                type="text"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="Enter your email"
+              />
+              <Text type="error" data-testid="rp-email-error">
+                {inlineErrors.email}
               </Text>
             </div>
             <div>
@@ -84,10 +99,10 @@ const RegisterPage = () => {
                 placeholder="Re-enter your password"
               />
               <Text type="error" data-testid="rp-cpassword-error">
-                {inlineErrors.compare}
+                {inlineErrors.compare || registerError}
               </Text>
             </div>
-            {isLoading ? <Text>Loading...</Text> : null}
+            {isLoading && <Text>Loading...</Text>}
             <Button data-testid="rp-register-button" type="submit" className="w-full">
               Register
             </Button>

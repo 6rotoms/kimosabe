@@ -40,6 +40,9 @@ services:
   environment:
     REDIS_HOST: redis
 
+- name: mailhog
+  image: mailhog/mailhog:latest 
+
 trigger:
   branch:
   - master

@@ -14,12 +14,12 @@ import {
 } from '../../constants';
 import authService from '../../../src/services/authService';
 
-export const registerUser = ({ username, password }) => {
+export const registerUser = ({ username, email, password }) => {
   return async (dispatch) => {
     dispatch({
       type: REGISTER_REQUEST,
     });
-    const response = await authService.register({ username, password });
+    const response = await authService.register({ username, email, password });
     if (response.error) {
       dispatch({
         type: REGISTER_FAILED,

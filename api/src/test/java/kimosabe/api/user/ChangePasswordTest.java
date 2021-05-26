@@ -28,6 +28,7 @@ public class ChangePasswordTest extends AbstractBaseIntegrationTest {
 
     @BeforeEach
     public void setup() {
+        super.cleanUpDb();
         baseUrl = "http://localhost:"+ randomServerPort + "/user/changePassword";
     }
 
@@ -68,20 +69,20 @@ public class ChangePasswordTest extends AbstractBaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("bad old password returns 403 status code")
-    public void whenChangePasswordWrongOldPassword_thenReturn403Forbidden() {
+    @DisplayName("bad old password returns 401 status code")
+    public void whenChangePasswordWrongOldPassword_thenReturn401Unauthorized() {
         // Arrange
+        HttpHeaders headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
         ChangePasswordRequestBody requestBody = new ChangePasswordRequestBody();
         requestBody.setOldPassword("wrongPassword");
         requestBody.setNewPassword("newPassword");
-        HttpHeaders headers = TestUserUtils.loginUser1(restTemplate, randomServerPort);
         HttpEntity<ChangePasswordRequestBody> request = new HttpEntity<>(requestBody, headers);
 
         // Act
         ResponseEntity<String> result = restTemplate.postForEntity(baseUrl, request, String.class);
 
         // Assert
-        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
     @Test
