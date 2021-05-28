@@ -43,7 +43,7 @@ const Header = ({ siteTitle }) => {
         <Button onClick={() => dispatch(logoutUser())}>Logout</Button>
       ) : (
         <Link to="/login/" data-testid="header-login">
-          <Button>Login</Button>
+          <Button><Text>Login</Text></Button>
         </Link>
       )}
     </Grid>

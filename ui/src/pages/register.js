@@ -104,7 +104,7 @@ const RegisterPage = () => {
             </div>
             {isLoading && <Text>Loading...</Text>}
             <Button data-testid="rp-register-button" type="submit" className="w-full">
-              Register
+              <Text>Register</Text>
             </Button>
           </Form>
         </Tile>

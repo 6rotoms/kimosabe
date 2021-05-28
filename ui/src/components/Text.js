@@ -27,7 +27,7 @@ Text.propTypes = {
 
 Text.defaultProps = {
   type: 'DEFAULT',
-  weight: 'font-normal',
+  weight: 'font-medium',
   size: 'text-base',
   className: '',
 };

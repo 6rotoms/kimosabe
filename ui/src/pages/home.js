@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Layout } from '../components';
+import { Layout, Text } from '../components';
 
 const HomePage = () => {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
   return (
     <Layout>
-      <p>{loggedIn ? 'Welcome!' : 'Kimosabe placeholder'}</p>
+      <Text>{loggedIn ? 'Welcome!' : 'Kimosabe placeholder'}</Text>
     </Layout>
   );
 };
