@@ -56,7 +56,7 @@ const LoginPage = () => {
             </Flex>
             {isLoading && <Text className="text-italic">Loading...</Text>}
             <Button data-testid="login-submit-button" type="submit" className="w-full">
-              Login
+              <Text>Login</Text>
             </Button>
           </Form>
         </Tile>

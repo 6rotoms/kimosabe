@@ -177,6 +177,7 @@ module.exports = {
     },
     fontFamily: {
       sans: [
+        'Inconsolata',
         'ui-sans-serif',
         'system-ui',
         '-apple-system',
