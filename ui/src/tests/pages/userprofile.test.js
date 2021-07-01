@@ -86,7 +86,7 @@ describe('pages/userprofile.js', () => {
       await waitFor(() => {
         expect(screen.queryByTestId('users-friends')).not.toBeNull();
         expect(screen.queryByText('user1')).not.toBeNull();
-        const expectedDateString = new Date('2021-04-02T03:02:18.229798Z').toDateString();
+        const expectedDateString = new Date('2021-04-02T03:02:18.229798Z').toDateString().slice(4);
         expect(screen.queryByText(new RegExp(expectedDateString))).not.toBeNull();
         expect(screen.queryByText('18')).not.toBeNull();
         expect(screen.queryByText('Female')).not.toBeNull();

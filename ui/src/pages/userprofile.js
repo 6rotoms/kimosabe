@@ -64,12 +64,11 @@ const UserProfilePage = () => {
 
     return () => (mounted = false);
   }, [username]);
-
   return (
     <Layout isLoading={isLoading}>
-      <Flex justify="justify-center" align="items-center">
-        <Grid rows="grid-rows-4" cols="grid-cols-4" gap="gap-4" className="w-full h-97 min-h-90">
-          <div className="row-span-3 col-span-1 row-start-1 col-start-1">
+      <Flex height="h-auto md:h-97" justify="justify-center" align="items-center" className="py-5 overflow-y-auto">
+        <Grid rows="grid-rows-6 md:grid-rows-4" cols="grid-cols-4" gap="gap-4" className="w-11/12 h-full md:w-full">
+          <div className="col-span-4 row-span-2 row-start-1 md:row-span-3 md:col-span-1 md:row-start-1 md:col-start-1">
             <Tile height="h-full">
               <Flex direction="flex-col">
                 <Flex height="h-auto" align="items-center" className="border-b-2 pb-px10 mb-px10 border-ivory-dark">
@@ -79,7 +78,9 @@ const UserProfilePage = () => {
                   />
                   <Flex direction="flex-col" className="justify-center text-center">
                     <Text size="text-2xl">{username}</Text>
-                    <Text size="text-sm">Last on: {new Date(userData.lastLogin).toDateString()}</Text>
+                    <Text size="text-sm">
+                      Last on: {userData.lastLogin ? new Date(userData.lastLogin).toDateString().slice(4) : 'Never'}
+                    </Text>
                   </Flex>
                 </Flex>
                 <Text className="pt-2 pb-2 font-bold">
@@ -97,7 +98,7 @@ const UserProfilePage = () => {
               </Flex>
             </Tile>
           </div>
-          <div className="row-span-2 col-span-3 row-start-1 col-start-2">
+          <div className="col-span-4 row-span-1 row-start-3 md:row-span-2 md:col-span-3 md:row-start-1 md:col-start-2">
             <Tile height="h-full" title="About" titleAlign="text-center">
               <Flex
                 data-testid="display-text"
@@ -107,7 +108,7 @@ const UserProfilePage = () => {
               </Flex>
             </Tile>
           </div>
-          <div className="row-span-1 col-span-1 row-start-4 col-start-1">
+          <div className="col-span-4 row-span-2 row-start-4 md:row-span-1 md:col-span-1 md:row-start-4 md:col-start-1">
             <Tile height="h-full">
               <Tabs tabNames={['Friends', 'Groups']}>
                 <div data-testid="users-friends">{friendItems}</div>
@@ -126,7 +127,7 @@ const UserProfilePage = () => {
               </Tabs>
             </Tile>
           </div>
-          <div className="row-span-2 col-span-3 row-start-3 col-start-2">
+          <div className="col-span-4 row-span-1 row-start-6 md:row-span-2 md:col-span-3 md:row-start-3 md:col-start-2">
             <Tile height="h-full"></Tile>
           </div>
         </Grid>

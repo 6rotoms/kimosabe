@@ -14,7 +14,7 @@ const Tabs = ({ tabNames, children }) => {
       <Text
         color={i === activeTab ? 'text-ivory' : 'text-ivory-dark'}
         key={name}
-        size="text-xs"
+        size="text-base"
         onClick={() => onTabSwitch(i)}
         className="pr-4 cursor-pointer md:text-base"
       >

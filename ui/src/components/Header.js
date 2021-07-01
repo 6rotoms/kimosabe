@@ -8,7 +8,7 @@ import { logoutUser } from '../redux/actions';
 import gameService from '../services/gameService';
 import { Grid, DropdownSearch, Button, Text } from './index';
 
-const Header = ({ siteTitle }) => {
+const Header = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
   const suggestionsCallback = async (searchTerm) => {
@@ -26,9 +26,10 @@ const Header = ({ siteTitle }) => {
   };
   return (
     <Grid rows="grid-rows-1" cols="grid-cols-header" gap="gap-4" className="bg-orange p-4">
-      <Link to="/">
-        <Text size="text-5xl" weight="text-bold">
-          {siteTitle}
+      <Link to="/" className="text-center">
+        <img src="/logo128.png" width="48px" className="inline" />
+        <Text size="text-5xl" weight="text-bold" className="hidden md:inline align-middle">
+          kimosabe
         </Text>
       </Link>
       <DropdownSearch

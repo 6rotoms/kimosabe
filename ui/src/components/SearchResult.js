@@ -7,10 +7,12 @@ const SearchResult = ({ name, summary, coverUrl }) => {
       <Flex>
         <img src={coverUrl} alt="" className="inline h-full" />
         <div className="overflow-hidden">
-          <Text size="text-xl" className="inline-block w-full px-5">
+          <Text size="text-base md:text-xl" className="inline-block w-full px-5">
             {name}
           </Text>
-          <Text className="inline-block px-5">{summary.length > 380 ? `${summary.slice(0, 377)}...` : summary}</Text>
+          <Text size="text-xs md:text-base" className="inline-block px-5">
+            {summary.length > 380 ? `${summary.slice(0, 377)}...` : summary}
+          </Text>
         </div>
       </Flex>
     </Tile>
