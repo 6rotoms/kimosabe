@@ -17,7 +17,7 @@ steps:
 
 - name: test-frontend
   depends_on: [ clone ] 
-  image: mhart/alpine-node:12
+  image: mhart/alpine-node:12.18.4
   commands:
   - cd ./ui
   - npm install
@@ -71,7 +71,7 @@ steps:
 
 - name: build-frontend
   depends_on: [ clone ]
-  image: mhart/alpine-node:12
+  image: mhart/alpine-node:12.18.4
   commands:
   - mkdir -p target
   - cd ./ui
