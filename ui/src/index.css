@@ -11,7 +11,7 @@
 
 .lds-ripple div {
   @apply absolute border-8 border-grey-lighter opacity-100 rounded-full;
-  animation: ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  @apply animate-ripple;
 }
 
 .lds-ripple div:nth-child(2) {
