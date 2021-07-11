@@ -2,19 +2,16 @@ package kimosabe.api.group;
 
 import kimosabe.api.AbstractBaseIntegrationTest;
 import kimosabe.api.TestUserUtils;
-import kimosabe.api.repository.GroupRepository;
+import kimosabe.api.entity.ExceptionResponse;
+import kimosabe.api.entity.GroupInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GroupInfoTest extends AbstractBaseIntegrationTest {
-    @Autowired
-    GroupRepository groupRepository;
-
     HttpHeaders headers;
 
     @BeforeEach
@@ -45,27 +42,26 @@ public class GroupInfoTest extends AbstractBaseIntegrationTest {
     public void whenGroupExists_thenReturnGroupInfo() {
         // Arrange
         TestUserUtils.user1CreateNewGroupBaldursGate(restTemplate, randomServerPort);
-        HttpEntity<String> request = new HttpEntity<>(headers);
 
         // Act
-        ResponseEntity<String> response = restTemplate.exchange(baseUrl + "baldur-s-gate-enhanced-edition",
-                HttpMethod.GET, request, String.class);
+        ResponseEntity<GroupInfo> response = restTemplate.getForEntity(baseUrl+ "baldur-s-gate-enhanced-edition", GroupInfo.class);
 
         // Assert
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        GroupInfo body = response.getBody();
+        assertThat(body.getGroupId()).isEqualTo("baldur-s-gate-enhanced-edition");
+        assertThat(body.getGroupName()).isEqualTo("Baldur's Gate: Enhanced Edition");
     }
 
     @Test
-    @DisplayName("invalid group id returns 404")
+    @DisplayName("invalid group id returns 404 with error")
     public void whenGroupDoesNotExist_thenReturn404() {
-        // Arrange
-        HttpEntity<String> request = new HttpEntity<>(headers);
 
         // Act
-        ResponseEntity<String> response = restTemplate.exchange(baseUrl + "baldur-s-gate-enhanced-edition",
-                HttpMethod.GET, request, String.class);
+        ResponseEntity<ExceptionResponse> response = restTemplate.getForEntity(baseUrl + "baldur-s-gate-enhanced-edition", ExceptionResponse.class);
 
         // Assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        ExceptionResponse body = response.getBody();
+        assertThat(body.getMessage()).isEqualTo("Group is missing from database");
     }
 }
