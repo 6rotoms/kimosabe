@@ -17,11 +17,11 @@ public class GameService {
         this.gameSearchRepository = gameSearchRepository;
     }
 
-    public List<GameSearchResponse> searchForGames(String searchTerm, int pageNumber) {
-        return gameSearchRepository.getSearchResultsPage(searchTerm, pageNumber);
+    public List<GameSearchResponse> searchForGames(String searchTerm, int pageNumber, int pageSize) {
+        return gameSearchRepository.getSearchResultsPage(searchTerm, pageNumber, pageSize);
     }
 
-    public SearchSummary getSearchSummary(String searchTerm) {
-        return gameSearchRepository.getSearchSummary(searchTerm);
+    public SearchSummary getSearchSummary(String searchTerm, int pageSize) {
+        return gameSearchRepository.getSearchSummary(searchTerm, pageSize);
     }
 }

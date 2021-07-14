@@ -1,6 +1,5 @@
 package kimosabe.api.entity;
 
-import kimosabe.api.constants.IgdbConstants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,9 +10,9 @@ public class SearchSummary {
     private String searchTerm;
     private long numSearchResults;
 
-    public SearchSummary(long numSearchResults, String searchTerm) {
+    public SearchSummary(long numSearchResults, String searchTerm, int pageSize) {
         this.numSearchResults = numSearchResults;
-        this.maxNumPages = (long)Math.ceil(numSearchResults / IgdbConstants.PAGE_SIZE);
+        this.maxNumPages = (long)Math.ceil(numSearchResults / pageSize);
         this.searchTerm = searchTerm;
     }
 }

@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 @SuppressWarnings("unused")
@@ -73,7 +75,14 @@ public class ExceptionController {
         for (ObjectError error : ex.getBindingResult().getGlobalErrors()) {
             errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
         }
-        return new ExceptionResponse(new BadRequestException("mandatory fields are missing from request object"), HttpStatus.BAD_REQUEST, errors);
+        return new ExceptionResponse(new BadRequestException("mandatory fields are missing from request body"), HttpStatus.BAD_REQUEST, errors);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse exception(ConstraintViolationException ex) {
+        List<String> errors = ex.getConstraintViolations().stream().map(v -> v.getMessage()).collect(Collectors.toList());
+        return new ExceptionResponse(new BadRequestException("request properties did not meet constraints"), HttpStatus.BAD_REQUEST, errors);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
