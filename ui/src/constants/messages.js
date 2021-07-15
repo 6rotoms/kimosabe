@@ -26,6 +26,7 @@ export const VERIFY_ERROR_MESSAGES = {
 
 export const SEARCH_ERROR_MESSAGES = {
   500: 'Internal Server Error, Please try again Later',
+  400: 'Bad Request. Something went wrong.',
 };
 
 export const USER_PROFILE_MESSAGES = {
