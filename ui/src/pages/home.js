@@ -1,9 +1,9 @@
 import React from 'react';
 import { Layout, Text } from '../components';
-import { useLocalstorageState } from '../hooks';
+import { useLogin } from '../hooks';
 
 const HomePage = () => {
-  const [loggedIn] = useLocalstorageState('isLoggedIn', false);
+  const [loggedIn] = useLogin();
   return (
     <Layout>
       <Text>{loggedIn ? 'Welcome!' : 'Kimosabe placeholder'}</Text>

@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
-
-const useAsync = (asyncFn, { runOnMount = true } = {}) => {
+/**
+ * hook for setting up an async call that can be called using a trigger function
+ * @param  asyncFn is the async call that is made when trigger is called
+ * @param  runOnMount is the flag that determines whether or not async call should be made on first hook call/mount
+ */
+export default function useAsync(asyncFn, { runOnMount = true } = {}) {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
@@ -30,6 +34,4 @@ const useAsync = (asyncFn, { runOnMount = true } = {}) => {
   }
 
   return { loading, triggerCall, response, error };
-};
-
-export default useAsync;
+}

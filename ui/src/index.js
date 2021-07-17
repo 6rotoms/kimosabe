@@ -4,13 +4,16 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Router } from 'react-router-dom';
 import history from './history';
+import { AppProvider } from './context/AppContext';
 import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router history={history}>
-      <App />
-    </Router>
+    <AppProvider>
+      <Router history={history}>
+        <App />
+      </Router>
+    </AppProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

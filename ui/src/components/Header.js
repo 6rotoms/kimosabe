@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import gameService from '../services/gameService';
 import { Grid, DropdownSearch, Button, Text } from './index';
-import { useAsync, useLocalstorageState } from '../hooks';
+import { useAsync, useLogin } from '../hooks';
 import authService from '../services/authService';
 
 const Header = () => {
-  const [loggedIn, setLoggedIn] = useLocalstorageState('isLoggedIn', false);
+  const [loggedIn, setLoggedIn] = useLogin();
   const { loading, triggerCall, response, error } = useAsync(() => authService.logout(), { runOnMount: false });
   const history = useHistory();
+
   useEffect(() => {
     if (loading || error) return;
     if (response) {

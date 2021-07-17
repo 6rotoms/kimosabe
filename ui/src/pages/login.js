@@ -2,13 +2,13 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Layout, Input, Button, Text, Form, Flex, Tile } from '../components';
-import { useLocalstorageState, useAsync } from '../hooks';
+import { useLogin, useAsync } from '../hooks';
 import authService from '../services/authService';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [, setLoggedIn] = useLocalstorageState('isLoggedIn', false);
+  const [, setLoggedIn] = useLogin();
   const { loading, triggerCall, response, error } = useAsync(() => authService.login({ username, password }), {
     runOnMount: false,
   });

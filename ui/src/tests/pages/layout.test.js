@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout } from '../../components';
 import { render, fireEvent, screen } from '../test-utils';
 import { getSuggestions } from '../../services/gameService';
-import { authService } from '../../services/authService';
+import { logout } from '../../services/authService';
 import { createMemoryHistory } from 'history';
 import { waitFor } from '@testing-library/react';
 
@@ -82,35 +82,54 @@ describe('components/layout.js', () => {
   });
 
   describe('when user is not logged in', () => {
+    let history;
+    beforeEach(() => {
+      // Arrange
+      history = createMemoryHistory();
+      jest.spyOn(history, 'push');
+      render(<Layout />, { history });
+    });
     it('then login should be displayed', () => {
       // Act
-      render(<Layout />);
       const loginButton = screen.queryByText('Login');
 
       // Assert
       expect(loginButton).not.toBeNull();
     });
+
+    it('then clicking login should direct to login', async () => {
+      // Act
+      const loginButton = screen.queryByText('Login');
+      fireEvent.click(loginButton);
+      await waitFor(() => {
+        expect(history.push).toHaveBeenCalledWith('/login/');
+      });
+    });
   });
 
-  // describe('when user is logged in', () => {
-  //   let store;
-  //   beforeEach(async () => {
-  //     // Arrange
-  //     store = makeStore();
-  //     const response = {
-  //       status: 200,
-  //     };
-  //     login.mockReturnValueOnce(response);
-  //     await store.dispatch(loginUser({ username: 'any', password: 'thing' }));
-  //   });
+  describe('when user is logged in', () => {
+    beforeEach(async () => {
+      // Arrange
+      render(<Layout />, { initialState: { loggedIn: true } });
+    });
 
-  //   it('then logout should be displayed', async () => {
-  //     // Act
-  //     const { queryByText } = render(<Layout />, { store });
-  //     const loginButton = queryByText('Logout');
+    it('then logout should be displayed', async () => {
+      // Act
+      const logoutButton = screen.queryByText('Logout');
 
-  //     // Assert
-  //     expect(loginButton).not.toBeNull();
-  //   });
-  // });
+      // Assert
+      expect(logoutButton).not.toBeNull();
+    });
+
+    it('then clicking logout should logout user', async () => {
+      // Act
+      const logoutButton = screen.queryByText('Logout');
+      logout.mockResolvedValue({ status: 200 });
+      fireEvent.click(logoutButton);
+      await waitFor(() => {
+        const loginButton = screen.queryByText('Login');
+        expect(loginButton).not.toBeNull();
+      });
+    });
+  });
 });
