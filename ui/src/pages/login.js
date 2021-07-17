@@ -1,24 +1,35 @@
 import React from 'react';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { loginUser } from '../redux/actions';
+import { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Layout, Input, Button, Text, Form, Flex, Tile } from '../components';
+import { useLocalstorageState, useAsync } from '../hooks';
+import authService from '../services/authService';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const loginError = useSelector((state) => state.errors.loginError);
-  const isLoading = useSelector((state) => state.auth.isLoading);
-  const dispatch = useDispatch();
+  const [, setLoggedIn] = useLocalstorageState('isLoggedIn', false);
+  const { loading, triggerCall, response, error } = useAsync(() => authService.login({ username, password }), {
+    runOnMount: false,
+  });
+  const history = useHistory();
+
+  useEffect(() => {
+    if (loading || error) return;
+    if (response) {
+      setLoggedIn(true);
+      history.push('/');
+    }
+  }, [loading, response, error]);
+
   return (
-    <Layout>
+    <Layout isLoading={loading}>
       <Flex justify="justify-center" align="items-center">
         <Tile className="max-w-xl">
           <Form
             onSubmit={(e) => {
               e.preventDefault();
-              dispatch(loginUser({ username, password }));
+              triggerCall();
             }}
           >
             <Flex justify="justify-center">
@@ -41,9 +52,9 @@ const LoginPage = () => {
               onChange={(event) => setPassword(event.target.value)}
               placeholder="Enter your password"
             />
-            {loginError && (
+            {error && (
               <Text type="error" data-testid="error-span">
-                {loginError}
+                {error}
               </Text>
             )}
             <Flex justify="justify-center">
@@ -54,7 +65,7 @@ const LoginPage = () => {
                 </Link>
               </Text>
             </Flex>
-            {isLoading && <Text className="text-italic">Loading...</Text>}
+            {loading && <Text className="text-italic">Loading...</Text>}
             <Button data-testid="login-submit-button" type="submit" className="w-full">
               <Text>Login</Text>
             </Button>

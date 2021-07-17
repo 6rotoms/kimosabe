@@ -1,16 +1,24 @@
 /* eslint-disable tailwind/class-order */
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import history from '../history';
-import { logoutUser } from '../redux/actions';
+import React, { useEffect } from 'react';
 import gameService from '../services/gameService';
 import { Grid, DropdownSearch, Button, Text } from './index';
+import { useAsync, useLocalstorageState } from '../hooks';
+import authService from '../services/authService';
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  const [loggedIn, setLoggedIn] = useLocalstorageState('isLoggedIn', false);
+  const { loading, triggerCall, response, error } = useAsync(() => authService.logout(), { runOnMount: false });
+  const history = useHistory();
+  useEffect(() => {
+    if (loading || error) return;
+    if (response) {
+      setLoggedIn(false);
+      history.push('/');
+    }
+  }, [loading, response, error]);
+
   const suggestionsCallback = async (searchTerm) => {
     const response = await gameService.getSuggestions({ searchTerm });
     if (response.status !== 200) {
@@ -24,6 +32,7 @@ const Header = () => {
       imgUrl: suggestion.thumbUrl,
     }));
   };
+
   return (
     <Grid rows="grid-rows-1" cols="grid-cols-header" gap="gap-4" className="bg-orange p-4">
       <Link to="/" className="text-center">
@@ -40,8 +49,8 @@ const Header = () => {
         data-testid="header-search"
         placeholder="Look For Group..."
       />
-      {isLoggedIn ? (
-        <Button onClick={() => dispatch(logoutUser())}>Logout</Button>
+      {loggedIn ? (
+        <Button onClick={() => triggerCall()}>Logout</Button>
       ) : (
         <Link to="/login/" data-testid="header-login">
           <Button>

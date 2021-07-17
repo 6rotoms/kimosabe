@@ -1,9 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Layout, Text } from '../components';
+import { useLocalstorageState } from '../hooks';
 
 const HomePage = () => {
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const [loggedIn] = useLocalstorageState('isLoggedIn', false);
   return (
     <Layout>
       <Text>{loggedIn ? 'Welcome!' : 'Kimosabe placeholder'}</Text>

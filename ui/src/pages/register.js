@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../redux/actions';
-
+import { useHistory } from 'react-router-dom';
 import { REGISTER_ERROR_MESSAGES } from '../constants';
 import { Layout, Input, Button, Text, Form, Flex, Tile } from '../components';
+import authService from '../services/authService';
+import { useAsync } from '../hooks';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [cpassword, setCPassword] = useState('');
-  const [inlineErrors, setInlineErrors] = useState({});
-  const registerError = useSelector((state) => state.errors.registerError);
-  const isLoading = useSelector((state) => state.auth.isLoading);
-  const dispatch = useDispatch();
+  const [inlineErrors, setInlineErrors] = useState('');
+  const history = useHistory();
+  const { loading, triggerCall, response, error } = useAsync(
+    () => authService.register({ username, email, password }),
+    { runOnMount: false },
+  );
+
+  useEffect(() => {
+    if (loading || error) return;
+    if (response) {
+      history.push('/login');
+    }
+  }, [loading, response, error]);
 
   const fieldsAreValid = () => {
     const errors = {};
@@ -32,14 +41,14 @@ const RegisterPage = () => {
   };
 
   return (
-    <Layout>
+    <Layout isLoading={loading}>
       <Flex justify="justify-center" align="items-center">
         <Tile className="max-w-xl">
           <Form
             onSubmit={(e) => {
               e.preventDefault();
               if (fieldsAreValid()) {
-                dispatch(registerUser({ username, email, password }));
+                triggerCall();
               }
             }}
           >
@@ -99,10 +108,9 @@ const RegisterPage = () => {
                 placeholder="Re-enter your password"
               />
               <Text type="error" data-testid="rp-cpassword-error">
-                {inlineErrors.compare || registerError}
+                {inlineErrors.compare || error}
               </Text>
             </div>
-            {isLoading && <Text>Loading...</Text>}
             <Button data-testid="rp-register-button" type="submit" className="w-full">
               <Text>Register</Text>
             </Button>

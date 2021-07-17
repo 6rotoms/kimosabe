@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen, makeTestStore, waitFor } from '../test-utils';
+import { render, fireEvent, screen, waitFor } from '../test-utils';
 import LoginPage from '../../pages/login';
 import { login } from '../../services/authService';
 import { LOGIN_ERROR_MESSAGES } from '../../constants';
@@ -20,19 +20,20 @@ describe('pages/login.js', () => {
   });
 
   describe('when login button clicked', () => {
-    test('then loginUser action creater should be called', () => {
+    test('then login should be called', async () => {
       // Arrange
-      const store = makeTestStore();
       const response = {
         status: 200,
       };
       login.mockReturnValueOnce(response);
       // Act
-      render(<LoginPage />, { store });
+      render(<LoginPage />);
+      fireEvent.click(screen.getByTestId('login-submit-button'));
 
       // Assert
-      fireEvent.click(screen.getByTestId('login-submit-button'));
-      expect(store.dispatch).toHaveBeenCalledWith(expect.any(Function));
+      await waitFor(() => {
+        expect(login).toHaveBeenCalledWith(expect.any(Object));
+      });
     });
 
     describe('and login succeeds', () => {
