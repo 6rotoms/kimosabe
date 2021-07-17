@@ -3,19 +3,17 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { makeStore } from './redux/store';
 import history from './history';
+import { AppProvider } from './context/AppContext';
 import './index.css';
 
-const store = makeStore();
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <AppProvider>
       <Router history={history}>
         <App />
       </Router>
-    </Provider>
+    </AppProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

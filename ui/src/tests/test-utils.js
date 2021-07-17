@@ -1,34 +1,26 @@
 // test-utils.js
 import React from 'react';
 import { render as rtlRender } from '@testing-library/react';
-import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { makeStore } from '../redux/store';
+import { AppProvider } from '../context/AppContext';
 
-const TestWrapper = ({ history, store, children }) => (
-  <Provider store={store}>
+const TestWrapper = ({ initialState, history, children }) => (
+  <AppProvider initialState={initialState}>
     <Router history={history}>{children}</Router>
-  </Provider>
+  </AppProvider>
 );
 
 function render(
   ui,
-  { route = '/', history = createMemoryHistory({ initialEntries: [route] }), store = makeStore(), ...otherOpts } = {},
+  { route = '/', history = createMemoryHistory({ initialEntries: [route] }), initialState, ...otherOpts } = {},
 ) {
   return rtlRender(
-    <TestWrapper store={store} history={history}>
+    <TestWrapper history={history} initialState={initialState}>
       {ui}
     </TestWrapper>,
     otherOpts,
   );
-}
-
-export function makeTestStore() {
-  const store = makeStore();
-  const origDispatch = store.dispatch;
-  store.dispatch = jest.fn(origDispatch);
-  return store;
 }
 
 // re-export everything

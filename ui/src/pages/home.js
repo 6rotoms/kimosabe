@@ -1,9 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Layout, Text } from '../components';
+import { useLogin } from '../hooks';
 
 const HomePage = () => {
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const [loggedIn] = useLogin();
   return (
     <Layout>
       <Text>{loggedIn ? 'Welcome!' : 'Kimosabe placeholder'}</Text>
