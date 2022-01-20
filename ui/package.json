@@ -5,7 +5,7 @@
   "dependencies": {
     "@craco/craco": "^6.1.1",
     "classnames": "^2.2.6",
-    "cross-fetch": "^3.0.6",
+    "cross-fetch": "^3.1.5",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-paginate": "^6.5.0",
