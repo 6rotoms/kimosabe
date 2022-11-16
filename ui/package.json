@@ -10,7 +10,7 @@
     "react-dom": "^16.14.0",
     "react-paginate": "^6.5.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3"
+    "react-scripts": "^5.0.0"
   },
   "scripts": {
     "start": "PORT=8000 craco start",
